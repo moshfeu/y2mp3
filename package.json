@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "youtube-mp3-downloader": "^0.5.3",
+    "youtube-playlist": "^1.0.1"
+  },
+  "name": "youtube-playlist",
+  "version": "1.0.0",
+  "main": "main.js",
+  "devDependencies": {
+    "electron": "^3.0.5"
+  },
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "MIT",
+  "description": ""
+}

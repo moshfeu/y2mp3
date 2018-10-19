@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+</head>
+
+<body>
+
+  <input type="url" id="playlistUrl" placeholder="playlist url" value="https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK" />
+  <button>Fetch</button>
+  <ul id="result">
+
+  </ul>
+
+  <script src="api.js"></script>
+  <script>
+    document.querySelector('button').addEventListener('click', function() {
+      document.querySelector('#result').innerHTML = '';
+      fetchVideos(document.querySelector('input').value, playlist => {
+        playlist.forEach(video => {
+          document.querySelector('#result').innerHTML += `<li>${video}</li>`;
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
