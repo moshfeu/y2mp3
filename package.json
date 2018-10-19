@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react": "^16.5.2",
     "youtube-mp3-downloader": "^0.5.3",
     "youtube-playlist": "^1.0.1"
   },
@@ -10,7 +11,7 @@
     "electron": "^3.0.5"
   },
   "scripts": {
-    "start": "electron ."
+    "start": "electron . && tsc -w src/api.ts"
   },
   "author": "",
   "license": "MIT",
