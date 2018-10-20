@@ -3,3 +3,4 @@ downloads
 package-lock.json
 src/*.js*
 config.js
+dist

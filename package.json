@@ -1,17 +1,19 @@
 {
   "dependencies": {
+    "downloads-folder": "^1.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "youtube-mp3-downloader": "^0.5.3",
     "youtube-playlist": "^1.0.1"
   },
-  "name": "youtube-playlist",
+  "name": "download-youtube-playlist",
   "version": "1.0.0",
   "main": "main.js",
   "devDependencies": {
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "electron": "^3.0.5",
+    "electron-builder": "^20.28.4",
     "object-assign": "^4.1.1",
     "ts-loader": "^5.2.2",
     "typescript": "^3.1.3",
@@ -20,9 +22,39 @@
   },
   "scripts": {
     "webpack": "webpack --watch",
-    "start": "electron ."
+    "start": "npm run webpack | electron .",
+    "pack": "build --dir",
+    "dist": "build",
+    "dist-windows": "npm run dist -- --win"
   },
   "author": "",
   "license": "MIT",
-  "description": ""
+  "description": "",
+  "build": {
+    "appId": "moshfeu.youtube.playlist.downloader",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
+  }
 }
