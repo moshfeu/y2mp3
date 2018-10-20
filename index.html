@@ -3,28 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Hello World!</title>
+  <title>Download YouTube playlist</title>
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
 </head>
 
 <body>
-
-  <input type="url" id="playlistUrl" placeholder="playlist url" value="https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK" />
-  <button>Fetch</button>
-  <ul id="result">
-
-  </ul>
-
-  <script src="src/api.js"></script>
-  <script>
-    document.querySelector('button').addEventListener('click', function() {
-      document.querySelector('#result').innerHTML = '';
-      fetchVideos(document.querySelector('input').value, playlist => {
-        playlist.forEach(video => {
-          document.querySelector('#result').innerHTML += `<li>${video}</li>`;
-        });
-      });
-    });
-  </script>
+  <div id="app"></div>
+  <script src="src/app.bundle.js"></script>
 </body>
 
 </html>

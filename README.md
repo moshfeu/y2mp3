@@ -1,2 +1,2 @@
-# download-youtube-playlist
-An Electron app to download youtube playlist
+- run `npm start`
+- run `npm run webpack`

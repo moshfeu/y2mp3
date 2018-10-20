@@ -1,4 +1,5 @@
 node_modules
 downloads
 package-lock.json
-src/*.js
+src/*.js*
+config.js

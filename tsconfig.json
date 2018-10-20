@@ -1,30 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./",
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react",
-    "moduleResolution": "node",
+    "target": "es6",
+    "lib": ["es2015", "dom"],
+    "sourceMap": false,
     "rootDir": "src",
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true
+    "removeComments": true,
+    "module": "commonjs",
+    "jsx": "react"
   },
   "exclude": [
     "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    "main.js"
-  ],
-  "types": [
-    "typePatches"
   ]
 }
