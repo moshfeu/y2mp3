@@ -8,10 +8,16 @@ interface IVideoProps {
 export class Video extends React.Component<IVideoProps, any> {
   render() {
     const { video } = this.props;
+    console.log('video inside video', video);
     return (
       <div className='video'>
-        <img src={`https://img.youtube.com/vi/${video.id}/1.jpg`} />
-        <progress value={video.progress} max={0}  />
+        <div>
+          <img src={`https://img.youtube.com/vi/${video.id}/1.jpg`} />
+        </div>
+        <div>
+          <progress value={video.progress} max={0}  /><br />
+          Status: {video.status}
+        </div>
       </div>
     )
   }

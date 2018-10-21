@@ -1,29 +1,29 @@
 import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
-import { IVideoEntity, IDownloadProgress } from './types';
+import { IVideoEntity, IDownloadProgress, IFetchVideosCallbacks, IPlaylistYoutube } from './types';
 import * as path from 'path';
 import * as downloadsFolder from 'downloads-folder';
 import * as fs from 'fs';
+import { videoInfo } from 'ytdl-core';
 
 const downloadsFolderName = 'YoutubePlaylistDownloader';
 const DOWNLOADS_FOLDER = path.join(downloadsFolder(), downloadsFolderName);
 !fs.existsSync(DOWNLOADS_FOLDER) && fs.mkdirSync(DOWNLOADS_FOLDER);
 
-interface IPlaylistYoutube {
-  data: {
-    playlist: string[];
-  }
-}
-
 export function fetchVideos(
   playlistUrl: string,
-  onVideosFetched: (videos: IVideoEntity[]) => void,
-  onVideoProgress: (videoIndex: number, progress: IDownloadProgress) => void
-  ) {
-  //Configure YoutubeMp3Downloader with your settings
+  {
+    onBeforeGetInfoForDownload,
+    onAfterGetInfoForDownload,
+    onVideosFetched,
+    onVideoProgress,
+    onDone
+  }: IFetchVideosCallbacks
+  ): void {
   let videos: IVideoEntity[];
   let currentSize: number;
 
+  //Configure YoutubeMp3Downloader with your settings
   const YD = new YoutubeMp3Downloader({
     // ffmpegPath,        // Where is the FFmpeg binary located?
     outputPath: DOWNLOADS_FOLDER,    // Where should the downloaded and encoded files be stored?
@@ -32,26 +32,33 @@ export function fetchVideos(
     progressTimeout: 1000                 // How long should be the interval of the progress reports
   });
 
-  YD.on("finished", function() {
-      // console.log(JSON.stringify(data, null, 2));
-      console.log('done');
+  const currentVideo = (): number => videos.length - currentSize;
+
+  YD.on('finished', () => {
+    onDone();
   });
 
-  // YD.on("error", function(error: string) {
-  //     console.log(error);
-  // });
-
-  YD.on("progress", function(progress: any) {
-    // onVideoProgress(videos.length - currentSize, progress);
-    console.log(progress);
+  YD.on('error', (error: string) => {
+    console.log(error);
   });
 
-  YD.on("queueSize", function(size: number) {
+  YD.on('progress', ({ progress }) => {
+    onVideoProgress(currentVideo(), progress);
+  });
+
+  YD.on('queueSize', (size: number) => {
     currentSize = size;
-    console.log('size', size);
   });
 
-  return ytlist(playlistUrl, 'id').
+  YD.on('beforeGetInfoForDownload', (info: videoInfo) => {
+    onBeforeGetInfoForDownload(currentVideo(), info);
+  });
+
+  YD.on('afterGetInfoForDownload', (info: videoInfo) => {
+    onAfterGetInfoForDownload(currentVideo(), info);
+  });
+
+  ytlist(playlistUrl, 'id').
     then((data: IPlaylistYoutube) => {
     const { data: {playlist} } = data;
     playlist.map(videoId => YD.download(videoId));
@@ -61,5 +68,4 @@ export function fetchVideos(
     }));
     onVideosFetched(videos);
   });
-
 }

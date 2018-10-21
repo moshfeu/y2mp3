@@ -13,6 +13,9 @@ module.exports = {
     ]
   },
   watch: true,
+  watchOptions: {
+    poll: 1000
+  },
   resolve: {
     modules: ['node_modules'],
     extensions: [ '.ts', '.tsx', '.js', '.json' ]
