@@ -3,7 +3,7 @@ import { videoInfo } from 'ytdl-core';
 export interface IVideoEntity {
   id: string;
   progress: number;
-  status?: 'getting info for download' | 'preperare to download and convert' | 'done';
+  status: EVideoStatus;
 }
 
 export interface IDownloadProgress {
@@ -29,4 +29,12 @@ export interface IFetchVideosCallbacks {
   onVideosFetched: (videos: IVideoEntity[]) => void;
   onVideoProgress: (videoIndex: number, progress: IDownloadProgress) => void;
   onDone: () => void;
+}
+
+export enum EVideoStatus {
+  NOT_STARTED = 'Not Started',
+  GETTING_INFO = 'Getting Data',
+  PENDING = 'Pending',
+  DOWNLOADING = 'Downloading',
+  DONE = 'Done'
 }

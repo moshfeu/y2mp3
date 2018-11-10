@@ -1,6 +1,6 @@
 import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
-import { IVideoEntity, IDownloadProgress, IFetchVideosCallbacks, IPlaylistYoutube } from './types';
+import { IVideoEntity, IDownloadProgress, IFetchVideosCallbacks, IPlaylistYoutube, EVideoStatus } from './types';
 import * as path from 'path';
 import * as downloadsFolder from 'downloads-folder';
 import * as fs from 'fs';
@@ -10,62 +10,29 @@ const downloadsFolderName = 'YoutubePlaylistDownloader';
 const DOWNLOADS_FOLDER = path.join(downloadsFolder(), downloadsFolderName);
 !fs.existsSync(DOWNLOADS_FOLDER) && fs.mkdirSync(DOWNLOADS_FOLDER);
 
-export function fetchVideos(
-  playlistUrl: string,
-  {
-    onBeforeGetInfoForDownload,
-    onAfterGetInfoForDownload,
-    onVideosFetched,
-    onVideoProgress,
-    onDone
-  }: IFetchVideosCallbacks
-  ): void {
-  let videos: IVideoEntity[];
-  let currentSize: number;
+const downloader = new YoutubeMp3Downloader({
+  // ffmpegPath,        // Where is the FFmpeg binary located?
+  outputPath: DOWNLOADS_FOLDER,    // Where should the downloaded and encoded files be stored?
+  youtubeVideoQuality: 'highest',       // What video quality should be used?
+  queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
+  progressTimeout: 1000                 // How long should be the interval of the progress reports
+});
+
+export function fetchVideos(playlistUrl: string): Promise<IVideoEntity[]> {
 
   //Configure YoutubeMp3Downloader with your settings
-  const YD = new YoutubeMp3Downloader({
-    // ffmpegPath,        // Where is the FFmpeg binary located?
-    outputPath: DOWNLOADS_FOLDER,    // Where should the downloaded and encoded files be stored?
-    youtubeVideoQuality: 'highest',       // What video quality should be used?
-    queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
-    progressTimeout: 1000                 // How long should be the interval of the progress reports
-  });
-
-  const currentVideo = (): number => videos.length - currentSize;
-
-  YD.on('finished', () => {
-    onDone();
-  });
-
-  YD.on('error', (error: string) => {
-    console.log(error);
-  });
-
-  YD.on('progress', ({ progress }) => {
-    onVideoProgress(currentVideo(), progress);
-  });
-
-  YD.on('queueSize', (size: number) => {
-    currentSize = size;
-  });
-
-  YD.on('beforeGetInfoForDownload', (info: videoInfo) => {
-    onBeforeGetInfoForDownload(currentVideo(), info);
-  });
-
-  YD.on('afterGetInfoForDownload', (info: videoInfo) => {
-    onAfterGetInfoForDownload(currentVideo(), info);
-  });
-
-  ytlist(playlistUrl, 'id').
+  return ytlist(playlistUrl, 'id').
     then((data: IPlaylistYoutube) => {
     const { data: {playlist} } = data;
-    playlist.map(videoId => YD.download(videoId));
-    videos = playlist.map(video => ({
+    return playlist.map(video => (<IVideoEntity>{
       id: video,
-      progress: 0
+      progress: 0,
+      status: EVideoStatus.NOT_STARTED
     }));
-    onVideosFetched(videos);
   });
+}
+
+
+export function getDownloader(video: IVideoEntity) {
+  return downloader;
 }

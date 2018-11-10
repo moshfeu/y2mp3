@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as DOM from 'react-dom';
-import { fetchVideos } from './api';
-import { IVideoEntity, IDownloadProgress } from './types';
+import { fetchVideos, getDownloader } from './api';
+import { IVideoEntity, EVideoStatus } from './types';
 import { Video } from './components/video';
+import { IVideoTask } from 'youtube-mp3-downloader';
 
 interface IMainState {
   playlistUrl: string;
@@ -24,61 +25,61 @@ class Main extends React.Component<any, IMainState> {
     };
   }
 
-  private onVideosFetched = (videos: IVideoEntity[]) => {
-    this.setState({videos});
-  }
-
-  private onVideoProgress = (videoIndex: number, progress: IDownloadProgress) => {
-    const { videos } = this.state;
-    videos[videoIndex].progress = progress.percentage;
-    console.log(videos);
-    if (progress.percentage === 100) {
-      videos[videoIndex].status = 'done';
-    }
-    this.setState({videos});
-  }
-
-  private onDone = () => {
-    this.setState({doneDownloading: true})
-  }
-
-  private onBeforeGetInfoForDownload = (videoIndex: number) => {
-    const { videos } = this.state;
-    videos[videoIndex].status = 'getting info for download';
-    this.setState({videos});
-  }
-
-  private onAfterGetInfoForDownload = (videoIndex: number) => {
-    const { videos } = this.state;
-    videos[videoIndex].status = 'preperare to download and convert';
-    this.setState({videos});
-  }
-
-  private fetchVideosClick = (): void => {
+  private fetchVideosClick = async () => {
     this.setState({process: true});
-    fetchVideos(
-      this.state.playlistUrl,
-      {
-        onBeforeGetInfoForDownload: this.onBeforeGetInfoForDownload,
-        onAfterGetInfoForDownload: this.onAfterGetInfoForDownload,
-        onVideosFetched: this.onVideosFetched,
-        onVideoProgress: this.onVideoProgress,
-        onDone: this.onDone
-      }
-    );
+    const videos = await fetchVideos(this.state.playlistUrl);
+    this.setState({videos});
+  }
+
+  private downloadVideo = async (video: IVideoEntity) => {
+    const { videos } = this.state;
+    const videoIndex = (videoId:  string) => videos.findIndex(v => v.id === videoId);
+    const downloader = await getDownloader(video);
+    downloader
+      .on('addToQueue', (videoId: string) => {
+        videos[videoIndex(videoId)].status = EVideoStatus.PENDING;
+        console.log(videos, 'addToQueue');
+        this.setState({videos});
+      })
+      .on('gettingInfo', (videoId: string) => {
+        videos[videoIndex(videoId)].status = EVideoStatus.GETTING_INFO;
+        console.log(videos, 'gettingInfo');
+        this.setState({videos});
+      })
+      .on('progress', ({videoId, progress}: IVideoTask) => {
+        videos[videoIndex(videoId)].status = EVideoStatus.DOWNLOADING;
+        videos[videoIndex(videoId)].progress = progress.percentage;
+        console.log(videos, 'progress');
+        this.setState({videos});
+      })
+      .on('finished', (err, data) => {
+        const  { videoId } = data;
+        videos[videoIndex(videoId)].status = EVideoStatus.DONE;
+        this.setState({videos});
+      });
+      downloader.download(video.id);;
+  }
+
+  downloadAll = () => {
+    console.log('this', this);
+    this.state.videos.forEach(video => {
+      this.downloadVideo(video);
+    });
   }
 
   public render() {
     const { playlistUrl, videos, process } = this.state;
-
     return (
       <div>
         <input type="url" id="playlistUrl" placeholder="playlist url" value={playlistUrl} onChange={e => this.setState({playlistUrl: e.target.value})} />
         <button onClick={this.fetchVideosClick} disabled={process}>Fetch</button>
         <hr />
         <div>
+        {videos.length ?
+          <button onClick={this.downloadAll}>Download All</button> : ''
+        }
         {videos.map(video => (
-          <Video video={video} />
+          <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
         ))}
         </div>
       </div>
