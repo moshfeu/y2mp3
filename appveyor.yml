@@ -1,4 +1,3 @@
-os: unstable
 cache:
   - node_modules
   - '%USERPROFILE%\.electron'
@@ -26,3 +25,8 @@ init:
 build_script:
   - npm run dist
 test: off
+artifacts:
+- path: dist/installers/*.exe
+  name: download-youtube-mp3
+deploy:
+  artifacts: download-youtube-mp3
