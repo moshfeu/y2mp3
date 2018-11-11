@@ -1,9 +1,10 @@
 os: unstable
 cache:
   - node_modules
+  - '%USERPROFILE%\.electron'
 environment:
   GH_TOKEN:
-      secure: gHm5sKIAonag8G/hV5Z/SfhjRmXwIcRxhQT9PNFi+eMYJv+FO2WgnQuH5PYiYlc1
+      secure: qufJvj7/gCW7sddwA7G248QZipL5/w5rLor87FzTEyozZQPVoyJxr7r0ETmnUQc2
   matrix:
     - nodejs_version: 8
 install:
@@ -14,7 +15,14 @@ install:
   - npm install
 matrix:
   fast_finish: true
-build: off
 version: '{build}'
 shallow_clone: true
 clone_depth: 1
+image: Visual Studio 2017
+platform:
+  - x64
+init:
+  - git config --global core.autocrlf input
+build_script:
+  - npm dist
+test: off
