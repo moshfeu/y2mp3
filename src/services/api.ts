@@ -1,6 +1,6 @@
 import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
-import { IVideoEntity, IPlaylistYoutube, EVideoStatus } from './types';
+import { IVideoEntity, IPlaylistYoutube, EVideoStatus } from '../types';
 import { join, resolve } from 'path';
 import * as downloadsFolder from 'downloads-folder';
 import { existsSync, mkdirSync } from 'fs';

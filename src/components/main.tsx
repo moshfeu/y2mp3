@@ -2,12 +2,12 @@ import './style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
-import { fetchVideos, getDownloader } from './api';
-import { IVideoEntity, EVideoStatus } from './types';
-import { Video } from './components/video';
+import { fetchVideos, getDownloader } from '../services/api';
+import { IVideoEntity, EVideoStatus } from '../types';
+import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { existsSync } from 'fs';
-import { installFfmpeg } from './ffmpeg-installer';
+import { installFfmpeg } from '../services/ffmpeg-installer';
 
 interface IMainState {
   playlistUrl: string;

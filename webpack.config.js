@@ -2,7 +2,7 @@ const path = require('path');
 const { DefinePlugin } = require('webpack');
 
 module.exports = {
-  entry: './src/main.tsx',
+  entry: './src/components/main.tsx',
   module: {
     rules: [
       {
