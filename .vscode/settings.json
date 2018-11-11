@@ -1,5 +1,6 @@
 {
   "files.exclude": {
-    "**/*.js.map": true
+    "**/*.js.map": true,
+    "**/*.bundle.js": true
   }
 }

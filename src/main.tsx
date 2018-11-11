@@ -1,15 +1,20 @@
+import './style.scss';
+
 import * as React from 'react';
 import * as DOM from 'react-dom';
 import { fetchVideos, getDownloader } from './api';
 import { IVideoEntity, EVideoStatus } from './types';
 import { Video } from './components/video';
 import { IVideoTask } from 'youtube-mp3-downloader';
+import { existsSync } from 'fs';
+import { installFfmpeg } from './ffmpeg-installer';
 
 interface IMainState {
   playlistUrl: string;
   videos: IVideoEntity[];
   process: boolean;
   doneDownloading: boolean;
+  downloadProgress: string;
 }
 
 class Main extends React.Component<any, IMainState> {
@@ -21,7 +26,8 @@ class Main extends React.Component<any, IMainState> {
       videos: [],
       process: false,
       doneDownloading: false,
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK'
+      playlistUrl: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
+      downloadProgress: ''
     };
   }
 
@@ -61,26 +67,40 @@ class Main extends React.Component<any, IMainState> {
   }
 
   downloadAll = () => {
-    console.log('this', this);
     this.state.videos.forEach(video => {
       this.downloadVideo(video);
     });
   }
 
+  isFFMpegInstalled() {
+    return existsSync('./bin/ffmpeg');
+  }
+
+  private updateDownloadProgress = (data) => {
+    this.setState({downloadProgress: (data.progress*100).toFixed(1) + '%'})
+  }
+
   public render() {
-    const { playlistUrl, videos, process } = this.state;
+    const { playlistUrl, videos, process, downloadProgress } = this.state;
     return (
       <div>
-        <input type="url" id="playlistUrl" placeholder="playlist url" value={playlistUrl} onChange={e => this.setState({playlistUrl: e.target.value})} />
-        <button onClick={this.fetchVideosClick} disabled={process}>Fetch</button>
-        <hr />
-        <div>
-        {videos.length ?
-          <button onClick={this.downloadAll}>Download All</button> : ''
-        }
-        {videos.map(video => (
-          <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
-        ))}
+        <div className={this.isFFMpegInstalled() ? '' : 'hidden'}>
+          <input type="url" id="playlistUrl" placeholder="playlist url" value={playlistUrl} onChange={e => this.setState({playlistUrl: e.target.value})} />
+          <button onClick={this.fetchVideosClick} disabled={process}>Fetch</button>
+          <hr />
+          <div>
+          {videos.length ?
+            <button onClick={this.downloadAll}>Download All</button> : ''
+          }
+          {videos.map(video => (
+            <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
+          ))}
+          </div>
+        </div>
+        <div className={this.isFFMpegInstalled() ? 'hidden' : ''}>
+            ffMpeg is not install :(<br />
+            <button onClick={() => installFfmpeg(this.updateDownloadProgress)}>Install it</button><br />
+            downloadProgress: {downloadProgress}
         </div>
       </div>
     );
