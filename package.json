@@ -31,8 +31,8 @@
   "scripts": {
     "webpack": "webpack --watch",
     "start": "npm run webpack | electron .",
-    "pack": "build --dir",
-    "dist": "build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "dist-windows": "npm run dist -- --win"
   },
   "author": "MosheF",
