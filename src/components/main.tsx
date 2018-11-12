@@ -62,6 +62,13 @@ class Main extends React.Component<any, IMainState> {
         const  { videoId } = data;
         videos[videoIndex(videoId)].status = EVideoStatus.DONE;
         this.setState({videos});
+
+        if (err) {
+          alert(err);
+        }
+      })
+      .on('error', (err, data) => {
+        alert(err);
       });
       downloader.download(video.id);;
   }
