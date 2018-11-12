@@ -1,4 +1,4 @@
-import './style.scss';
+import '../style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
@@ -7,7 +7,7 @@ import { IVideoEntity, EVideoStatus } from '../types';
 import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { existsSync } from 'fs';
-import { installFfmpeg } from '../services/ffmpeg-installer';
+import { installFfmpeg, isFFMpegInstalled } from '../services/ffmpeg-installer';
 
 interface IMainState {
   playlistUrl: string;
@@ -34,7 +34,7 @@ class Main extends React.Component<any, IMainState> {
   private fetchVideosClick = async () => {
     this.setState({process: true});
     const videos = await fetchVideos(this.state.playlistUrl);
-    this.setState({videos});
+    this.setState({videos, process: false});
   }
 
   private downloadVideo = async (video: IVideoEntity) => {
@@ -72,10 +72,6 @@ class Main extends React.Component<any, IMainState> {
     });
   }
 
-  isFFMpegInstalled() {
-    return existsSync('./bin/ffmpeg');
-  }
-
   private updateDownloadProgress = (data) => {
     this.setState({downloadProgress: (data.progress*100).toFixed(1) + '%'})
   }
@@ -84,7 +80,7 @@ class Main extends React.Component<any, IMainState> {
     const { playlistUrl, videos, process, downloadProgress } = this.state;
     return (
       <div>
-        <div className={this.isFFMpegInstalled() ? '' : 'hidden'}>
+        <div className={isFFMpegInstalled() ? '' : 'hidden'}>
           <input type="url" id="playlistUrl" placeholder="playlist url" value={playlistUrl} onChange={e => this.setState({playlistUrl: e.target.value})} />
           <button onClick={this.fetchVideosClick} disabled={process}>Fetch</button>
           <hr />
@@ -97,7 +93,7 @@ class Main extends React.Component<any, IMainState> {
           ))}
           </div>
         </div>
-        <div className={this.isFFMpegInstalled() ? 'hidden' : ''}>
+        <div className={isFFMpegInstalled() ? 'hidden' : ''}>
             ffMpeg is not install :(<br />
             <button onClick={() => installFfmpeg(this.updateDownloadProgress)}>Install it</button><br />
             downloadProgress: {downloadProgress}

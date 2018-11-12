@@ -1,17 +1,16 @@
 import * as ffbinaries from 'ffbinaries';
-import { mkdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import { existsSync } from 'fs';
+import {ffmpegPath, APPDATA_FOLDER} from './path';
 
 export function installFfmpeg(tickerFn: (data) => void): Promise<void> {
-  const destination = join('.', 'bin');
-  if (!existsSync(destination)) {
-    mkdirSync(destination);
-  }
-
   return new Promise((resolve) => {
-    ffbinaries.downloadBinaries(['ffmpeg'], {destination, tickerFn}, function () {
+    ffbinaries.downloadBinaries(['ffmpeg'], {destination: APPDATA_FOLDER, tickerFn}, function () {
       tickerFn({progress: 100});
       resolve();
     });
   });
+}
+
+export function isFFMpegInstalled(): boolean {
+  return existsSync(ffmpegPath());
 }
