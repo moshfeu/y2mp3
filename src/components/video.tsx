@@ -19,7 +19,7 @@ export class Video extends React.Component<IVideoProps, any> {
     } else {
       return (
         <div>
-          <progress value={video.progress} max={0}  /><br />
+          <progress value={video.progress} max={100}  /><br />
           Status: {video.status}
         </div>
       )

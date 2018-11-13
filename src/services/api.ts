@@ -3,7 +3,7 @@ import * as ytlist from 'youtube-playlist';
 import { IVideoEntity, IPlaylistYoutube, EVideoStatus } from '../types';
 import { DOWNLOADS_FOLDER, ffmpegPath } from './path';
 
-const downloader = new YoutubeMp3Downloader({
+export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
   outputPath: DOWNLOADS_FOLDER,         // Where should the downloaded and encoded files be stored?
   youtubeVideoQuality: 'highest',       // What video quality should be used?
@@ -27,9 +27,4 @@ export function fetchVideos(playlistUrl: string): Promise<IVideoEntity[]> {
   } catch (error) {
     console.error(error);
   }
-}
-
-
-export function getDownloader(video: IVideoEntity) {
-  return downloader;
 }

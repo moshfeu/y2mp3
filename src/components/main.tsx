@@ -2,11 +2,10 @@ import '../style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
-import { fetchVideos, getDownloader } from '../services/api';
+import { fetchVideos, downloader } from '../services/api';
 import { IVideoEntity, EVideoStatus } from '../types';
 import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
-import { existsSync } from 'fs';
 import { installFfmpeg, isFFMpegInstalled } from '../services/ffmpeg-installer';
 
 interface IMainState {
@@ -31,46 +30,69 @@ class Main extends React.Component<any, IMainState> {
     };
   }
 
+  componentDidMount() {
+    this.listenToDownloader();
+  }
+
   private fetchVideosClick = async () => {
     this.setState({process: true});
     const videos = await fetchVideos(this.state.playlistUrl);
     this.setState({videos, process: false});
   }
+  private videoIndex = (videoId:  string) => {
+    return this.state.videos.findIndex(v => v.id === videoId);
+  }
+
+  private addToQueue = (videoId: string) => {
+    const { videos } = this.state;
+    videos[this.videoIndex(videoId)].status = EVideoStatus.PENDING;
+    console.log(videos, 'addToQueue');
+    this.setState({videos});
+  }
+
+  private gettingInfo = (videoId: string) => {
+    const { videos } = this.state;
+    videos[this.videoIndex(videoId)].status = EVideoStatus.GETTING_INFO;
+    console.log(videos, 'gettingInfo');
+    this.setState({videos});
+  }
+
+  private progress = ({videoId, progress}: IVideoTask) => {
+    const { videos } = this.state;
+    const videoIndex = this.videoIndex(videoId);
+    videos[videoIndex].status = EVideoStatus.DOWNLOADING;
+    videos[videoIndex].progress = progress.percentage;
+    console.log(videos, 'progress');
+    this.setState({videos});
+  }
+
+  private finished = (err, data) => {
+    const { videos } = this.state;
+    const  { videoId } = data;
+    videos[this.videoIndex(videoId)].status = EVideoStatus.DONE;
+    this.setState({videos});
+    console.log('done');
+
+    if (err) {
+      alert(err);
+    }
+  }
+
+  private error = (err, data) => {
+    alert(err);
+  }
+
+  private listenToDownloader() {
+    return downloader
+      .on('addToQueue', this.addToQueue)
+      .on('gettingInfo', this.gettingInfo)
+      .on('progress', this.progress)
+      .on('finished', this.finished)
+      .on('error', this.error);
+  }
 
   private downloadVideo = async (video: IVideoEntity) => {
-    const { videos } = this.state;
-    const videoIndex = (videoId:  string) => videos.findIndex(v => v.id === videoId);
-    const downloader = await getDownloader(video);
-    downloader
-      .on('addToQueue', (videoId: string) => {
-        videos[videoIndex(videoId)].status = EVideoStatus.PENDING;
-        console.log(videos, 'addToQueue');
-        this.setState({videos});
-      })
-      .on('gettingInfo', (videoId: string) => {
-        videos[videoIndex(videoId)].status = EVideoStatus.GETTING_INFO;
-        console.log(videos, 'gettingInfo');
-        this.setState({videos});
-      })
-      .on('progress', ({videoId, progress}: IVideoTask) => {
-        videos[videoIndex(videoId)].status = EVideoStatus.DOWNLOADING;
-        videos[videoIndex(videoId)].progress = progress.percentage;
-        console.log(videos, 'progress');
-        this.setState({videos});
-      })
-      .on('finished', (err, data) => {
-        const  { videoId } = data;
-        videos[videoIndex(videoId)].status = EVideoStatus.DONE;
-        this.setState({videos});
-
-        if (err) {
-          alert(err);
-        }
-      })
-      .on('error', (err, data) => {
-        alert(err);
-      });
-      downloader.download(video.id);;
+    downloader.download(video.id);;
   }
 
   downloadAll = () => {
