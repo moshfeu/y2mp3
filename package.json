@@ -31,7 +31,7 @@
   },
   "scripts": {
     "webpack": "webpack --watch",
-    "start": "npm run webpack | electron .",
+    "electron": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist-windows": "npm run dist -- --win"
