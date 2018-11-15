@@ -16,9 +16,9 @@ const isDev = require('electron-is-dev');
     win.loadFile('index.html')
 
     // Open the DevTools.
-    if (isDev) {
+    // if (isDev) {
       win.webContents.openDevTools()
-    }
+    // }
 
     // Emitted when the window is closed.
     win.on('closed', () => {

@@ -1,4 +1,4 @@
-import '../style.scss';
+import '../styles/style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
@@ -92,7 +92,7 @@ class Main extends React.Component<any, IMainState> {
   }
 
   private downloadVideo = async (video: IVideoEntity) => {
-    downloader.download(video.id);;
+    downloader.download(video.id);
   }
 
   downloadAll = () => {

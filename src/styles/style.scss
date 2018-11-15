@@ -1,0 +1,20 @@
+@import './form.scss';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  background: url(../assets/image.jpg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.hidden {
+  display: none;
+}

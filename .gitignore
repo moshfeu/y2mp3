@@ -1,7 +1,9 @@
+.idea
 node_modules
 downloads
 package-lock.json
 src/*.js*
 config.js
 dist
-bin
+resources
+maps

@@ -18,7 +18,19 @@ module.exports = {
           "sass-loader"   // compiles Sass to CSS, using Node Sass by default
         ],
         exclude: /node_modules/
-    }
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'resources/',
+            }
+          },
+        ],
+      }
     ]
   },
   watch: true,
@@ -30,8 +42,9 @@ module.exports = {
     extensions: [ '.ts', '.tsx', '.js', '.json' ]
   },
   output: {
-    filename: 'app.bundle.js',
-    path: path.join(__dirname, 'src')
+    filename: 'resources/app.bundle.js',
+    sourceMapFilename: 'maps/app.[chunkhash].map.js',
+    path: __dirname
   },
   mode: 'production',
   target: 'node',
