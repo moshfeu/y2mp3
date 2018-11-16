@@ -5,6 +5,11 @@
   transform: translate(-50%, -50%);
   top:50%;
   left:50%;
+
+  &.-has-result {
+    top: 30px;
+    transform: translate(-50%, 0);
+  }
 }
 
 .search-wrapper .input-holder {
@@ -182,7 +187,7 @@
   text-align: center;
   font-family: "Open Sans", Arial, Verdana;
   font-size: 14px;
-  display:none;
+  // display:none;
   color:#B7B7B7;
 }
 

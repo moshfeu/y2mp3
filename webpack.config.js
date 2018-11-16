@@ -30,6 +30,7 @@ module.exports = {
             }
           },
         ],
+        exclude: /node_modules/
       }
     ]
   },
@@ -46,7 +47,7 @@ module.exports = {
     sourceMapFilename: 'maps/app.[chunkhash].map.js',
     path: __dirname
   },
-  mode: 'production',
+  mode: 'development',
   target: 'node',
   plugins: [
     new DefinePlugin({

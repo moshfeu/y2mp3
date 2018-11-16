@@ -7,6 +7,7 @@ import { IVideoEntity, EVideoStatus } from '../types';
 import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { installFfmpeg, isFFMpegInstalled } from '../services/ffmpeg-installer';
+import { Form } from './form';
 
 interface IMainState {
   playlistUrl: string;
@@ -32,6 +33,26 @@ class Main extends React.Component<any, IMainState> {
 
   componentDidMount() {
     this.listenToDownloader();
+
+    this.setState({
+      videos: [
+        {
+          "id": "JvKKd32Yw2E",
+          "progress": 0,
+          "status": EVideoStatus.NOT_STARTED
+        },
+        {
+          "id": "tPEE9ZwTmy0",
+          "progress": 0,
+          "status": EVideoStatus.NOT_STARTED
+        },
+        {
+          "id": "cdwal5Kw3Fc",
+          "progress": 0,
+          "status": EVideoStatus.NOT_STARTED
+        }
+      ]
+    })
   }
 
   private fetchVideosClick = async () => {
@@ -110,17 +131,20 @@ class Main extends React.Component<any, IMainState> {
     return (
       <div>
         <div className={isFFMpegInstalled() ? '' : 'hidden'}>
-          <input type="url" id="playlistUrl" placeholder="playlist url" value={playlistUrl} onChange={e => this.setState({playlistUrl: e.target.value})} />
-          <button onClick={this.fetchVideosClick} disabled={process}>Fetch</button>
-          <hr />
-          <div>
-          {videos.length ?
-            <button onClick={this.downloadAll}>Download All</button> : ''
-          }
-          {videos.map(video => (
-            <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
-          ))}
-          </div>
+          <Form
+            hasResult={!!videos.length}
+            onSubmit={this.fetchVideosClick}
+            onClear={() => this.setState({videos: []})}
+          >
+            <div>
+            {videos.length ?
+              <button onClick={this.downloadAll}>Download All</button> : ''
+            }
+            {videos.map(video => (
+              <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
+            ))}
+            </div>
+          </Form>
         </div>
         <div className={isFFMpegInstalled() ? 'hidden' : ''}>
             ffMpeg is not install :(<br />

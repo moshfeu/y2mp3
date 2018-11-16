@@ -8,7 +8,7 @@ const isDev = require('electron-is-dev');
   function createWindow () {
     // Create the browser window.
     // win = new BrowserWindow({ width: 800, height: 600 })
-    win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
+    win = new BrowserWindow({ width: 1600, height: 1200, webPreferences: {
 	    additionalArguments: [`--appData=${app.getPath('appData')}`]
     } });
 
