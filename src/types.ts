@@ -2,6 +2,7 @@ import { videoInfo } from 'ytdl-core';
 
 export interface IVideoEntity {
   id: string;
+  name: string;
   progress: number;
   status: EVideoStatus;
 }
@@ -19,7 +20,10 @@ export interface IDownloadProgress {
 
 export interface IPlaylistYoutube {
   data: {
-    playlist: string[];
+    playlist: {
+      id: string;
+      name: string;
+    }[];
   }
 }
 

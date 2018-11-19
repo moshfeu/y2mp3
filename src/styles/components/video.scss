@@ -1,0 +1,15 @@
+.video {
+  width: 250px;
+  height: 190px;
+  background-size: 100% auto;
+  margin: 0 auto 15px;
+  position: relative;
+
+  .details {
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}

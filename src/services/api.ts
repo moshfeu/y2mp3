@@ -15,11 +15,12 @@ export function fetchVideos(playlistUrl: string): Promise<IVideoEntity[]> {
 
   //Configure YoutubeMp3Downloader with your settings
   try {
-    return ytlist(playlistUrl, 'id').
+    return ytlist(playlistUrl).
       then((data: IPlaylistYoutube) => {
       const { data: {playlist} } = data;
       return playlist.map(video => (<IVideoEntity>{
-        id: video,
+        id: video.id,
+        name: video.name,
         progress: 0,
         status: EVideoStatus.NOT_STARTED
       }));

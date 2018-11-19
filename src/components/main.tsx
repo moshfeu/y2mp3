@@ -38,16 +38,19 @@ class Main extends React.Component<any, IMainState> {
       videos: [
         {
           "id": "JvKKd32Yw2E",
+          "name": "video 1",
           "progress": 0,
           "status": EVideoStatus.NOT_STARTED
         },
         {
           "id": "tPEE9ZwTmy0",
+          "name": "video 2",
           "progress": 0,
           "status": EVideoStatus.NOT_STARTED
         },
         {
           "id": "cdwal5Kw3Fc",
+          "name": "video 3",
           "progress": 0,
           "status": EVideoStatus.NOT_STARTED
         }

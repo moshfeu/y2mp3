@@ -15,7 +15,7 @@ export class Video extends React.Component<IVideoProps, any> {
     const { video, onVideoStartClick } = this.props;
 
     if (video.status === EVideoStatus.NOT_STARTED) {
-      return <button onClick={() => onVideoStartClick(video)}>Download Video</button>
+      return <button onClick={() => onVideoStartClick(video)}>Download "{video.name}"</button>
     } else {
       return (
         <div>
@@ -30,11 +30,9 @@ export class Video extends React.Component<IVideoProps, any> {
     const { video } = this.props;
 
     return (
-      <div className='video'>
-        <div>
-          <img src={`https://img.youtube.com/vi/${video.id}/1.jpg`} />
-        </div>
-        <div>
+      <div className="video" style={{backgroundImage: `url(https://img.youtube.com/vi/${video.id}/0.jpg)`}}>
+        <div className="details">
+          {video.name}
           {
             this.buttonOrProgress()
           }

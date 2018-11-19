@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "downloads-folder": "^1.0.1",
+    "electron-is-dev": "^1.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
-    "youtube-playlist": "^1.0.1",
-    "electron-is-dev": "^1.0.1"
+    "youtube-playlist": "^1.0.2"
   },
   "name": "download-youtube-playlist",
   "version": "1.0.0",

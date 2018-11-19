@@ -54,18 +54,18 @@ export class Form extends React.Component<IFormProps, IFormState> {
     const { hasResult } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || ''].join(' ')}>
+      <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || ''].join(' ')}>
+        <form onSubmit={this.onSubmit}>
           <div className="input-holder">
             <input className="search-input" type="url" id="playlistUrl" placeholder="Type to search" value={terms} onChange={e => this.setState({terms: e.target.value})} />
             <button type="button" className="search-icon" onClick={this.searchClick}><span></span></button>
           </div>
           <span className="close" onClick={this.clear}></span>
-          <div className="result-container">
-            {this.props.children}
-          </div>
+        </form>
+        <div className="result-container">
+          {this.props.children}
         </div>
-      </form>
+      </div>
     );
   }
 }
