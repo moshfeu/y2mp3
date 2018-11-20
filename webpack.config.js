@@ -15,12 +15,13 @@ module.exports = {
         use: [
           "style-loader", // creates style nodes from JS strings
           "css-loader",   // translates CSS into CommonJS
-          "sass-loader"   // compiles Sass to CSS, using Node Sass by default
+          "sass-loader",  // compiles Sass to CSS, using Node Sass by default
+          "postcss-loader"
         ],
         exclude: /node_modules/
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.(gif|png|jpe?g)$/i,
         use: [
           {
             loader: 'file-loader',
@@ -31,6 +32,16 @@ module.exports = {
           },
         ],
         exclude: /node_modules/
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]',
+                outputPath: 'resources/fonts/'
+            }
+        }]
       }
     ]
   },
@@ -52,7 +63,14 @@ module.exports = {
   plugins: [
     new DefinePlugin({
       'process.env.FLUENTFFMPEG_COV': false
-    })
+    }),
+    {
+      apply: compiler => {
+        compiler.hooks.beforeCompile.tap('clearConsole', compilation => {
+          process.stdout.write('\033c');
+        });
+      }
+    }
   ],
   devtool: 'source-map'
 }

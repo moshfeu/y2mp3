@@ -1,5 +1,5 @@
 .video {
-  width: 250px;
+  width: 350px;
   height: 190px;
   background-size: 100% auto;
   margin: 0 auto 15px;
@@ -11,5 +11,9 @@
     position: absolute;
     bottom: 0;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1em;
+    padding: 10px 0;
   }
 }

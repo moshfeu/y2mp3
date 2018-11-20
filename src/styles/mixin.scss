@@ -1,0 +1,22 @@
+@mixin parent($with-selector: '') {
+
+  @each $selector in & {
+
+    $l: length($selector) + 1;
+
+    @if ($l == 1) {
+      @error "Used parent mixin on a top-level selector";
+    } @else {
+
+      $parent: nth($selector,1) + $with-selector;
+
+      @for $i from 2 to $l {
+        $parent: append($parent,nth($selector,$i));
+      }
+
+      @at-root #{$parent} {
+        @content;
+      }
+    }
+  }
+}
