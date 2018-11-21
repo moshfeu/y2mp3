@@ -1,4 +1,5 @@
-.progress-button {
+/* https://tympanus.net/Development/ProgressButtonStyles/ */
+.button-progress {
   position: relative;
   display: inline-block;
   padding: 0;
@@ -11,7 +12,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 1em;
-  line-height: 4;
+  line-height: 2;
 
   .progress-wrap {
     transform-style: preserve-3d;
@@ -28,7 +29,7 @@
   }
 
   .content {
-    padding: 0 60px;
+    padding: 0 30px;
     background: #1d9650;
     position: relative;
     display: block;
@@ -36,7 +37,7 @@
     &::before,
     &::after {
       position: absolute;
-      right: 20px;
+      right: 5px;
       color: #0e7138;
       font-family: "icomoon";
       opacity: 0;

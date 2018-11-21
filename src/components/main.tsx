@@ -8,6 +8,7 @@ import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { installFfmpeg, isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { Form } from './form';
+import { ButtonProgress } from './button-progress';
 
 interface IMainState {
   playlistUrl: string;
@@ -130,22 +131,22 @@ class Main extends React.Component<any, IMainState> {
   }
 
   public render() {
-    const { playlistUrl, videos, process, downloadProgress } = this.state;
+    const { videos, downloadProgress } = this.state;
     return (
-      <div>
+      <div className="main">
         <div className={isFFMpegInstalled() ? '' : 'hidden'}>
           <Form
             hasResult={!!videos.length}
             onSubmit={this.fetchVideosClick}
             onClear={() => this.setState({videos: []})}
           >
-            <div>
-            {videos.length ?
-              <button onClick={this.downloadAll}>Download All</button> : ''
+            {videos.length &&
+              <ButtonProgress text="Download All" onClick={this.downloadAll} />
             }
-            {videos.map(video => (
-              <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
-            ))}
+            <div className="videos">
+              {videos.map(video => (
+                <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
+              ))}
             </div>
           </Form>
         </div>

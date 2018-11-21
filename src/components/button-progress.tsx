@@ -2,6 +2,7 @@ import * as React from 'react';
 
 export interface IButtonProgressProps {
   text: string;
+  onClick: () => void;
 }
 
 export interface IButtonProgressState {
@@ -46,6 +47,8 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
       setTimeout(() => {
         makeProgress()
       }, Math.random()*500);
+
+      this.props.onClick();
     }
 
     makeProgress();
@@ -64,7 +67,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     const { progress } = this.state;
 
     return (
-      <button className={`progress-button ${this.buttonCssState}`} onClick={this.onClick} data-style="rotate-side-down" data-perspective="" data-horizontal="">
+      <button className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} data-style="rotate-side-down" data-perspective="" data-horizontal="">
         <span className="progress-wrap">
           <span className="content">{text}</span>
           <span className="progress">

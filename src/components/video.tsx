@@ -37,7 +37,7 @@ export class Video extends React.Component<IVideoProps, any> {
             {video.name}
           </div>
           <div className="button">
-            <ButtonProgress text="Download" />
+            <ButtonProgress text="Download" onClick={() => console.warn('not yet implemented')} />
           </div>
         </div>
       </div>
