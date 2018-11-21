@@ -70,14 +70,18 @@ class Main extends React.Component<any, IMainState> {
 
   private addToQueue = (videoId: string) => {
     const { videos } = this.state;
-    videos[this.videoIndex(videoId)].status = EVideoStatus.PENDING;
+    const videoIndex = this.videoIndex(videoId);
+    videos[videoIndex].status = EVideoStatus.PENDING;
+    videos[videoIndex].progress = 2;
     console.log(videos, 'addToQueue');
     this.setState({videos});
   }
 
   private gettingInfo = (videoId: string) => {
     const { videos } = this.state;
-    videos[this.videoIndex(videoId)].status = EVideoStatus.GETTING_INFO;
+    const videoIndex = this.videoIndex(videoId);
+    videos[videoIndex].status = EVideoStatus.GETTING_INFO;
+    videos[videoIndex].progress = 20;
     console.log(videos, 'gettingInfo');
     this.setState({videos});
   }
@@ -86,7 +90,7 @@ class Main extends React.Component<any, IMainState> {
     const { videos } = this.state;
     const videoIndex = this.videoIndex(videoId);
     videos[videoIndex].status = EVideoStatus.DOWNLOADING;
-    videos[videoIndex].progress = progress.percentage;
+    videos[videoIndex].progress = 20 + (progress.percentage * 0.8);
     console.log(videos, 'progress');
     this.setState({videos});
   }
@@ -94,7 +98,9 @@ class Main extends React.Component<any, IMainState> {
   private finished = (err, data) => {
     const { videos } = this.state;
     const  { videoId } = data;
-    videos[this.videoIndex(videoId)].status = EVideoStatus.DONE;
+    const videoIndex = this.videoIndex(videoId);
+    videos[videoIndex].status = EVideoStatus.DONE;
+    videos[videoIndex].progress = 0;
     this.setState({videos});
     console.log('done');
 
@@ -145,7 +151,7 @@ class Main extends React.Component<any, IMainState> {
             }
             <div className="videos">
               {videos.map(video => (
-                <Video key={video.id} video={video} onVideoStartClick={this.downloadVideo} />
+                <Video key={video.id} video={video} onVideoDownloadClick={this.downloadVideo} />
               ))}
             </div>
           </Form>

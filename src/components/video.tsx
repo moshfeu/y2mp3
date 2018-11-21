@@ -4,7 +4,7 @@ import { ButtonProgress } from './button-progress';
 
 interface IVideoProps {
   video: IVideoEntity;
-  onVideoStartClick: (video :IVideoEntity) => void;
+  onVideoDownloadClick: (video :IVideoEntity) => void;
 }
 
 export class Video extends React.Component<IVideoProps, any> {
@@ -27,17 +27,26 @@ export class Video extends React.Component<IVideoProps, any> {
   //   }
   // }
 
+  get backgroundImage(): string {
+    return `url(https://img.youtube.com/vi/${this.props.video.id}/mqdefault.jpg)`;
+  }
+
   render() {
-    const { video } = this.props;
+    const { video, onVideoDownloadClick } = this.props;
+    const { backgroundImage } = this;
 
     return (
-      <div className="video" style={{backgroundImage: `url(https://img.youtube.com/vi/${video.id}/mqdefault.jpg)`}}>
+      <div className="video" style={{backgroundImage}}>
         <div className="details">
           <div className="name">
             {video.name}
           </div>
           <div className="button">
-            <ButtonProgress text="Download" onClick={() => console.warn('not yet implemented')} />
+            <ButtonProgress
+              text="Download"
+              progress={video.progress}
+              onClick={() => onVideoDownloadClick(video)}
+            />
           </div>
         </div>
       </div>

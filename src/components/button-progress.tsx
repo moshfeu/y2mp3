@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface IButtonProgressProps {
   text: string;
   onClick: () => void;
+  progress?: number;
 }
 
 export interface IButtonProgressState {
@@ -10,6 +11,8 @@ export interface IButtonProgressState {
 }
 
 export class ButtonProgress extends React.Component<IButtonProgressProps, IButtonProgressState> {
+  private readonly progressDone = 100;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,11 +21,27 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
   }
 
   get isLoading(): boolean {
-    return this.state.progress > 0 && this.state.progress < 1;
+    return this.state.progress > 0 && this.state.progress < this.progressDone;
   }
 
   get isDone(): boolean {
-    return this.state.progress === 1;
+    return this.state.progress === this.progressDone;
+  }
+
+  componentWillReceiveProps(nextProps: IButtonProgressProps, currentProps: IButtonProgressProps) {
+    if (nextProps.progress && currentProps.progress !== nextProps.progress) {
+      if (nextProps.progress === this.progressDone) {
+        this.done();
+      }
+
+      if (currentProps.progress != this.progressDone) {
+        // if current progress is complete which means this operation is reset it again to the start
+        // and that what `done` function do for the UI so ignore it
+        this.setState({
+          progress: nextProps.progress
+        });
+      }
+    }
   }
 
   done() {
@@ -34,6 +53,9 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
   }
 
   onClick = () => {
+    if (this.props.onClick) {
+      return this.props.onClick();
+    }
     const makeProgress = () => {
       const {progress} = this.state;
       if (progress === 1) {
@@ -47,8 +69,6 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
       setTimeout(() => {
         makeProgress()
       }, Math.random()*500);
-
-      this.props.onClick();
     }
 
     makeProgress();
@@ -60,6 +80,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     } else if (this.isDone) {
       return 'state-success';
     }
+    return '';
   }
 
   render() {
@@ -71,7 +92,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
         <span className="progress-wrap">
           <span className="content">{text}</span>
           <span className="progress">
-            <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress * 100}%`, opacity: 1}}></span>
+            <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress}%`, opacity: 1}}></span>
           </span>
         </span>
       </button>
