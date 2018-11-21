@@ -13,6 +13,7 @@
   letter-spacing: 1px;
   font-size: 1em;
   line-height: 2;
+  cursor: pointer;
 
   .progress-wrap {
     transform-style: preserve-3d;
@@ -33,6 +34,10 @@
     background: #1d9650;
     position: relative;
     display: block;
+
+    &:hover {
+      background: #095027;
+    }
 
     &::before,
     &::after {
@@ -71,6 +76,7 @@
     transform-origin: 50% 0%;
     backface-visibility: hidden;
     background: #148544;
+    line-height: 1.4;
   }
 
   .progress-inner {
@@ -79,6 +85,10 @@
     background: #0e7138;
     height: 100%;
     top: 0;
+  }
+
+  .progress-counter {
+    position: relative;
   }
 
   .notransition {

@@ -74,6 +74,10 @@
         border-radius: 30px;
       }
 
+      @include parent('.-in-process') {
+        animation: spinner 1s ease infinite;
+      }
+
       span {
         width:22px;
         height:22px;
@@ -170,4 +174,14 @@
 
 @media screen and (max-width: 560px) {
   .search-wrapper.active .input-holder {width:200px;}
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }

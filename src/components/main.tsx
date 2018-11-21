@@ -11,9 +11,8 @@ import { Form } from './form';
 import { ButtonProgress } from './button-progress';
 
 interface IMainState {
-  playlistUrl: string;
   videos: IVideoEntity[];
-  process: boolean;
+  inProcess: boolean;
   doneDownloading: boolean;
   downloadProgress: string;
 }
@@ -25,9 +24,9 @@ class Main extends React.Component<any, IMainState> {
 
     this.state = {
       videos: [],
-      process: false,
+      inProcess: false,
       doneDownloading: false,
-      playlistUrl: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
+      // playlistUrl: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
       downloadProgress: ''
     };
   }
@@ -35,34 +34,34 @@ class Main extends React.Component<any, IMainState> {
   componentDidMount() {
     this.listenToDownloader();
 
-    this.setState({
-      videos: [
-        {
-          "id": "JvKKd32Yw2E",
-          "name": "video 1",
-          "progress": 0,
-          "status": EVideoStatus.NOT_STARTED
-        },
-        {
-          "id": "tPEE9ZwTmy0",
-          "name": "video 2",
-          "progress": 0,
-          "status": EVideoStatus.NOT_STARTED
-        },
-        {
-          "id": "cdwal5Kw3Fc",
-          "name": "video 3",
-          "progress": 0,
-          "status": EVideoStatus.NOT_STARTED
-        }
-      ]
-    })
+    // this.setState({
+    //   videos: [
+    //     {
+    //       "id": "JvKKd32Yw2E",
+    //       "name": "video 1",
+    //       "progress": 0,
+    //       "status": EVideoStatus.NOT_STARTED
+    //     },
+    //     {
+    //       "id": "tPEE9ZwTmy0",
+    //       "name": "video 2",
+    //       "progress": 0,
+    //       "status": EVideoStatus.NOT_STARTED
+    //     },
+    //     {
+    //       "id": "cdwal5Kw3Fc",
+    //       "name": "video 3",
+    //       "progress": 0,
+    //       "status": EVideoStatus.NOT_STARTED
+    //     }
+    //   ]
+    // })
   }
 
-  private fetchVideosClick = async () => {
-    this.setState({process: true});
-    const videos = await fetchVideos(this.state.playlistUrl);
-    this.setState({videos, process: false});
+  private fetchVideosClick = async (terms: string) => {
+    this.setState({inProcess: true});
+    const videos = await fetchVideos(terms);
+    this.setState({videos, inProcess: false});
   }
   private videoIndex = (videoId:  string) => {
     return this.state.videos.findIndex(v => v.id === videoId);
@@ -90,7 +89,7 @@ class Main extends React.Component<any, IMainState> {
     const { videos } = this.state;
     const videoIndex = this.videoIndex(videoId);
     videos[videoIndex].status = EVideoStatus.DOWNLOADING;
-    videos[videoIndex].progress = 20 + (progress.percentage * 0.8);
+    videos[videoIndex].progress = 20 + Math.floor(progress.percentage * 0.8);
     console.log(videos, 'progress');
     this.setState({videos});
   }
@@ -137,7 +136,7 @@ class Main extends React.Component<any, IMainState> {
   }
 
   public render() {
-    const { videos, downloadProgress } = this.state;
+    const { videos, downloadProgress, inProcess } = this.state;
     return (
       <div className="main">
         <div className={isFFMpegInstalled() ? '' : 'hidden'}>
@@ -145,9 +144,10 @@ class Main extends React.Component<any, IMainState> {
             hasResult={!!videos.length}
             onSubmit={this.fetchVideosClick}
             onClear={() => this.setState({videos: []})}
+            inProcess={inProcess}
           >
-            {videos.length &&
-              <ButtonProgress text="Download All" onClick={this.downloadAll} />
+            {videos.length ?
+              <ButtonProgress text="Download All" onClick={this.downloadAll} /> : ''
             }
             <div className="videos">
               {videos.map(video => (

@@ -93,6 +93,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
           <span className="content">{text}</span>
           <span className="progress">
             <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress}%`, opacity: 1}}></span>
+            <span className="progress-counter">{progress}%</span>
           </span>
         </span>
       </button>

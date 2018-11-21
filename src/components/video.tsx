@@ -12,21 +12,6 @@ export class Video extends React.Component<IVideoProps, any> {
     super(props);
   }
 
-  // buttonOrProgress() {
-  //   const { video, onVideoStartClick } = this.props;
-
-  //   if (video.status === EVideoStatus.NOT_STARTED) {
-  //     return <button onClick={() => onVideoStartClick(video)}>Download "{video.name}"</button>
-  //   } else {
-  //     return (
-  //       <div>
-  //         <progress value={video.progress} max={100}  /><br />
-  //         Status: {video.status}
-  //       </div>
-  //     )
-  //   }
-  // }
-
   get backgroundImage(): string {
     return `url(https://img.youtube.com/vi/${this.props.video.id}/mqdefault.jpg)`;
   }

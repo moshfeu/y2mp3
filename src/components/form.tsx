@@ -4,11 +4,13 @@ interface IFormProps {
   onSubmit: (url: string) => void;
   onClear: () => void;
   hasResult: boolean;
+  inProcess: boolean;
 }
 
 interface IFormState {
   terms: string;
   containerActive: boolean;
+  inProcess: boolean;
 }
 
 export class Form extends React.Component<IFormProps, IFormState> {
@@ -16,8 +18,17 @@ export class Form extends React.Component<IFormProps, IFormState> {
     super(props);
 
     this.state = {
-      terms: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
-      containerActive: true
+      terms: '',
+      containerActive: true,
+      inProcess: false
+    }
+  }
+
+  componentWillReceiveProps(newProps: IFormProps, currentProps: IFormProps) {
+    if (newProps.inProcess !== currentProps.inProcess) {
+      this.setState({
+        inProcess: newProps.inProcess
+      });
     }
   }
 
@@ -50,11 +61,11 @@ export class Form extends React.Component<IFormProps, IFormState> {
   }
 
   render() {
-    const { terms, containerActive } = this.state;
+    const { terms, containerActive, inProcess } = this.state;
     const { hasResult } = this.props;
 
     return (
-      <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || ''].join(' ')}>
+      <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || '', inProcess && '-in-process' || ''].join(' ')}>
         <form onSubmit={this.onSubmit}>
           <div className="input-holder">
             <input className="search-input" type="url" id="playlistUrl" placeholder="Type to search" value={terms} onChange={e => this.setState({terms: e.target.value})} />
