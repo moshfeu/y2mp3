@@ -1,0 +1,28 @@
+.install-ffmpeg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba($color: #27ae60, $alpha: 0.7);
+  }
+
+  .message {
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .disclamer {
+    color: #fff;
+  }
+
+  p {
+    color: #85cd62;
+  }
+}

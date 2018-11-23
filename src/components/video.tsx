@@ -19,6 +19,8 @@ export class Video extends React.Component<IVideoProps, any> {
   render() {
     const { video, onVideoDownloadClick } = this.props;
     const { backgroundImage } = this;
+    const text = video.status === EVideoStatus.PENDING ? 'Waiting' : 'Download';
+    const isDisabled = video.status !== EVideoStatus.NOT_STARTED && video.status !== EVideoStatus.DONE;
 
     return (
       <div className="video" style={{backgroundImage}}>
@@ -28,9 +30,10 @@ export class Video extends React.Component<IVideoProps, any> {
           </div>
           <div className="button">
             <ButtonProgress
-              text="Download"
+              text={text}
               progress={video.progress}
               onClick={() => onVideoDownloadClick(video)}
+              disabled={isDisabled}
             />
           </div>
         </div>

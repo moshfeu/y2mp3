@@ -18,7 +18,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
     super(props);
 
     this.state = {
-      terms: '',
+      terms: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
+      // terms: '',
       containerActive: true,
       inProcess: false
     }
@@ -68,8 +69,10 @@ export class Form extends React.Component<IFormProps, IFormState> {
       <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || '', inProcess && '-in-process' || ''].join(' ')}>
         <form onSubmit={this.onSubmit}>
           <div className="input-holder">
-            <input className="search-input" type="url" id="playlistUrl" placeholder="Type to search" value={terms} onChange={e => this.setState({terms: e.target.value})} />
-            <button type="button" className="search-icon" onClick={this.searchClick}><span></span></button>
+            <input className="search-input" type="url" placeholder="Type to search" value={terms} onChange={e => this.setState({terms: e.target.value})} />
+            <button type="button" className="search-icon" onClick={this.searchClick} disabled={inProcess}>
+              <span></span>
+            </button>
           </div>
           <span className="close" onClick={this.clear}></span>
         </form>

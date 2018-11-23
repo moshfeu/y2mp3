@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface IButtonProgressProps {
+export interface IButtonProgressProps extends Partial<HTMLButtonElement> {
   text: string;
   onClick: () => void;
   progress?: number;
@@ -84,11 +84,11 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
   }
 
   render() {
-    const { text } = this.props;
+    const { text, disabled } = this.props;
     const { progress } = this.state;
 
     return (
-      <button className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} data-style="rotate-side-down" data-perspective="" data-horizontal="">
+      <button className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} disabled={disabled} data-style="rotate-side-down" data-perspective="" data-horizontal="">
         <span className="progress-wrap">
           <span className="content">{text}</span>
           <span className="progress">

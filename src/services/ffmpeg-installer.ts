@@ -12,5 +12,6 @@ export function installFfmpeg(tickerFn: (data) => void): Promise<void> {
 }
 
 export function isFFMpegInstalled(): boolean {
+  console.log('isFFMpegInstalled');
   return existsSync(ffmpegPath());
 }
