@@ -4,6 +4,8 @@
   background-size: 100% auto;
   margin: 0 auto 15px;
   position: relative;
+  animation: fade-in .2s ease forwards;
+  opacity: 0;
 
   .details {
     background: rgba(0,0,0,.5);
@@ -19,5 +21,15 @@
 
   .name {
     padding-right: 10px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

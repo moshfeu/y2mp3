@@ -161,13 +161,22 @@ class Main extends React.Component<{}, IMainState> {
           inProcess={inProcess}
         >
           {videos.length ?
-            <ButtonProgress text="Download All" onClick={this.downloadAll} /> : ''
-          }
-          <div className="videos">
-            {videos.map(video => (
-              <Video key={video.id} video={video} onVideoDownloadClick={this.downloadVideo} />
-            ))}
-          </div>
+            <div>
+              <ButtonProgress text="Download All" onClick={this.downloadAll} />
+              <div className="videos">
+                {videos.map((video, i) => (
+                  <Video
+                    key={video.id}
+                    video={video}
+                    onVideoDownloadClick={this.downloadVideo}
+                    style={{
+                      animationDelay: `${(i + 1) * 200}ms`
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          : ''}
         </Form>
         {
           !isFFMpegInstalled && <InstallFFMpeg onDone={() => this.setState({isFFMpegInstalled: true})} />

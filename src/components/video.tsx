@@ -3,6 +3,7 @@ import { IVideoEntity, EVideoStatus } from '../types';
 import { ButtonProgress } from './button-progress';
 
 interface IVideoProps {
+  style?: React.CSSProperties,
   video: IVideoEntity;
   onVideoDownloadClick: (video :IVideoEntity) => void;
 }
@@ -17,13 +18,13 @@ export class Video extends React.Component<IVideoProps, any> {
   }
 
   render() {
-    const { video, onVideoDownloadClick } = this.props;
+    const { video, onVideoDownloadClick, style } = this.props;
     const { backgroundImage } = this;
     const text = video.status === EVideoStatus.PENDING ? 'Waiting' : 'Download';
     const isDisabled = video.status !== EVideoStatus.NOT_STARTED && video.status !== EVideoStatus.DONE;
 
     return (
-      <div className="video" style={{backgroundImage}}>
+      <div className="video" style={{backgroundImage, ...style}}>
         <div className="details">
           <div className="name">
             {video.name}

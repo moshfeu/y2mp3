@@ -5,6 +5,8 @@
   transform: translate(-50%, -50%);
   top:50%;
   left:50%;
+  width: 90%;
+  transition: top .3s ease;
 
   &.-has-result {
     top: 30px;
@@ -22,7 +24,7 @@
 
     @include parent('.active') {
       border-radius: 50px;
-      width:450px;
+      width: 100%;
       background: rgba(0,0,0,0.5);
       transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
     }
@@ -170,10 +172,6 @@
     // display:none;
     color:#B7B7B7;
   }
-}
-
-@media screen and (max-width: 560px) {
-  .search-wrapper.active .input-holder {width:200px;}
 }
 
 @keyframes spinner {
