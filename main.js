@@ -7,8 +7,7 @@ const isDev = require('electron-is-dev');
 
   function createWindow () {
     // Create the browser window.
-    // win = new BrowserWindow({ width: 800, height: 600 })
-    win = new BrowserWindow({ width: 1600, height: 1200, webPreferences: {
+    win = new BrowserWindow({ width: 480, height: 600, webPreferences: {
 	    additionalArguments: [`--appData=${app.getPath('appData')}`]
     } });
 
@@ -16,9 +15,9 @@ const isDev = require('electron-is-dev');
     win.loadFile('index.html')
 
     // Open the DevTools.
-    // if (isDev) {
-      win.webContents.openDevTools()
-    // }
+    if (isDev) {
+      win.webContents.openDevTools();
+    }
 
     // Emitted when the window is closed.
     win.on('closed', () => {
