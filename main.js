@@ -1,15 +1,31 @@
 const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
+const { join } = require('path');
+const os = require('os');
 
   // Keep a global reference of the window object, if you don't, the window will
   // be closed automatically when the JavaScript object is garbage collected.
-  let win
+  let win;
+  function getIconFile() {
+    switch (os.platform()) {
+      case 'darwin':
+        return 'mac/icon.icns';
+      case 'win32':
+      default:
+        return 'win/icon.ico';
+    }
+  }
 
   function createWindow () {
     // Create the browser window.
-    win = new BrowserWindow({ width: 480, height: 600, webPreferences: {
-	    additionalArguments: [`--appData=${app.getPath('appData')}`]
-    } });
+    win = new BrowserWindow({
+      width: 480,
+      height: 600,
+      webPreferences: {
+        additionalArguments: [`--appData=${app.getPath('appData')}`]
+      },
+      icon: join(__dirname, 'resources/icons', getIconFile())
+    });
 
     // and load the index.html of the app.
     win.loadFile('index.html')

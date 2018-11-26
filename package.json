@@ -8,6 +8,8 @@
     "youtube-playlist": "^1.0.2"
   },
   "name": "download-youtube-playlist",
+  "appname": "Download Youtube Playlist",
+  "productName": "Download Youtube Playlist",
   "version": "1.0.0",
   "main": "main.js",
   "devDependencies": {
@@ -48,7 +50,11 @@
       "main.js",
       "resources/**"
     ],
+    "mac": {
+      "icon": "resources/icons/mac/icon.icns"
+    },
     "dmg": {
+      "icon": "resources/icons/mac/icon.icns",
       "contents": [
         {
           "x": 110,
@@ -70,7 +76,10 @@
     },
     "win": {
       "target": "NSIS",
-      "icon": "build/icon.ico"
+      "icon": "resources/icons/win/icon.ico"
+    },
+    "nsis": {
+      "installerIcon": "resources/icons/win/icon.ico"
     }
   }
 }
