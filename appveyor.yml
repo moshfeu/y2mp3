@@ -28,10 +28,12 @@ build_script:
 test: off
 artifacts:
 - path: dist/installers/*.exe
-  name: Download Youtube MP3
+  name: Download Youtube Playlist
 deploy:
   - provider: GitHub
-    draft: false
-    prerelease: false
+    auth_token:
+      secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
+    draft: true
+    prerelease: true
     on:
       appveyor_repo_tag: true       # deploy on tag push only
