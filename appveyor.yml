@@ -23,6 +23,7 @@ platform:
 init:
   - git config --global core.autocrlf input
 build_script:
+  - npm run generate-icons
   - npm run dist
 test: off
 artifacts:

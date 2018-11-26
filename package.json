@@ -38,7 +38,7 @@
     "webpack": "webpack --watch",
     "electron": "electron .",
     "pack": "electron-builder --dir",
-    "dist": "npm run generate-icons && electron-builder",
+    "dist": "electron-builder",
     "dist-windows": "npm run dist -- --win",
     "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.jpg --output=resources"
   },
