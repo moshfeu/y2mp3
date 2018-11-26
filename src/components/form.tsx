@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { isDev } from '../services/additional-arguments';
 
 interface IFormProps {
   onSubmit: (url: string) => void;
@@ -16,10 +17,8 @@ interface IFormState {
 export class Form extends React.Component<IFormProps, IFormState> {
   constructor(props) {
     super(props);
-
     this.state = {
-      terms: 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK',
-      // terms: '',
+      terms: isDev ? 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK' : '',
       containerActive: true,
       inProcess: false
     }
@@ -69,7 +68,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
       <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || '', inProcess && '-in-process' || ''].join(' ')}>
         <form onSubmit={this.onSubmit}>
           <div className="input-holder">
-            <input className="search-input" type="url" placeholder="Type to search" value={terms} onChange={e => this.setState({terms: e.target.value})} />
+            <input className="search-input" type="url" placeholder="https://www.youtube.com/playlist?list=..." value={terms} onChange={e => this.setState({terms: e.target.value})} />
             <button type="button" className="search-icon" onClick={this.searchClick} disabled={inProcess}>
               <span></span>
             </button>

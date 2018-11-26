@@ -22,7 +22,10 @@ const os = require('os');
       width: 480,
       height: 600,
       webPreferences: {
-        additionalArguments: [`--appData=${app.getPath('appData')}`]
+        additionalArguments: [
+          `--appData=${app.getPath('appData')}`,
+          `--isDev=${isDev}`
+        ]
       },
       icon: join(__dirname, 'resources/icons', getIconFile())
     });

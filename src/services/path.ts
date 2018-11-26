@@ -1,14 +1,10 @@
 import {join} from 'path';
 import * as downloadsFolder from 'downloads-folder';
 import { mkdirSync, existsSync, readdirSync } from 'fs';
+import { findArgument } from './additional-arguments';
 
 const folderName = 'YoutubePlaylistDownloader';
-const appDataFolder = process.argv
-.find(arg => arg.includes('appData'))
-.split('=')
-.pop();
-
-// const appDataFolder = '/Users/moshef/Library/Application Support/';
+const appDataFolder = findArgument('appData');
 
 export const DOWNLOADS_FOLDER = join(downloadsFolder(), folderName);
 if (!existsSync(DOWNLOADS_FOLDER)) {
