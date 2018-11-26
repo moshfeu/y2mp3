@@ -3,7 +3,7 @@ cache:
   - '%USERPROFILE%\.electron'
 environment:
   GH_TOKEN:
-      secure: qufJvj7/gCW7sddwA7G248QZipL5/w5rLor87FzTEyozZQPVoyJxr7r0ETmnUQc2
+      secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
   matrix:
     - nodejs_version: 8
 install:
