@@ -27,7 +27,7 @@ build_script:
 test: off
 artifacts:
 - path: dist/installers/*.exe
-  name: download-youtube-mp3
+  name: Download Youtube MP3
 deploy:
   - provider: GitHub
     draft: false
