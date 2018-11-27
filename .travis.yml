@@ -44,7 +44,7 @@ deploy:
   api_key:
     secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
   file_glob: true
-  file: "Download Youtube Playlist Setup*.exe"
+  file: "Download Youtube Playlist Setup*.dmg"
   skip_cleanup: true
   draft: true
   on:
