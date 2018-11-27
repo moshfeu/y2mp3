@@ -15,8 +15,6 @@ cache:
   - node_modules
   - "$HOME/.cache/electron"
   - "$HOME/.cache/electron-builder"
-before_install:
-- composer config --global github-oauth.github.com "$GITHUB_TOKEN"
 install:
 - npm install
 - npm run generate-icons
