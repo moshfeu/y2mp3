@@ -1,3 +1,7 @@
+env:
+  global:
+    secure: bMkuB4hgv7IpZUFg2tL77NP3ea+jv0v/VrioLEY1DP3CCGmpleDI5mIcmBBMlkhXPS5fRDg+SgrVY7rYrPHXbuvvG28yvN2CjNFsUx0V5CjxYoKebP8XInJfXM1nq//kAZi7K04VVy002Q40uFqqojLCr6msB2yG2ra+wkeT0z9oKx5BneL/UAtaRCxvmrYV5hq9LADhi7dyJ8lrmnZmaNi7O2gzGbV8VZEH+7meiPxPGtXhVFDWXa7S9By1hq/DteN5wnrD73METlpzvmCMEH+rtBWHT3a7suHjaPL77+gqfSUq8VMdSwQnpJjsJvPfAN/rl66TIW6zRPc37IM2zJKWSSTj7Sn5rhdYr5cVA4YU7lUUEUWXm/+A29v5cMBVAi7/sZ4Ud2TaawAScg/xv9+wTr7EeRk7HL0Oy0uQQjBd7qP+4NASwWh9/EpNciII7Zjnf9yjESjJtjjrFRaT6+VlVmzRZ4FdlaieDTwwjXYg+yFy5MtBpunSZym/8AgBSjLLwvrjooKImf2gzGdgwq4ixO42bwfcLj3WvtjU2VjIor1HRamoopc3t3DzU+JpsREliQQZ/SeKYlFOx4jpQIzy00e77E/qixFmTzebRP0jxqGginl5WruQXPsKQJ2mGnZde9aS958TOLdJMoBsLfEI/QuBJMHEppWEkW6bfTo=
+
 matrix:
   include:
   - os: osx
@@ -12,7 +16,10 @@ cache:
   - node_modules
   - "$HOME/.cache/electron"
   - "$HOME/.cache/electron-builder"
+before_install:
+- composer config --global github-oauth.github.com "$GITHUB_TOKEN"
 install:
+- composer install --dev --prefer-dist
 - npm install
 - npm run generate-icons
 script:
