@@ -45,7 +45,7 @@ branches:
 deploy:
   provider: releases
   api_key:
-    secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
+    secure: "UzG9CGlnVIZ0qoUaPi5jNlulwwAbKFDgaXq7nzDE7RFDroA/DawaRD2ET9KZh76U/aRhMFtCk9KDtbvrqiNC8MxtZ9W/k7jT3pe80yAxFLAs0BKv+uBWUvrLH3A+afh5J8zlc+9nKZyqx8g5U9Rt6AJWYIObql2CDHgZBRlJVUj+t33phuxvAamu/uC2uREPlBnFL0LaWOYAmCYvOQu/2t4rwSN3BftUDt9Z87lNMa7s9gi6bLD4UCxRcTiJRc3qUIyHkcInmaTiWrAmQ0M3YCTPwDJF9v2I7vGUC2G4GuGlo12B8jd4DQDyhGXSFbMfPCyuKL1a17LiKNV0a4eyiXakFaOmObmTr5Fux7td/W75bMv18PCQWZvNz73VBjUYsGOXEKdsxciPoU9f6yk94DyWhzZZFzYwz7fRtB9UYFXasD99t4nPiYQOEq4uL5OeoZkbXD7SqYsXhZDrT7nCi6ZvsT8hj6nAxx16BlnumchzuFocGsXnacM5norVZj24Tekrbwq+DIWrcqbvAI5GTVm5nLRpznie2LW+hRU+hQHlap+cwseZwRC7v8+aJv1O4v5t68jTLyMbho2jf/ECIM+B+lDfAWcS69vJ8qI4d3FgBQ61PvmMhh7NOgd8S8b80YxjRGMjBSatfLsN7v+I8O+6lEp1AK6PWP5gu0BXw0A="
   file_glob: true
   file: "Download Youtube Playlist Setup*.dmg"
   skip_cleanup: true
