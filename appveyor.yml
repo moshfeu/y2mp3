@@ -27,7 +27,7 @@ build_script:
   - npm run dist
 test: off
 artifacts:
-- path: dist/installers/*.exe
+- path: dist/*.exe
   name: Download Youtube Playlist
 deploy:
   - provider: GitHub
@@ -36,4 +36,4 @@ deploy:
     draft: true
     prerelease: true
     on:
-      appveyor_repo_tag: true       # deploy on tag push only
+      appveyor_repo_tag: false       # deploy on tag push only
