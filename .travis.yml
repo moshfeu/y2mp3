@@ -18,8 +18,11 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
-script:
+install:
+  - npm install
   - npm run generate-icons
+
+script:
   - |
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
       docker run --rm \
