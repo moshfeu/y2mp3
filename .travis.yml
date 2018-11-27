@@ -1,53 +1,44 @@
 matrix:
   include:
-    - os: osx
-      osx_image: xcode9.4
-      language: node_js
-      node_js: "10"
-      env:
-        - ELECTRON_CACHE=$HOME/.cache/electron
-        - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-
-    # - os: linux
-    #   services: docker
-    #   language: generic
-
+  - os: osx
+    osx_image: xcode9.4
+    language: node_js
+    node_js: '10'
+    env:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 cache:
   directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-
+  - node_modules
+  - "$HOME/.cache/electron"
+  - "$HOME/.cache/electron-builder"
 install:
-  - npm install
-  - npm run generate-icons
-
+- npm install
+- npm run generate-icons
 script:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-      docker run --rm \
-        --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
-        -v ${PWD}:/project \
-        -v ~/.cache/electron:/root/.cache/electron \
-        -v ~/.cache/electron-builder:/root/.cache/electron-builder \
-        electronuserland/builder:wine \
-        /bin/bash -c "npm run dist"
-    else
-      npm run dist
-    fi
+- |
+  if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+    docker run --rm \
+      --env-file <(env | grep -iE 'DEBUG|NODE_|ELECTRON_|YARN_|NPM_|CI|CIRCLE|TRAVIS|APPVEYOR_|CSC_|_TOKEN|_KEY|AWS_|STRIP|BUILD_') \
+      -v ${PWD}:/project \
+      -v ~/.cache/electron:/root/.cache/electron \
+      -v ~/.cache/electron-builder:/root/.cache/electron-builder \
+      electronuserland/builder:wine \
+      /bin/bash -c "npm run dist"
+  else
+    npm run dist
+  fi
 before_cache:
-  - rm -rf $HOME/.cache/electron-builder/wine
-
+- rm -rf $HOME/.cache/electron-builder/wine
 branches:
   except:
-    - "/^v\\d+\\.\\d+\\.\\d+$/"
-
+  - "/^v\\d+\\.\\d+\\.\\d+$/"
 deploy:
   provider: releases
   api_key:
-    secure: "UzG9CGlnVIZ0qoUaPi5jNlulwwAbKFDgaXq7nzDE7RFDroA/DawaRD2ET9KZh76U/aRhMFtCk9KDtbvrqiNC8MxtZ9W/k7jT3pe80yAxFLAs0BKv+uBWUvrLH3A+afh5J8zlc+9nKZyqx8g5U9Rt6AJWYIObql2CDHgZBRlJVUj+t33phuxvAamu/uC2uREPlBnFL0LaWOYAmCYvOQu/2t4rwSN3BftUDt9Z87lNMa7s9gi6bLD4UCxRcTiJRc3qUIyHkcInmaTiWrAmQ0M3YCTPwDJF9v2I7vGUC2G4GuGlo12B8jd4DQDyhGXSFbMfPCyuKL1a17LiKNV0a4eyiXakFaOmObmTr5Fux7td/W75bMv18PCQWZvNz73VBjUYsGOXEKdsxciPoU9f6yk94DyWhzZZFzYwz7fRtB9UYFXasD99t4nPiYQOEq4uL5OeoZkbXD7SqYsXhZDrT7nCi6ZvsT8hj6nAxx16BlnumchzuFocGsXnacM5norVZj24Tekrbwq+DIWrcqbvAI5GTVm5nLRpznie2LW+hRU+hQHlap+cwseZwRC7v8+aJv1O4v5t68jTLyMbho2jf/ECIM+B+lDfAWcS69vJ8qI4d3FgBQ61PvmMhh7NOgd8S8b80YxjRGMjBSatfLsN7v+I8O+6lEp1AK6PWP5gu0BXw0A="
+    secure: UzG9CGlnVIZ0qoUaPi5jNlulwwAbKFDgaXq7nzDE7RFDroA/DawaRD2ET9KZh76U/aRhMFtCk9KDtbvrqiNC8MxtZ9W/k7jT3pe80yAxFLAs0BKv+uBWUvrLH3A+afh5J8zlc+9nKZyqx8g5U9Rt6AJWYIObql2CDHgZBRlJVUj+t33phuxvAamu/uC2uREPlBnFL0LaWOYAmCYvOQu/2t4rwSN3BftUDt9Z87lNMa7s9gi6bLD4UCxRcTiJRc3qUIyHkcInmaTiWrAmQ0M3YCTPwDJF9v2I7vGUC2G4GuGlo12B8jd4DQDyhGXSFbMfPCyuKL1a17LiKNV0a4eyiXakFaOmObmTr5Fux7td/W75bMv18PCQWZvNz73VBjUYsGOXEKdsxciPoU9f6yk94DyWhzZZFzYwz7fRtB9UYFXasD99t4nPiYQOEq4uL5OeoZkbXD7SqYsXhZDrT7nCi6ZvsT8hj6nAxx16BlnumchzuFocGsXnacM5norVZj24Tekrbwq+DIWrcqbvAI5GTVm5nLRpznie2LW+hRU+hQHlap+cwseZwRC7v8+aJv1O4v5t68jTLyMbho2jf/ECIM+B+lDfAWcS69vJ8qI4d3FgBQ61PvmMhh7NOgd8S8b80YxjRGMjBSatfLsN7v+I8O+6lEp1AK6PWP5gu0BXw0A=
   file_glob: true
-  file: "Download Youtube Playlist Setup*.dmg"
+  file: Download Youtube Playlist Setup*.dmg
   skip_cleanup: true
   draft: true
   on:
