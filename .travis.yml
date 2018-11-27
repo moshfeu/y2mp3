@@ -43,3 +43,6 @@ deploy:
   file: Download Youtube Playlist Setup*.dmg
   on:
     repo: moshfeu/download-youtube-playlist
+    branches:
+      only:
+        - master
