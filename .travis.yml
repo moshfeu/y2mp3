@@ -43,6 +43,7 @@ deploy:
   file_glob: true
   file: Download Youtube Playlist Setup*.dmg
   skip_cleanup: true
+  draft: true
   on:
     repo: moshfeu/download-youtube-playlist
     tags: true
