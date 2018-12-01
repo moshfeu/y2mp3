@@ -1,13 +1,13 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi?svg=true)](https://ci.appveyor.com/project/moshfeu/download-youtube-playlist)
-[![Build Status](https://travis-ci.com/moshfeu/download-youtube-playlist.svg?branch=master)](https://travis-ci.com/moshfeu/download-youtube-playlist)
+[![Build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi?svg=true)](https://ci.appveyor.com/project/moshfeu/y2mp3)
+[![Build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
 
-## What is "Download Youtube Playlist" app?
+## What is "Y2Mp3" app?
 
-A simple desktop application to download Youtube playlist videos, one by one or all of them.
+A simple desktop application to download Youtube videos to mp3, one by one or all of them.
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
-In this version the videos will be saved to a **YoutubePlaylistDownloader** folder in the **Download** folder (mac and windows)
+In this version the videos will be saved to a **y2mp3** folder in the **Download** folder (mac and windows)
 
 ## Stack
 
@@ -24,8 +24,8 @@ In this version the videos will be saved to a **YoutubePlaylistDownloader** fold
 
 ## Download
 
-- [Windows](https://github.com/moshfeu/download-youtube-playlist/releases/download/untagged-23c1596e225c1f3179b1/Download.Youtube.Playlist.Setup.1.0.0.exe)
-- [Mac](https://github.com/moshfeu/download-youtube-playlist/releases/download/untagged-922c282296c944c12d42/Download.Youtube.Playlist-1.0.0.dmg)
+- [Windows](https://github.com/moshfeu/y2mp3/releases/download/untagged-23c1596e225c1f3179b1/Y2Mp3-1.0.0.Setup.1.0.0.exe)
+- [Mac](https://github.com/moshfeu/y2mp3/releases/download/untagged-922c282296c944c12d42/Y2Mp3-1.0.0.dmg)
 
 ## License
 MIT

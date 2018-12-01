@@ -7,9 +7,9 @@
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
     "youtube-playlist": "^1.0.2"
   },
-  "name": "download-youtube-playlist",
-  "appname": "Download Youtube Playlist",
-  "productName": "Download Youtube Playlist",
+  "name": "y2mp3",
+  "appname": "Y2Mp3",
+  "productName": "Y2Mp3",
   "version": "1.0.0",
   "main": "main.js",
   "devDependencies": {
@@ -44,9 +44,9 @@
   },
   "author": "MosheF",
   "license": "MIT",
-  "description": "An app to download youtube playlists and onvert to mp3",
+  "description": "An app to download youtube videos as mp3",
   "build": {
-    "appId": "moshfeu.youtube.playlist.downloader",
+    "appId": "moshfeu.y2mp3",
     "files": [
       "index.html",
       "main.js",

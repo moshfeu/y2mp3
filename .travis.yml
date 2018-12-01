@@ -39,8 +39,11 @@ deploy:
     secure: QeZfqVS8cbHiioYkLQmCJvA/g5eYL3l9Kzqc+ceoX5U/oyQOlZRUPJDYVjDwr8SNhYr5KHK5HnFXFSQYzEXAmsw+v5LoqUKKxqUtuUc3b8tbipa0TbjInEo+Fm2b+K/GMU+10oX5JCEtYz49pHdZzdpW23EdGf4Z0tYWt5DvSJ0AkDswhDqOVlk2I7PswwlSzooSIqkwRF819p2QU9t+tIGsArvtwHriDyyG1xUXYUNjDOnBYuxbv8tyObmhcJLcLM7xIIVPQfCfN+1vmfpc0o0BJjm/K3guRzDCYYrYYhPY5i7gHkfZm3sfBoo0QfgmEWBQ45Za2L9N1k3koLupf4bW/oBWGTtKdgPTxU138hAvLC+bm1dd2Yx8kOn+xxaK3FtVSaXivv/iR/7RfXGyHfm4yBVlOTGMdMwYx+4+n+iQ/6kbsF6u0Fr2JwzJAKWd0qkBpThRuhJdHveDRZZqvwWluYELhBdgUhdFnt6bevvQixEP3nYR8+9yiBC48sge+qWoq1VQ8ySuLa8v3BAH50F9d/c3MjnmRCAK28WlMRx9k41ZJY7kzmFxh5/3h834lMkOpen/CjVOQe3N0SJlcb+w0hmzDoUN29X3jZ0GQR1wD4rkcpHhQRcneTpMeZYoWvHJCWS65zXzopbpNe94OGRRsJJzZ7abGq1UHzkQ8jQ=
   file_glob: true
   file: dist/*.dmg
+  target_commitish: $TRAVIS_COMMIT
+  tag_name: $TRAVIS_TAG
+  overwrite: true
   skip_cleanup: true
   draft: true
   on:
-    repo: moshfeu/download-youtube-playlist
-    tags: false
+    repo: moshfeu/y2mp3
+    tags: true

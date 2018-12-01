@@ -3,7 +3,7 @@ import * as downloadsFolder from 'downloads-folder';
 import { mkdirSync, existsSync, readdirSync } from 'fs';
 import { findArgument } from './additional-arguments';
 
-const folderName = 'YoutubePlaylistDownloader';
+const folderName = 'y2mp3';
 const appDataFolder = findArgument('appData');
 
 export const DOWNLOADS_FOLDER = join(downloadsFolder(), folderName);

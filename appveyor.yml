@@ -28,12 +28,14 @@ build_script:
 test: off
 artifacts:
 - path: dist/*.exe
-  name: Download Youtube Playlist
+  name: y2mp3
 deploy:
   - provider: GitHub
     auth_token:
       secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
     draft: true
     prerelease: true
+    force_update: true
     on:
-      appveyor_repo_tag: false       # deploy on tag push only
+      appveyor_repo_tag: true
+      tag: $(APPVEYOR_REPO_TAG_NAME)
