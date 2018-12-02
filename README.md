@@ -24,8 +24,10 @@ In this version the videos will be saved to a **y2mp3** folder in the **Download
 
 ## Download
 
-- [Windows](https://github.com/moshfeu/y2mp3/releases/download/untagged-23c1596e225c1f3179b1/Y2Mp3-1.0.0.Setup.1.0.0.exe)
-- [Mac](https://github.com/moshfeu/y2mp3/releases/download/untagged-922c282296c944c12d42/Y2Mp3-1.0.0.dmg)
+- Free 💰
+- No ads 📣
+
+Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://github.com/moshfeu/y2mp3/releases/latest)
 
 ## License
 MIT

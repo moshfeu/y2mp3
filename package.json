@@ -8,8 +8,8 @@
     "youtube-playlist": "^1.0.2"
   },
   "name": "y2mp3",
-  "appname": "Y2Mp3",
-  "productName": "Y2Mp3",
+  "appname": "y2mp3",
+  "productName": "y2Mp3",
   "version": "1.0.0",
   "main": "main.js",
   "devDependencies": {
@@ -40,7 +40,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "dist-windows": "npm run dist -- --win",
-    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.jpg --output=resources"
+    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources"
   },
   "author": "MosheF",
   "license": "MIT",
