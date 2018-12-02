@@ -9,7 +9,7 @@
   },
   "name": "y2mp3",
   "appname": "y2mp3",
-  "productName": "y2Mp3",
+  "productName": "y2mp3",
   "version": "1.0.0",
   "main": "main.js",
   "devDependencies": {
