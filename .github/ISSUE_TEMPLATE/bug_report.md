@@ -17,6 +17,10 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
+**Add logs from DevTools**
+
+Please go to **y2mp3** menu -> **Toggle Developer Tools** if there are error messages please include them.
+
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
