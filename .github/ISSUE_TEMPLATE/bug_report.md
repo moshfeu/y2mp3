@@ -19,7 +19,8 @@ Steps to reproduce the behavior:
 
 **Add logs from DevTools**
 
-Please go to **y2mp3** menu -> **Toggle Developer Tools** if there are error messages please include them.
+Please go to **y2mp3** menu -> **Toggle Developer Tools** or hit <kbd>ctrl</kbd>+<kbd>Alt</kbd>+<kbd>j</kbd> (on windows) or 
+<kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>j</kbd> (on mac), if there are error messages please include them.
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
