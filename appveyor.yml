@@ -38,4 +38,3 @@ deploy:
     force_update: true
     on:
       appveyor_repo_tag: true
-      tag: 1.0.0
