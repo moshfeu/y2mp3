@@ -37,10 +37,11 @@
   "scripts": {
     "webpack": "webpack --watch",
     "electron": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
     "dist-windows": "npm run dist -- --win",
-    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources"
+    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
+    "build": "webpack --config webpack.prod.js"
   },
   "author": "MosheF",
   "license": "MIT",
