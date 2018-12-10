@@ -1,5 +1,5 @@
-const path = require('path');
 const { DefinePlugin } = require('webpack');
+const { spawn } = require('child_process');
 
 module.exports = {
   entry: './src/components/main.tsx',
@@ -68,6 +68,10 @@ module.exports = {
       apply: compiler => {
         compiler.hooks.beforeCompile.tap('clearConsole', compilation => {
           process.stdout.write('\033c');
+        });
+
+        compiler.hooks.afterCompile.tap('jest', compilation => {
+          spawn('npm', ['test'], {stdio:'inherit'});
         });
       }
     }

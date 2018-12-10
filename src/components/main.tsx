@@ -8,7 +8,7 @@ import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { Form } from './form';
-import { ButtonProgress } from './button-progress';
+import ButtonProgress from './button-progress';
 import { InstallFFMpeg } from './install-ffmpeg';
 
 interface IMainState {

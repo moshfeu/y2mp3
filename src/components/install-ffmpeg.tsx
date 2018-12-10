@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { installFfmpeg } from '../services/ffmpeg-installer';
-import { ButtonProgress } from './button-progress';
+import ButtonProgress from './button-progress';
 
 interface IInstallFFMpegState {
   downloadProgress: number;

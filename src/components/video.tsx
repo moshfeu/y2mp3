@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IVideoEntity, EVideoStatus } from '../types';
-import { ButtonProgress } from './button-progress';
+import ButtonProgress from './button-progress';
 
 interface IVideoProps {
   style?: React.CSSProperties,

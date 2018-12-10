@@ -10,7 +10,7 @@ export interface IButtonProgressState {
   progress: number;
 }
 
-export class ButtonProgress extends React.Component<IButtonProgressProps, IButtonProgressState> {
+export default class ButtonProgress extends React.Component<IButtonProgressProps, IButtonProgressState> {
   private readonly progressDone = 100;
 
   constructor(props) {
@@ -88,9 +88,9 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     const { progress } = this.state;
 
     return (
-      <button className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} disabled={disabled} data-style="rotate-side-down" data-perspective="" data-horizontal="">
+      <button data-hook="button" className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} disabled={disabled} data-style="rotate-side-down" data-perspective="" data-horizontal="">
         <span className="progress-wrap">
-          <span className="content">{text}</span>
+          <span className="content" data-hook="content">{text}</span>
           <span className="progress">
             <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress}%`, opacity: 1}}></span>
             <span className="progress-counter">{progress}%</span>
