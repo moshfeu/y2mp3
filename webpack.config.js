@@ -71,7 +71,8 @@ module.exports = {
         });
 
         compiler.hooks.afterCompile.tap('jest', compilation => {
-          spawn('npm', ['test'], {stdio:'inherit'});
+          // https://stackoverflow.com/a/43285131/863110
+          spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['test'], {stdio:'inherit'});
         });
       }
     }
