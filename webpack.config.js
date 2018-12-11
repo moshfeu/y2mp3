@@ -1,5 +1,5 @@
 const { DefinePlugin } = require('webpack');
-const { spawn } = require('child_process');
+const { spawnSync } = require('child_process');
 
 module.exports = {
   entry: './src/components/main.tsx',
@@ -47,7 +47,7 @@ module.exports = {
   },
   watch: true,
   watchOptions: {
-    poll: 1000
+    poll: true
   },
   resolve: {
     modules: ['node_modules'],
@@ -70,10 +70,10 @@ module.exports = {
           process.stdout.write('\033c');
         });
 
-        compiler.hooks.afterCompile.tap('jest', compilation => {
-          // https://stackoverflow.com/a/43285131/863110
-          spawn(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['test'], {stdio:'inherit'});
-        });
+        // compiler.hooks.afterCompile.tap('jest', compilation => {
+        //   // https://stackoverflow.com/a/43285131/863110
+        //   spawnSync(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['test'], {stdio:'inherit'});
+        // });
       }
     }
   ],

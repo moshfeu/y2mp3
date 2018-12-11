@@ -9,4 +9,12 @@ export default class BaseDriver {
     this.wrapper = shallow(component);
     return this;
   }
+
+  setProps<T>(props: Partial<T>) {
+    this.wrapper.setProps(props);
+  }
+
+  flushTimeouts() {
+    jest.runAllTimers();
+  }
 }

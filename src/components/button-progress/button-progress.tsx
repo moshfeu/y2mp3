@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+export enum ButtonProgressStates {
+  LOADING = 'state-loading',
+  SUCCESS = 'state-success'
+}
 export interface IButtonProgressProps extends Partial<HTMLButtonElement> {
   text: string;
   onClick: () => void;
@@ -74,11 +78,11 @@ export default class ButtonProgress extends React.Component<IButtonProgressProps
     makeProgress();
   }
 
-  get buttonCssState(): string {
+  get buttonCssState(): ButtonProgressStates | '' {
     if (this.isLoading) {
-      return 'state-loading';
+      return ButtonProgressStates.LOADING;
     } else if (this.isDone) {
-      return 'state-success';
+      return ButtonProgressStates.SUCCESS;
     }
     return '';
   }
@@ -93,7 +97,7 @@ export default class ButtonProgress extends React.Component<IButtonProgressProps
           <span className="content" data-hook="content">{text}</span>
           <span className="progress">
             <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress}%`, opacity: 1}}></span>
-            <span className="progress-counter">{progress}%</span>
+            <span className="progress-counter" data-hook="progress-counter">{progress}%</span>
           </span>
         </span>
       </button>

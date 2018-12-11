@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "An app to download youtube videos as mp3",
   "scripts": {
-    "start": "webpack --watch",
+    "start": "webpack",
     "electron": "electron .",
     "dist": "npm run build && electron-builder",
     "dist-linux": "npm run dist --linux",
@@ -21,7 +21,8 @@
     "publish-linux": "npm run build && electron-builder --linux --publish onTagOrDraft",
     "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
     "build": "webpack --config webpack.prod.js",
-    "test": "node --trace-warnings ./test/runTests.js"
+    "test": "node --trace-warnings ./test/runTests.js",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "downloads-folder": "^1.0.1",
@@ -74,7 +75,8 @@
     ],
     "testMatch": [
       "**/?(*.)spec.ts?(x)"
-    ]
+    ],
+    "timers": "fake"
   },
   "build": {
     "appId": "moshfeu.y2mp3",
