@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "main.js",
   "author": {
     "name" : "MosheF",
@@ -83,9 +83,6 @@
       "main.js",
       "resources/**"
     ],
-    "mac": {
-      "icon": "resources/icons/mac/icon.icns"
-    },
     "dmg": {
       "icon": "resources/icons/mac/icon.icns",
       "contents": [
