@@ -1,4 +1,28 @@
 {
+  "name": "y2mp3",
+  "appname": "y2mp3",
+  "productName": "y2mp3",
+  "version": "1.0.1",
+  "main": "main.js",
+  "author": {
+    "name" : "MosheF",
+    "email" : "moshfeu.dev@gmail.com",
+    "url" : "https://github.com/moshfeu"
+  },
+  "email": "moshfeu.dev@gmail.com",
+  "license": "MIT",
+  "description": "An app to download youtube videos as mp3",
+  "scripts": {
+    "start": "webpack --watch",
+    "electron": "electron .",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist-windows": "npm run dist -- --win",
+    "dist-linux": "npm run dist -- --linux",
+    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
+    "build": "webpack --config webpack.prod.js",
+    "test": "node --trace-warnings ./test/runTests.js"
+  },
   "dependencies": {
     "downloads-folder": "^1.0.1",
     "electron-is-dev": "^1.0.1",
@@ -10,11 +34,6 @@
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
     "youtube-playlist": "^1.0.2"
   },
-  "name": "y2mp3",
-  "appname": "y2mp3",
-  "productName": "y2mp3",
-  "version": "1.0.1",
-  "main": "main.js",
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
     "@types/fluent-ffmpeg": "^2.1.8",
@@ -41,16 +60,6 @@
     "webpack-cli": "^3.1.2",
     "ytdl-core": "^0.26.3"
   },
-  "scripts": {
-    "start": "webpack --watch",
-    "electron": "electron .",
-    "pack": "npm run build && electron-builder --dir",
-    "dist": "npm run build && electron-builder",
-    "dist-windows": "npm run dist -- --win",
-    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
-    "build": "webpack --config webpack.prod.js",
-    "test": "node --trace-warnings ./test/runTests.js"
-  },
   "jest": {
     "moduleFileExtensions": [
       "ts",
@@ -67,9 +76,6 @@
       "**/?(*.)spec.ts?(x)"
     ]
   },
-  "author": "MosheF",
-  "license": "MIT",
-  "description": "An app to download youtube videos as mp3",
   "build": {
     "appId": "moshfeu.y2mp3",
     "files": [
@@ -97,9 +103,9 @@
     },
     "linux": {
       "target": [
-        "AppImage",
-        "deb"
-      ]
+        "AppImage"
+      ],
+      "category": "Music"
     },
     "win": {
       "target": "NSIS",
