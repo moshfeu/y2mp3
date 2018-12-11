@@ -2,7 +2,7 @@
 
 🎓 This project (among the other projects in my account) is meant for learning. So there is no **right** or **wrong** contribution.
 
-👩‍💻 Just creare a PR, explain what it should do and that's it.
+👩‍💻 Just create a PR, explain what it should do and that's it.
 
 🕵 If you do want to do more, you can add tests and make sure they pass by run `npm test`.
 
