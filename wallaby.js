@@ -1,7 +1,13 @@
 module.exports = function (wallaby) {
 
   return {
-    files: ['**/*.{ts?(x),js}', '!src/**/?(*.)spec.ts?(x)', 'jest.config.js', 'tsconfig.json'],
+    files: [
+      'src/**/*.{ts?(x),js}',
+      'test/**/*.{ts?(x),js}',
+      '!src/**/?(*.)spec.ts?(x)',
+      'jest.config.js',
+      'tsconfig.json',
+    ],
     tests: ['src/**/?(*.)spec.ts?(x)'],
     env: {
       type: 'node',
@@ -17,6 +23,9 @@ module.exports = function (wallaby) {
     testFramework: 'jest',
     compilers: {
       '**/*.ts?(x)': wallaby.compilers.typeScript()
+    },
+    env: {
+      type: 'node',
     },
   };
 };
