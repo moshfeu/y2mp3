@@ -15,10 +15,10 @@
   "scripts": {
     "start": "webpack --watch",
     "electron": "electron .",
-    "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
+    "dist-linux": "npm run dist --linux",
     "dist-windows": "npm run dist -- --win",
-    "dist-linux": "npm run dist -- --linux",
+    "publish-linux": "npm run build && electron-builder --linux --publish onTagOrDraft",
     "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
     "build": "webpack --config webpack.prod.js",
     "test": "node --trace-warnings ./test/runTests.js"
