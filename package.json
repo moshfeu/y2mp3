@@ -22,7 +22,8 @@
     "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
     "build": "webpack --config webpack.prod.js",
     "test": "node --trace-warnings ./test/runTests.js",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "downloads-folder": "^1.0.1",
@@ -43,6 +44,7 @@
     "@types/react-dom": "^16.0.9",
     "@types/sinon": "^5.0.7",
     "autoprefixer": "^9.3.1",
+    "coveralls": "^3.0.2",
     "css-loader": "^1.0.1",
     "electron": "^3.0.8",
     "electron-builder": "^20.28.4",
@@ -60,23 +62,6 @@
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2",
     "ytdl-core": "^0.26.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/test/preprocessor.js"
-    },
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "testMatch": [
-      "**/?(*.)spec.ts?(x)"
-    ],
-    "timers": "fake"
   },
   "build": {
     "appId": "moshfeu.y2mp3",
