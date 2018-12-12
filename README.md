@@ -1,5 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi?svg=true)](https://ci.appveyor.com/project/moshfeu/y2mp3)
 [![Build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
+[![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
 
 <img src="app-resources/logo-128.png" alt="logo" />
 
