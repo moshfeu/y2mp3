@@ -5,12 +5,18 @@ const os = require('os');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+
+const eos = {
+  MAC: 'darwin',
+  WINDOWS: 'win32'
+};
+
 let win;
 function getIconFile() {
   switch (os.platform()) {
-    case 'darwin':
+    case eos.MAC:
       return 'mac/icon.icns';
-    case 'win32':
+    case eos.WINDOWS:
     default:
       return 'win/icon.ico';
   }
@@ -44,14 +50,18 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null
-  })
+  });
 
   // Create the Application's main menu
   const template = [
     {
       label: "Application",
       submenu: [
-        { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
+        { label: "About Application", click: function() {
+          // if (os.platform() !== eos.MAC) {
+            win.webContents.send('open-about');
+          // }
+        } },
         { type: "separator" },
         { label: "Toggle Developer Tools", accelerator: "CommandOrControl+Option+J", click: function() {
           win.webContents.openDevTools()

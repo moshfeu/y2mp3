@@ -2,12 +2,12 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main.js",
   "author": {
-    "name" : "MosheF",
-    "email" : "moshfeu.dev@gmail.com",
-    "url" : "https://github.com/moshfeu"
+    "name": "MosheF",
+    "email": "moshfeu.dev@gmail.com",
+    "url": "https://github.com/moshfeu"
   },
   "email": "moshfeu.dev@gmail.com",
   "license": "MIT",
@@ -32,6 +32,7 @@
     "enzyme-adapter-react-16": "^1.7.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "semantic-ui-react": "^0.84.0",
     "sinon": "^7.1.1",
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
     "youtube-playlist": "^1.0.2"

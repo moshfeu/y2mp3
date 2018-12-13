@@ -10,12 +10,15 @@ import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { Form } from './form';
 import ButtonProgress from './button-progress';
 import { InstallFFMpeg } from './install-ffmpeg';
+import { ipcRenderer } from '../services/electron-adapter';
+import AboutModal from './about-modal';
 
 interface IMainState {
   videos: IVideoEntity[];
   inProcess: boolean;
   doneDownloading: boolean;
   isFFMpegInstalled: boolean;
+  isAboutOpen: boolean;
 }
 
 class Main extends React.Component<{}, IMainState> {
@@ -27,35 +30,17 @@ class Main extends React.Component<{}, IMainState> {
       videos: [],
       inProcess: false,
       doneDownloading: false,
-      isFFMpegInstalled: isFFMpegInstalled()
+      isFFMpegInstalled: isFFMpegInstalled(),
+      isAboutOpen: false
     };
   }
 
   componentDidMount() {
     this.listenToDownloader();
 
-    // this.setState({
-    //   videos: [
-    //     {
-    //       "id": "JvKKd32Yw2E",
-    //       "name": "video 1",
-    //       "progress": 0,
-    //       "status": EVideoStatus.NOT_STARTED
-    //     },
-    //     {
-    //       "id": "tPEE9ZwTmy0",
-    //       "name": "video 2",
-    //       "progress": 0,
-    //       "status": EVideoStatus.NOT_STARTED
-    //     },
-    //     {
-    //       "id": "cdwal5Kw3Fc",
-    //       "name": "video 3",
-    //       "progress": 0,
-    //       "status": EVideoStatus.NOT_STARTED
-    //     }
-    //   ]
-    // })
+    ipcRenderer.on('open-about', () => this.setState({
+      isAboutOpen: true
+    }));
   }
 
   fetchVideosClick = async (terms: string) => {
@@ -181,6 +166,7 @@ class Main extends React.Component<{}, IMainState> {
         {
           !isFFMpegInstalled && <InstallFFMpeg onDone={() => this.setState({isFFMpegInstalled: true})} />
         }
+        <AboutModal open={this.state.isAboutOpen} onClose={() => this.setState({isAboutOpen: false})} />
       </div>
     );
   }

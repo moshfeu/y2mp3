@@ -26,9 +26,6 @@ build_script:
   - npm run generate-icons
   - npm run dist
 test: true
-# artifacts:
-# - path: dist/*.exe
-#   name: y2mp3
 deploy:
   - provider: GitHub
     auth_token:

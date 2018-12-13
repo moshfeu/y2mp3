@@ -55,7 +55,7 @@ module.exports = {
   },
   output: {
     filename: 'resources/app.bundle.js',
-    sourceMapFilename: 'maps/app.[chunkhash].map.js',
+    sourceMapFilename: 'resources/app.bundle.js.map',
     path: __dirname
   },
   mode: 'development',
@@ -76,6 +76,5 @@ module.exports = {
         // });
       }
     }
-  ],
-  devtool: 'source-map'
+  ]
 }
