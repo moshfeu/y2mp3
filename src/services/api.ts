@@ -2,6 +2,7 @@ import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import { IVideoEntity, IPlaylistYoutube, EVideoStatus } from '../types';
 import { DOWNLOADS_FOLDER, ffmpegPath } from './path';
+var ffmpeg = require("fluent-ffmpeg");
 
 export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
@@ -10,6 +11,10 @@ export const downloader = new YoutubeMp3Downloader({
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
   progressTimeout: 1000                 // How long should be the interval of the progress reports
 });
+
+export function setFfmpegPath() {
+  ffmpeg.setFfmpegPath(ffmpegPath());
+}
 
 export function fetchVideos(playlistUrl: string): Promise<IVideoEntity[]> {
 

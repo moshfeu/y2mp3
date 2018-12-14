@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { installFfmpeg } from '../services/ffmpeg-installer';
-import ButtonProgress from './button-progress';
+import { ButtonProgress } from './button-progress';
+import { setFfmpegPath } from '../services/api';
 
 interface IInstallFFMpegState {
   downloadProgress: number;
@@ -24,6 +25,7 @@ export class InstallFFMpeg extends React.Component<IInstallFFMpegProps, IInstall
       downloadProgress: Math.floor(data.progress * 100)
     }, () => {
       if (this.state.downloadProgress === 100) {
+        setFfmpegPath();
         setTimeout(() => {
           this.props.onDone();
         }, 2000);
