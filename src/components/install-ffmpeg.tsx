@@ -21,7 +21,7 @@ export class InstallFFMpeg extends React.Component<IInstallFFMpegProps, IInstall
 
   updateDownloadProgress = (data) => {
     this.setState({
-      downloadProgress: data.progress
+      downloadProgress: Math.floor(data.progress * 100)
     }, () => {
       if (this.state.downloadProgress === 100) {
         setTimeout(() => {
