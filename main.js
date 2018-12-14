@@ -57,10 +57,8 @@ function createWindow () {
     {
       label: "Application",
       submenu: [
-        { label: "About Application", click: function() {
-          // if (os.platform() !== eos.MAC) {
-            win.webContents.send('open-about');
-          // }
+        { label: "About y2mp3", click: function() {
+          win.webContents.send('open-about');
         } },
         { type: "separator" },
         { label: "Toggle Developer Tools", accelerator: "CommandOrControl+Option+J", click: function() {
