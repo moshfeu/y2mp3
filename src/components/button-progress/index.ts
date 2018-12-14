@@ -1,1 +1,1 @@
-export {default} from './button-progress';
+export {ButtonProgress} from './button-progress';

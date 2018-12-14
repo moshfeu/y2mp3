@@ -10,7 +10,7 @@ interface IAboutModalProps {
   onClose: () => void;
 }
 
-export default class AboutModal extends React.Component<IAboutModalProps> {
+export class AboutModal extends React.Component<IAboutModalProps> {
   render() {
     const { open, onClose } = this.props;
     return (

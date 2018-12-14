@@ -8,10 +8,10 @@ import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { Form } from './form';
-import ButtonProgress from './button-progress';
+import { ButtonProgress } from './button-progress';
 import { InstallFFMpeg } from './install-ffmpeg';
 import { ipcRenderer } from '../services/electron-adapter';
-import AboutModal from './about-modal';
+import { AboutModal } from './about-modal';
 
 interface IMainState {
   videos: IVideoEntity[];
@@ -48,6 +48,7 @@ class Main extends React.Component<{}, IMainState> {
     const videos = await fetchVideos(terms);
     this.setState({videos, inProcess: false});
   }
+
   videoIndex = (videoId:  string) => {
     return this.state.videos.findIndex(v => v.id === videoId);
   }
@@ -112,7 +113,7 @@ class Main extends React.Component<{}, IMainState> {
     }
   }
 
-  error = (err, data) => {
+  error = (err) => {
     alert(err);
   }
 

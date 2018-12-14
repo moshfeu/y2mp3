@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SinonSpy } from 'sinon';
 import { shallow } from 'enzyme';
 import BaseDriver from '../../../test/base.driver';
-import ButtonProgress, { IButtonProgressProps } from './button-progress';
+import { ButtonProgress, IButtonProgressProps } from './button-progress';
 
 export default class ButtonProgressDriver extends BaseDriver {
   private text: string;

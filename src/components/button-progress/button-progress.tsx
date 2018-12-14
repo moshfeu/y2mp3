@@ -14,7 +14,7 @@ export interface IButtonProgressState {
   progress: number;
 }
 
-export default class ButtonProgress extends React.Component<IButtonProgressProps, IButtonProgressState> {
+export class ButtonProgress extends React.Component<IButtonProgressProps, IButtonProgressState> {
   private readonly progressDone = 100;
 
   constructor(props) {
