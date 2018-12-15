@@ -1,6 +1,13 @@
-const { app, shell, BrowserWindow, Menu } = require('electron');
+const {
+  app,
+  shell,
+  BrowserWindow,
+  Menu
+} = require('electron');
 const isDev = require('electron-is-dev');
-const { join } = require('path');
+const {
+  join
+} = require('path');
 const os = require('os');
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -12,6 +19,7 @@ const eos = {
 };
 
 let win;
+
 function getIconFile() {
   switch (os.platform()) {
     case eos.MAC:
@@ -22,7 +30,7 @@ function getIconFile() {
   }
 }
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     width: 480,
@@ -53,49 +61,108 @@ function createWindow () {
   });
 
   // Create the Application's main menu
-  const template = [
-    {
+  const template = [{
       label: "Application",
-      submenu: [
-        { label: "About y2mp3", click: function() {
-          win.webContents.send('open-about');
-        } },
-        { type: "separator" },
-        { label: "Toggle Developer Tools", accelerator: "CommandOrControl+Option+J", click: function() {
-          win.webContents.openDevTools()
-        }},
-        { type: "separator" },
-        { label: "Quit", accelerator: "CommandOrControl+Q", click: function() { app.quit(); }}
+      submenu: [{
+          label: "About y2mp3",
+          click: function () {
+            win.webContents.send('open-about');
+          }
+        },
+        {
+          type: "separator"
+        },
+        {
+          label: "Toggle Developer Tools",
+          accelerator: "CommandOrControl+Option+J",
+          click: function () {
+            win.webContents.openDevTools()
+          }
+        },
+        {
+          type: "separator"
+        },
+        {
+          label: "Quit",
+          accelerator: "CommandOrControl+Q",
+          click: function () {
+            app.quit();
+          }
+        }
       ]
     },
     {
       label: "Edit",
-      submenu: [
-        { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-        { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-        { type: "separator" },
-        { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-        { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-        { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-        { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
+      submenu: [{
+          label: "Undo",
+          accelerator: "CmdOrCtrl+Z",
+          selector: "undo:"
+        },
+        {
+          label: "Redo",
+          accelerator: "Shift+CmdOrCtrl+Z",
+          selector: "redo:"
+        },
+        {
+          type: "separator"
+        },
+        {
+          label: "Cut",
+          accelerator: "CmdOrCtrl+X",
+          selector: "cut:"
+        },
+        {
+          label: "Copy",
+          accelerator: "CmdOrCtrl+C",
+          selector: "copy:"
+        },
+        {
+          label: "Paste",
+          accelerator: "CmdOrCtrl+V",
+          selector: "paste:"
+        },
+        {
+          label: "Select All",
+          accelerator: "CmdOrCtrl+A",
+          selector: "selectAll:"
+        }
       ]
     },
     {
       label: "Support",
-      submenu: [
-        { label: "Need help? Give feedback?", click: function() {
+      submenu: [{
+          label: "Need help? Give feedback?",
+          click: function () {
             shell.openExternal('https://github.com/moshfeu/y2mp3/issues')
-        }},
-        { label: "Docs", click: function() {
+          }
+        },
+        {
+          label: "Docs",
+          click: function () {
             shell.openExternal('https://github.com/moshfeu/y2mp3/README.md')
-        }},
-        { type: "separator" },
-        { label: "Made with ❤️ by MosheF", click: function() {
+          }
+        },
+        {
+          type: "separator"
+        },
+        {
+          label: "Made with ❤️ by MosheF",
+          click: function () {
             shell.openExternal('https://github.com/moshfeu/')
-        }},
+          }
+        },
 
       ]
-    }
+    },
+    {
+      label: "Terms of use",
+      submenu: [{
+        label: "Disclaimer",
+        click: function () {
+          shell.openExternal('https://github.com/moshfeu/y2mp3#disclaimer')
+        }
+      }]
+    },
   ];
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));

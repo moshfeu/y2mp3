@@ -39,3 +39,8 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## License
 MIT
+
+## Disclaimer
+
+1. Please use this app for downloading only public resources.
+2. The app doesn't store ANY media files ANYWHERE except on the device who use this app.
