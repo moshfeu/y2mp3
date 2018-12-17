@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "An app to download youtube videos as mp3",
   "scripts": {
-    "start": "webpack",
+    "webpack": "webpack",
     "electron": "electron .",
     "dist": "npm run build && electron-builder",
     "dist-linux": "npm run dist --linux",
@@ -30,6 +30,7 @@
     "electron-is-dev": "^1.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.1",
+    "js-video-url-parser": "^0.2.8",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "semantic-ui-react": "^0.84.0",
