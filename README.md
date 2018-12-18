@@ -15,9 +15,9 @@ Mp3 files will be saved to a **y2mp3** folder in the **Download** folder
 
 ## Supported os
 
-<img width="30" alt="windows" src="app-resources/readme/windows.svg">
-<img width="30" alt="mac" src="app-resources/readme/mac.svg">
-<img width="30" alt="linux" src="app-resources/readme/linux.svg">
+<img width="30" alt="windows" src="app-resources/readme/windows.svg?sanitize=true" />
+<img width="30" alt="mac" src="app-resources/readme/mac.svg?sanitize=true" />
+<img width="30" alt="linux" src="app-resources/readme/linux.svg?sanitize=true" />
 
 ## Download
 
