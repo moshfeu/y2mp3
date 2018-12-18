@@ -1,24 +1,24 @@
-const {
+import {
   app,
+  Menu,
   shell,
   BrowserWindow,
-  Menu
-} = require('electron');
-const isDev = require('electron-is-dev');
-const {
-  join
-} = require('path');
-const os = require('os');
+  MenuItemConstructorOptions,
+} from 'electron';
+
+import { join } from 'path';
+import * as isDev from 'electron-is-dev';
+import * as os from 'os';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 
-const eos = {
-  MAC: 'darwin',
-  WINDOWS: 'win32'
+enum eos {
+  MAC = 'darwin',
+  WINDOWS = 'win32',
 };
 
-let win;
+let win: BrowserWindow;
 
 function getIconFile() {
   switch (os.platform()) {
@@ -61,7 +61,7 @@ function createWindow() {
   });
 
   // Create the Application's main menu
-  const template = [{
+  const template: MenuItemConstructorOptions[] = [{
       label: "Application",
       submenu: [{
           label: "About y2mp3",
@@ -96,12 +96,12 @@ function createWindow() {
       submenu: [{
           label: "Undo",
           accelerator: "CmdOrCtrl+Z",
-          selector: "undo:"
+          role: "undo"
         },
         {
           label: "Redo",
           accelerator: "Shift+CmdOrCtrl+Z",
-          selector: "redo:"
+          role: "redo"
         },
         {
           type: "separator"
@@ -109,22 +109,22 @@ function createWindow() {
         {
           label: "Cut",
           accelerator: "CmdOrCtrl+X",
-          selector: "cut:"
+          role: "cut"
         },
         {
           label: "Copy",
           accelerator: "CmdOrCtrl+C",
-          selector: "copy:"
+          role: "copy"
         },
         {
           label: "Paste",
           accelerator: "CmdOrCtrl+V",
-          selector: "paste:"
+          role: "paste"
         },
         {
           label: "Select All",
           accelerator: "CmdOrCtrl+A",
-          selector: "selectAll:"
+          role: "selectall"
         }
       ]
     },
