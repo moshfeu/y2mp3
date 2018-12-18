@@ -70,6 +70,13 @@ function createWindow() {
           }
         },
         {
+          label: "Preferences",
+          accelerator: "CommandOrControl+,",
+          click: function () {
+            win.webContents.send('open-preferences');
+          }
+        },
+        {
           type: "separator"
         },
         {
