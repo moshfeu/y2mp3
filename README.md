@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi?svg=true)](https://ci.appveyor.com/project/moshfeu/y2mp3)
 [![Build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
-[![Release version](https://img.shields.io/github/release/moshfeu/y2mp3.svg)](https://github.com/moshfeu/y2mp3/)
+[![Release version](https://img.shields.io/github/release/moshfeu/y2mp3.svg)](https://github.com/moshfeu/y2mp3/releases/latest)
 
 <img src="app-resources/logo-128.png" alt="logo" />
 
@@ -45,10 +45,10 @@ Fetch videos from youtube playlist and download them one by one or all.
 
 ## Development
 
-```
-npm run webpack
-npm run electron
-```
+
+    npm run webpack
+    npm run electron
+
 
 ### Stack
 
