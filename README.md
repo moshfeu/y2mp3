@@ -1,5 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi?svg=true)](https://ci.appveyor.com/project/moshfeu/y2mp3)
-[![Build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
+[![Appveyor build status](https://ci.appveyor.com/api/projects/status/0vjgy1nnxdp23lyi/branch/master?svg=true)](https://ci.appveyor.com/project/moshfeu/y2mp3)
+[![Travis-ci build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
 [![Release version](https://img.shields.io/github/release/moshfeu/y2mp3.svg)](https://github.com/moshfeu/y2mp3/releases/latest)
 
