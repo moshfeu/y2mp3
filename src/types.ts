@@ -35,6 +35,11 @@ export interface IFetchVideosCallbacks {
   onDone: () => void;
 }
 
+export interface IModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
 export enum EVideoStatus {
   NOT_STARTED = 'Not Started',
   GETTING_INFO = 'Getting Data',

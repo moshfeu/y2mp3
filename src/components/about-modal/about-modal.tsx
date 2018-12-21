@@ -4,13 +4,9 @@ import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import { remote } from '../../services/electron-adapter';
+import { IModalProps } from '../../types';
 
-interface IAboutModalProps {
-  open: boolean;
-  onClose: () => void;
-}
-
-export class AboutModal extends React.Component<IAboutModalProps> {
+export class AboutModal extends React.Component<IModalProps> {
   render() {
     const { open, onClose } = this.props;
     return (
