@@ -19,7 +19,7 @@ export const downloader = new YoutubeMp3Downloader({
 });
 
 export function setFfmpegPath() {
-  ffmpeg.setFfmpegPath(ffmpegPath());
+  (ffmpeg as any).setFfmpegPath(ffmpegPath());
 }
 
 export function fetchVideos(term: string): Promise<IVideoEntity[]> {
