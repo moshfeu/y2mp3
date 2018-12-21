@@ -21,7 +21,7 @@
     "dist-windows": "npm run dist -- --win",
     "publish-linux": "npm run build && electron-builder --linux --publish onTagOrDraft",
     "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
-    "build": "webpack --config webpack.prod.js",
+    "build": "tsc && webpack --config webpack.prod.js",
     "test": "node --trace-warnings ./test/runTests.js",
     "test:watch": "jest --watch",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
