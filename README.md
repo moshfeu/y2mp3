@@ -28,6 +28,9 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 1.2.0
+Allow to change the downloads folder
+
 ##### 1.1.0
 Allow fetch and download a single video
 
@@ -66,6 +69,7 @@ npm run electron
 - [youtube-mp3-downloader](https://github.com/ytb2mp3/youtube-mp3-downloader)
 - [youtube-playlist](https://github.com/CodeDotJS/youtube-playlist)
 - [ffbinaries](https://github.com/vot/ffbinaries-node)
+- [Semantic UI React](https://react.semantic-ui.com/)
 
 ### TODO
 

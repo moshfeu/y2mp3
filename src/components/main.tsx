@@ -2,7 +2,7 @@ import '../styles/style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
-import { fetchVideos, downloader } from '../services/api';
+import { fetchVideos, downloader, download } from '../services/api';
 import { IVideoEntity, EVideoStatus } from '../types';
 import { Video } from './video';
 import { IVideoTask } from 'youtube-mp3-downloader';
@@ -12,6 +12,7 @@ import { ButtonProgress } from './button-progress';
 import { InstallFFMpeg } from './install-ffmpeg';
 import { ipcRenderer } from '../services/electron-adapter';
 import { AboutModal } from './about-modal';
+import { PreferencesModal } from './preferences-modal/preferences-modal';
 
 interface IMainState {
   videos: IVideoEntity[];
@@ -19,6 +20,7 @@ interface IMainState {
   doneDownloading: boolean;
   isFFMpegInstalled: boolean;
   isAboutOpen: boolean;
+  isPreferencesOpen: boolean;
 }
 
 class Main extends React.Component<{}, IMainState> {
@@ -31,7 +33,8 @@ class Main extends React.Component<{}, IMainState> {
       inProcess: false,
       doneDownloading: false,
       isFFMpegInstalled: isFFMpegInstalled(),
-      isAboutOpen: false
+      isAboutOpen: false,
+      isPreferencesOpen: false,
     };
   }
 
@@ -40,6 +43,10 @@ class Main extends React.Component<{}, IMainState> {
 
     ipcRenderer.on('open-about', () => this.setState({
       isAboutOpen: true
+    }));
+
+    ipcRenderer.on('open-preferences', () => this.setState({
+      isPreferencesOpen: true
     }));
   }
 
@@ -113,8 +120,8 @@ class Main extends React.Component<{}, IMainState> {
     }
   }
 
-  error = (err) => {
-    alert(err);
+  error = (err: string) => {
+    alert('Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!');
   }
 
   listenToDownloader() {
@@ -127,13 +134,11 @@ class Main extends React.Component<{}, IMainState> {
   }
 
   downloadVideo = async (video: IVideoEntity) => {
-    downloader.download(video.id);
+    download(video.id)
   }
 
   downloadAll = () => {
-    this.state.videos.forEach(video => {
-      this.downloadVideo(video);
-    });
+    download(this.state.videos.map(videos => videos.id));
   }
 
   public render() {
@@ -168,6 +173,7 @@ class Main extends React.Component<{}, IMainState> {
           !isFFMpegInstalled && <InstallFFMpeg onDone={() => this.setState({isFFMpegInstalled: true})} />
         }
         <AboutModal open={this.state.isAboutOpen} onClose={() => this.setState({isAboutOpen: false})} />
+        <PreferencesModal open={this.state.isPreferencesOpen} onClose={() => this.setState({isPreferencesOpen: false})} />
       </div>
     );
   }

@@ -1,0 +1,14 @@
+.preferences-modal {
+  .path-container {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px;
+    vertical-align: sub;
+    white-space: nowrap;
+  }
+
+  .open-directory-button {
+    margin-left: 10px;
+  }
+}
