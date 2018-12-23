@@ -43,11 +43,10 @@ Fetch videos from youtube playlist and download them one by one or all.
 2. The app doesn't store ANY media files ANYWHERE except on the device who use this app.
 
 <div>
-  Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
+  Os Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 </div>
 
 ## Development
-
 
     npm run webpack
     npm run electron
@@ -55,10 +54,24 @@ Fetch videos from youtube playlist and download them one by one or all.
 
 ### Stack
 
-- [electron](http://electronjs.org/)
-- [reactjs](https://reactjs.org/)
-- [typescript](https://www.typescriptlang.org/)
-- [webpack](https://webpack.js.org/)
+<table>
+  <tr>
+    <td><a href="http://electronjs.org/"><img width="25" alt="electron" src="https://github.githubassets.com/images/icons/emoji/electron.png" /></a></td>
+    <td><a href="https://reactjs.org/"><img width="45" alt="reactjs" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" /></a></td>
+    <td><a href="https://mobx.js.org/"><img width="25" alt="mobx" src="https://mobx.js.org/docs/mobx.png" /></a></td>
+    <td><a href="https://www.typescriptlang.org/"><img width="25" alt="typescript" src="https://github.com/remojansen/logo.ts/blob/master/ts.jpg?raw=true" /></a></td>
+    <td><a href="https://webpack.js.org/"><img width="30" src="https://github.com/webpack/media/blob/master/logo/icon-square-small.jpg?raw=true" /></a></td>
+  <tr>
+    <td><a target="_blank" href="http://electronjs.org/">electron</a></td>
+    <td><a target="_blank" href="https://reactjs.org/">reactjs</a></td>
+    <td><a target="_blank" href="https://mobx.js.org/">mobx</a></td>
+    <td><a target="_blank" href="https://www.typescriptlang.org/">typescript</a></td>
+    <td><a target="_blank" href="https://webpack.js.org/">webpack</a></td>
+  </tr>
+</table>
+
+**Logos licenes**
+- Facebook [Public domain or CC BY-SA 1.0 (https://creativecommons.org/licenses/by-sa/1.0)]
 
 #### Tests
 

@@ -1,1 +1,1 @@
-export {default} from './preferences-modal';
+export {PreferencesModal} from './preferences-modal';

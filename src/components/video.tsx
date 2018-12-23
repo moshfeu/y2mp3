@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 import { IVideoEntity, EVideoStatus } from '../types';
 import { ButtonProgress } from './button-progress';
 
@@ -8,6 +9,7 @@ interface IVideoProps {
   onVideoDownloadClick: (video :IVideoEntity) => void;
 }
 
+@observer
 export class Video extends React.Component<IVideoProps, any> {
   constructor(props) {
     super(props);
