@@ -1,6 +1,7 @@
 import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
-import { IVideoEntity, IPlaylistYoutube, EVideoStatus } from '../types';
+import store from '../mobx/store';
+import { IVideoEntity, IPlaylistYoutube } from '../types';
 import { ffmpegPath } from './path';
 import * as urlParser from 'js-video-url-parser';
 import { getBasicInfo } from 'ytdl-core';
@@ -16,7 +17,14 @@ export const downloader = new YoutubeMp3Downloader({
   youtubeVideoQuality: 'highest',       // What video quality should be used?
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
   progressTimeout: 1000                 // How long should be the interval of the progress reports
-});
+})
+  .on('addToQueue', store.addToQueue)
+  .on('gettingInfo', store.gettingInfo)
+  .on('progress', store.progress)
+  .on('finished', store.finished)
+  .on('error', () => {
+    alert('Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!');
+  });
 
 export function setFfmpegPath() {
   (ffmpeg as any).setFfmpegPath(ffmpegPath());
