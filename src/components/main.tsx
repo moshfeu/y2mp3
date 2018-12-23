@@ -2,45 +2,23 @@ import '../styles/style.scss';
 
 import * as React from 'react';
 import * as DOM from 'react-dom';
-import { observer } from 'mobx-react';
-import { downloader, download } from '../services/api';
 import store from '../mobx/store';
+import { observer } from 'mobx-react';
+import { download } from '../services/api';
 import { IVideoEntity } from '../types';
 import { Video } from './video';
 import { Form } from './form';
 import { ButtonProgress } from './button-progress';
 import { InstallFFMpeg } from './install-ffmpeg';
-import { ipcRenderer } from '../services/electron-adapter';
 import { AboutModal } from './about-modal';
 import { PreferencesModal } from './preferences-modal/preferences-modal';
-
-interface IMainState {
-  doneDownloading: boolean;
-  isAboutOpen: boolean;
-  isPreferencesOpen: boolean;
-}
+import { ElectronEventsListener } from './electron-events-listener';
 
 @observer
-class Main extends React.Component<{}, IMainState> {
+class Main extends React.Component<{}, {}> {
 
   constructor(props: any) {
     super(props);
-
-    this.state = {
-      doneDownloading: false,
-      isAboutOpen: false,
-      isPreferencesOpen: false,
-    };
-  }
-
-  componentDidMount() {
-    ipcRenderer.on('open-about', () => this.setState({
-      isAboutOpen: true
-    }));
-
-    ipcRenderer.on('open-preferences', () => this.setState({
-      isPreferencesOpen: true
-    }));
   }
 
   downloadVideo = async (video: IVideoEntity) => {
@@ -82,12 +60,16 @@ class Main extends React.Component<{}, IMainState> {
         {
           !store.isFFMpegInstalled && <InstallFFMpeg onDone={() => store.isFFMpegInstalled = true} />
         }
-        <AboutModal open={this.state.isAboutOpen} onClose={() => this.setState({isAboutOpen: false})} />
-        <PreferencesModal open={this.state.isPreferencesOpen} onClose={() => this.setState({isPreferencesOpen: false})} />
+        <AboutModal open={store.isAboutOpen} onClose={() => store.isAboutOpen = false} />
+        <PreferencesModal open={store.isPreferencesOpen} onClose={() => store.isPreferencesOpen = false} />
       </div>
     );
   }
 }
 
 const root = document.getElementById('app');
-DOM.render(<Main />, root);
+DOM.render(
+  <ElectronEventsListener>
+    <Main />
+  </ElectronEventsListener>
+, root);

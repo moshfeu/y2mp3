@@ -18,10 +18,10 @@ export const downloader = new YoutubeMp3Downloader({
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
   progressTimeout: 1000                 // How long should be the interval of the progress reports
 })
-  .on('addToQueue', store.addToQueue)
-  .on('gettingInfo', store.gettingInfo)
-  .on('progress', store.progress)
-  .on('finished', store.finished)
+  .on('addToQueue', videoId => store.addToQueue(videoId))
+  .on('gettingInfo', videoId => store.gettingInfo(videoId))
+  .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
+  .on('finished', (err, { videoId }) => store.finished(err, { videoId }))
   .on('error', () => {
     alert('Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!');
   });

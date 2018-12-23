@@ -6,9 +6,11 @@ import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 
 class Store {
   @observable searchTerm: string;
+  @observable videos: IVideoEntity[] = [];
   @observable searchInProgress: boolean;
   @observable isFFMpegInstalled: boolean;
-  @observable videos: IVideoEntity[] = [];
+  @observable isAboutOpen: boolean;
+  @observable isPreferencesOpen: boolean;
 
   constructor() {
     this.isFFMpegInstalled = isFFMpegInstalled();
@@ -80,5 +82,4 @@ class Store {
   }
 }
 
-const store = new Store();
-export default store;
+export default new Store();
