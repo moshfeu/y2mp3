@@ -8,7 +8,8 @@ import {
 
 import { join } from 'path';
 import * as isDev from 'electron-is-dev';
-import * as os from 'os';
+import { platform, homedir } from 'os';
+import { existsSync } from 'fs';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,7 +22,7 @@ enum eos {
 let win: BrowserWindow;
 
 function getIconFile() {
-  switch (os.platform()) {
+  switch (platform()) {
     case eos.MAC:
       return 'mac/icon.icns';
     case eos.WINDOWS:
@@ -50,6 +51,14 @@ function createWindow() {
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools();
+    const reactDevtoolsPath = join(homedir(), '/Library/Application\ Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.3_0/');
+    const ex = existsSync(reactDevtoolsPath);
+    if (ex) {
+      BrowserWindow.addDevToolsExtension(reactDevtoolsPath);
+    } else {
+      console.error()
+      alert('react devtools extension path not found');
+    }
   }
 
   // Emitted when the window is closed.
