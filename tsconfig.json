@@ -14,8 +14,5 @@
   ],
   "files": [
     "./main.ts"
-  ],
-  "include": [
-    "src/**/*"
   ]
 }
