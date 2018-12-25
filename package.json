@@ -13,7 +13,7 @@
   "license": "MIT",
   "description": "An app to download youtube videos as mp3",
   "scripts": {
-    "start": "npm run tsc | npm run webpack | npm run electron",
+    "start": "npm-run-all --parallel tsc webpack electron",
     "tsc": "tsc -w",
     "webpack": "webpack",
     "electron": "electron .",
