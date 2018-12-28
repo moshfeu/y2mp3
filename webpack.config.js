@@ -59,6 +59,7 @@ module.exports = {
     path: __dirname
   },
   mode: 'development',
+  devtool : 'cheap-source-map',
   target: 'node',
   plugins: [
     new DefinePlugin({

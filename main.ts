@@ -33,20 +33,23 @@ function getIconFile() {
 
 function createWindow() {
   // Create the browser window.
+  const webPreferences: Electron.WebPreferences = {
+    additionalArguments: [
+      `--appData=${app.getPath('appData')}`,
+      `--isDev=${isDev}`
+    ],
+    nodeIntegration: true
+  };
+
   win = new BrowserWindow({
     width: 480,
     height: 600,
-    webPreferences: {
-      additionalArguments: [
-        `--appData=${app.getPath('appData')}`,
-        `--isDev=${isDev}`
-      ]
-    },
+    webPreferences,
     icon: join(__dirname, 'resources/icons', getIconFile())
   });
 
   // and load the index.html of the app.
-  win.loadFile('index.html')
+  win.loadFile('index.html');
 
   // Open the DevTools.
   if (isDev) {
