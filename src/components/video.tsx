@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { IVideoEntity, EVideoStatus } from '../types';
 import { ButtonProgress } from './button-progress';
+import { Popup } from 'semantic-ui-react';
 
 interface IVideoProps {
   style?: React.CSSProperties,
@@ -32,12 +33,18 @@ export class Video extends React.Component<IVideoProps, any> {
             {video.name}
           </div>
           <div className="button">
-            <ButtonProgress
-              text={text}
-              progress={video.progress}
-              onClick={() => onVideoDownloadClick(video)}
-              disabled={isDisabled}
-            />
+            <Popup
+              flowing
+              hoverable
+              trigger={
+                <ButtonProgress
+                  text={text}
+                  progress={video.progress}
+                  onClick={() => onVideoDownloadClick(video)}
+                  disabled={isDisabled} />
+              }>
+                Blabla
+              </Popup>
           </div>
         </div>
       </div>
