@@ -54,7 +54,8 @@ function createWindow() {
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools();
-    const reactDevtoolsPath = join(homedir(), '/Library/Application\ Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.3_0/');
+
+    const reactDevtoolsPath = join(homedir(), '/Library/Application Support/Google/Chrome/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.3_0/');
     const ex = existsSync(reactDevtoolsPath);
     if (ex) {
       BrowserWindow.addDevToolsExtension(reactDevtoolsPath);
