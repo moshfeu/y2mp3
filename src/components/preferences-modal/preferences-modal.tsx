@@ -1,17 +1,26 @@
 import * as React from 'react';
-import { IModalProps } from '../../types';
-import { Icon, Modal, Header, Button, Form } from 'semantic-ui-react';
+import { IModalProps, IQualityOption } from '../../types';
+import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
+import { DownloadQuality } from 'youtube-mp3-downloader';
+import { SyntheticEvent } from 'react';
+
+const qualityOptions: IQualityOption[] = ['highest', 'lowest'].map(option => ({
+  text: option,
+  value: option,
+}));
 
 interface IPreferencesModalState extends IConfig {
   downloadsFolder: string;
+  quality: DownloadQuality;
 }
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   componentWillMount() {
     this.setState({
-      downloadsFolder: settingsManager.downloadsFolder
+      downloadsFolder: settingsManager.downloadsFolder,
+      quality: qualityOptions[0].value
     });
   }
 
@@ -31,9 +40,19 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
     })
   }
 
+  onChangeQuality = (e: SyntheticEvent, data: DropdownProps) => {
+    const quality = data.value as DownloadQuality;
+
+    settingsManager.audioQuality = quality;
+    this.setState({
+      quality
+    });
+  }
+
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder } = this.state;
+    const { downloadsFolder, quality } = this.state;
+
     return (
       <Modal open={open} size='small' className="preferences-modal">
         <Header icon='settings' content='Preferences' />
@@ -44,6 +63,15 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             <label>
               <span title={downloadsFolder} className="path-container">{downloadsFolder}</span>
               <Button className="open-directory-button" icon='folder open outline' onClick={this.openDirectoryExplorer} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>Quality</label>
+            <label>
+              <Dropdown
+                options={qualityOptions}
+                onChange={this.onChangeQuality}
+                value={quality} />
             </label>
           </Form.Field>
         </Form>

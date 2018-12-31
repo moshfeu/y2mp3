@@ -16,7 +16,8 @@ export const downloader = new YoutubeMp3Downloader({
   outputPath: settingsManager.downloadsFolder,         // Where should the downloaded and encoded files be stored?
   youtubeVideoQuality: 'highest',       // What video quality should be used?
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
-  progressTimeout: 1000                 // How long should be the interval of the progress reports
+  progressTimeout: 1000,                 // How long should be the interval of the progress reports
+  filter: 'audioonly',
 })
   .on('addToQueue', videoId => store.addToQueue(videoId))
   .on('gettingInfo', videoId => store.gettingInfo(videoId))

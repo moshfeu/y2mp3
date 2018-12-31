@@ -13,6 +13,7 @@ import { InstallFFMpeg } from './install-ffmpeg';
 import { AboutModal } from './about-modal';
 import { PreferencesModal } from './preferences-modal/preferences-modal';
 import { ElectronEventsListener } from './electron-events-listener';
+import { closeModal} from '../services/modals';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -60,8 +61,8 @@ class Main extends React.Component<{}, {}> {
         {
           !store.isFFMpegInstalled && <InstallFFMpeg onDone={() => store.isFFMpegInstalled = true} />
         }
-        <AboutModal open={store.isAboutOpen} onClose={() => store.isAboutOpen = false} />
-        <PreferencesModal open={store.isPreferencesOpen} onClose={() => store.isPreferencesOpen = false} />
+        <AboutModal open={store.isAboutOpen} onClose={closeModal} />
+        <PreferencesModal open={store.isPreferencesOpen} onClose={closeModal} />
       </div>
     );
   }

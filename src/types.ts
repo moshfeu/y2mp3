@@ -1,4 +1,5 @@
 import { videoInfo } from 'ytdl-core';
+import { DownloadQuality } from 'youtube-mp3-downloader';
 
 export interface IVideoEntity {
   id: string;
@@ -46,4 +47,9 @@ export enum EVideoStatus {
   PENDING = 'Pending',
   DOWNLOADING = 'Downloading',
   DONE = 'Done'
+}
+
+export interface IQualityOption {
+  text: DownloadQuality;
+  value: DownloadQuality;
 }
