@@ -20,9 +20,7 @@ A simple desktop application to download Youtube videos to mp3, one by one or al
 ⚖ 🕵
 
 
-The app isn't tracking you in any way. We are absolutly doesn't know how you are using this app,
-
-## Supported os
+## Supported operating systems
 
 <img width="30" alt="windows" src="app-resources/readme/windows.svg?sanitize=true" />
 <img width="30" alt="mac" src="app-resources/readme/mac.svg?sanitize=true" />
@@ -56,8 +54,7 @@ Fetch videos from youtube playlist and download them one by one or all.
 
 ## Development
 
-    npm run webpack
-    npm run electron
+    npm start
 
 
 ### Stack
