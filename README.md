@@ -11,7 +11,16 @@ A simple desktop application to download Youtube videos to mp3, one by one or al
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
-Mp3 files will be saved to a **y2mp3** folder in the **Download** folder
+## Disclaimer
+📢📢
+1. The app doesn't track you down in ANY way. Not Google Analytics, or any other service. We know nothing jon snow! So, if you have an ideas about how to make this app even greater, we will not know unless you will tell us. Please fill a [Feature Request](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=enhancement&template=feature_request.md) or [Open a bug](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=bug&template=bug_report.md) and let we know what do you think.
+2. The app doesn't store ANY media files ANYWHERE except on the device who use this app.
+3. Please use this app for downloading only public resources (You should be able to download private media).
+
+⚖ 🕵
+
+
+The app isn't tracking you in any way. We are absolutly doesn't know how you are using this app,
 
 ## Supported os
 
@@ -40,11 +49,6 @@ Allow fetch and download a single video
 
 ##### 1.0.0
 Fetch videos from youtube playlist and download them one by one or all.
-
-## Disclaimer
-
-1. Please use this app for downloading only public resources.
-2. The app doesn't store ANY media files ANYWHERE except on the device who use this app.
 
 <div>
   Os Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
