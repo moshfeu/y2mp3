@@ -2,4 +2,18 @@
   .videos {
     margin-top: 10px;
   }
+
+  .errors {
+    position: fixed;
+    opacity: 0;
+    width: 100%;
+    text-align: center;
+    transition: opacity .3s ease;
+    bottom: 10px;
+
+    &.-has-errors {
+      pointer-events: none;
+      opacity: 1;
+    }
+  }
 }

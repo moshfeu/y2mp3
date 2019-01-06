@@ -22,3 +22,10 @@ export function closeModal() {
     break;``
   }
 }
+
+export function showTermsIsInvalid() {
+  store.termsIsInvalid = true;
+  setTimeout(() => {
+    store.termsIsInvalid = false;
+  }, 3000);
+}

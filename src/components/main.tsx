@@ -13,7 +13,9 @@ import { InstallFFMpeg } from './install-ffmpeg';
 import { AboutModal } from './about-modal';
 import { PreferencesModal } from './preferences-modal/preferences-modal';
 import { ElectronEventsListener } from './electron-events-listener';
-import { closeModal} from '../services/modals';
+import { closeModal} from '../services/modalsAndAlerts';
+import { Message } from 'semantic-ui-react';
+import * as classNames from 'classNames';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -63,6 +65,9 @@ class Main extends React.Component<{}, {}> {
         }
         <AboutModal open={store.isAboutOpen} onClose={closeModal} />
         <PreferencesModal open={store.isPreferencesOpen} onClose={closeModal} />
+        <div className={classNames('errors', {'-has-errors': store.termsIsInvalid})}>
+          <Message color="red" compact>Can't find media (url is not supported or invalid)</Message>
+        </div>
       </div>
     );
   }

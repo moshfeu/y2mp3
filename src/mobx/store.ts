@@ -3,6 +3,7 @@ import { IVideoEntity, EVideoStatus } from '../types';
 import { fetchVideos } from '../services/api';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
+import { showTermsIsInvalid } from '../services/modalsAndAlerts';
 
 class Store {
   @observable searchTerm: string;
@@ -11,6 +12,7 @@ class Store {
   @observable isFFMpegInstalled: boolean;
   @observable isAboutOpen: boolean;
   @observable isPreferencesOpen: boolean;
+  @observable termsIsInvalid: boolean;
 
   constructor() {
     this.isFFMpegInstalled = isFFMpegInstalled();
@@ -19,7 +21,11 @@ class Store {
   @action search = async (term: string): Promise<void> => {
     this.searchTerm = term;
     this.searchInProgress = true;
+    this.termsIsInvalid = false;
     this.videos = await fetchVideos(this.searchTerm);
+    if (!this.videos.length) {
+      showTermsIsInvalid();
+    }
     this.searchInProgress = false;
   }
 

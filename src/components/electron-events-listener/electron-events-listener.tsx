@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import { ipcRenderer } from '../../services/electron-adapter';
-import { openAbout, openPreferences } from '../../services/modals';
+import { openAbout, openPreferences } from '../../services/modalsAndAlerts';
 
 @observer
 export class ElectronEventsListener extends React.Component {

@@ -34,6 +34,9 @@ export function setFfmpegPath() {
 export function fetchVideos(term: string): Promise<IVideoEntity[]> {
   try {
     const parsedTerm = urlParser.parse(term);
+    if (!parsedTerm) {
+      return Promise.resolve([]);
+    }
     if (parsedTerm.list) {
       return fetchVideosFromList(term);
     }

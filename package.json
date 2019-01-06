@@ -28,6 +28,7 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "downloads-folder": "^1.0.1",
     "electron-is-dev": "^1.0.1",
     "enzyme": "^3.7.0",
