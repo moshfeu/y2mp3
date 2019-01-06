@@ -36,8 +36,7 @@ export class Video extends React.Component<IVideoProps, any> {
               text={text}
               progress={video.progress}
               onClick={() => onVideoDownloadClick(video)}
-              disabled={isDisabled}
-            />
+              disabled={isDisabled} />
           </div>
         </div>
       </div>

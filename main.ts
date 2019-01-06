@@ -60,8 +60,7 @@ function createWindow() {
     if (ex) {
       BrowserWindow.addDevToolsExtension(reactDevtoolsPath);
     } else {
-      console.error()
-      alert('react devtools extension path not found');
+      console.error('react devtools extension path not found');
     }
   }
 
