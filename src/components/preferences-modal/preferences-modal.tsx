@@ -20,7 +20,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
   componentWillMount() {
     this.setState({
       downloadsFolder: settingsManager.downloadsFolder,
-      quality: qualityOptions[0].value
+      quality: settingsManager.audioQuality
     });
   }
 

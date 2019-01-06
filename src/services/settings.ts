@@ -21,7 +21,7 @@ class SettingsManager implements IConfig {
   }
 
   set audioQuality(quality: DownloadQuality) {
-    localStorage.setItem('audioQuality', quality.toString());
+    localStorage.setItem('audioQuality', '' + quality);
     downloader.setQuality(quality);
   }
 }

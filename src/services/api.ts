@@ -14,10 +14,10 @@ import { existsSync } from 'fs';
 export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
   outputPath: settingsManager.downloadsFolder,         // Where should the downloaded and encoded files be stored?
-  youtubeVideoQuality: 'highest',       // What video quality should be used?
+  youtubeVideoQuality: settingsManager.audioQuality,       // What video quality should be used?
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
   progressTimeout: 1000,                 // How long should be the interval of the progress reports
-  filter: 'audioonly',
+  filter: 'audio'
 })
   .on('addToQueue', videoId => store.addToQueue(videoId))
   .on('gettingInfo', videoId => store.gettingInfo(videoId))
