@@ -15,7 +15,7 @@ import { PreferencesModal } from './preferences-modal/preferences-modal';
 import { ElectronEventsListener } from './electron-events-listener';
 import { closeModal} from '../services/modalsAndAlerts';
 import { Message } from 'semantic-ui-react';
-import * as classNames from 'classNames';
+import * as classNames from 'classnames';
 
 @observer
 class Main extends React.Component<{}, {}> {
