@@ -28,6 +28,10 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 1.3.0
+- Allow to change the audio quality
+- display a proper message when the url is not supported or invalid
+
 ##### 1.2.0
 Allow to change the downloads folder
 
