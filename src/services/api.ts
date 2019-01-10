@@ -23,8 +23,9 @@ export const downloader = new YoutubeMp3Downloader({
   .on('gettingInfo', videoId => store.gettingInfo(videoId))
   .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
   .on('finished', (err, { videoId }) => store.finished(err, { videoId }))
-  .on('error', () => {
-    alert('Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!');
+  .on('error', err => {
+    alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
+    console.error(err);
   });
 
 export function setFfmpegPath() {
@@ -73,3 +74,5 @@ export function download(videoOrVideos: string | string[]) {
     });
   }
 }
+
+console.log
