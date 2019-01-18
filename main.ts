@@ -158,7 +158,7 @@ function createWindow() {
         {
           label: "Docs",
           click: function () {
-            shell.openExternal('https://github.com/moshfeu/y2mp3/README.md')
+            shell.openExternal('https://github.com/moshfeu/y2mp3/blob/master/README.md')
           }
         },
         {
