@@ -48,14 +48,20 @@ export function fetchVideos(term: string): Promise<IVideoEntity[]> {
 }
 
 async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {
-  const { title, video_id } = await getBasicInfo(videoUrl);
-  return [createVideoEntity(title, video_id)];
+  try {
+    const { title, video_id } = await getBasicInfo(videoUrl);
+    return [createVideoEntity(title, video_id)];
+  } catch (error) {
+    return [];
+  }
 }
 
 async function fetchVideosFromList(playlistUrl: string): Promise<IVideoEntity[]> {
   const data: IPlaylistYoutube = await ytlist(playlistUrl);
   const { data: {playlist} } = data;
-  return playlist.map(video => createVideoEntity(video.name, video.id));
+  return playlist
+    .filter(video => !video.isPrivate)
+    .map(video => createVideoEntity(video.name, video.id));
 }
 
 export function download(videoId: string);
@@ -74,5 +80,3 @@ export function download(videoOrVideos: string | string[]) {
     });
   }
 }
-
-console.log

@@ -24,6 +24,7 @@ export interface IPlaylistYoutube {
     playlist: {
       id: string;
       name: string;
+      isPrivate: boolean;
     }[];
   }
 }
