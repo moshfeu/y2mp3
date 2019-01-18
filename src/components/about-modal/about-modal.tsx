@@ -16,6 +16,9 @@ export class AboutModal extends React.Component<IModalProps> {
           <p>
             <b>Version:</b> {remote.app.getVersion()}
           </p>
+          <p>
+            <b>Contact me:</b> <a href="mailto:moshfeu.dev@gmail.com">moshfeu.dev@gmail.com</a>
+          </p>
         </Modal.Content>
         <Modal.Actions>
           <Button color='green' inverted onClick={() => onClose()}>
