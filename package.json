@@ -43,7 +43,7 @@
     "semantic-ui-react": "^0.84.0",
     "sinon": "^7.1.1",
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
-    "youtube-playlist": "^1.0.2"
+    "youtube-playlist": "git+https://github.com/moshfeu/youtube-playlist.git"
   },
   "devDependencies": {
     "@types/electron-is-dev": "^0.3.0",
