@@ -13,9 +13,9 @@ A simple desktop application to download Youtube videos to mp3, one by one or al
 
 ## Disclaimer
 📢📢
-1. The app doesn't track you down in ANY way. Not Google Analytics, or any other service. We know nothing jon snow! So, if you have an ideas about how to make this app even greater, we will not know unless you will tell us. Please fill a [Feature Request](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=enhancement&template=feature_request.md) or [Open a bug](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=bug&template=bug_report.md) and let we know what do you think.
+1. The app doesn't track you down in ANY way. Not Google Analytics, or any other service. We know nothing jon snow! So, if you have an idea about how to make this app even greater, we will not know unless you will tell us. Please fill a [Feature Request](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=enhancement&template=feature_request.md) or [Open a bug](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=bug&template=bug_report.md) and let we know what do you think.
 2. The app doesn't store ANY media files ANYWHERE except on the device who use this app.
-3. Please use this app for downloading only public resources (You should be able to download private media).
+3. Please use this app for downloading only public resources (You shouldn't be able to download private media). If you doesn't see all of the videos in the playlist, probably, they private (even it's yours private)
 
 ⚖ 🕵
 
