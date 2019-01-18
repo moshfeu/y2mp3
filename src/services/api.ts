@@ -48,8 +48,12 @@ export function fetchVideos(term: string): Promise<IVideoEntity[]> {
 }
 
 async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {
-  const { title, video_id } = await getBasicInfo(videoUrl);
-  return [createVideoEntity(title, video_id)];
+  try {
+    const { title, video_id } = await getBasicInfo(videoUrl);
+    return [createVideoEntity(title, video_id)];
+  } catch (error) {
+    return [];
+  }
 }
 
 async function fetchVideosFromList(playlistUrl: string): Promise<IVideoEntity[]> {

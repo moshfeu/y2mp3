@@ -66,7 +66,7 @@ class Main extends React.Component<{}, {}> {
         <AboutModal open={store.isAboutOpen} onClose={closeModal} />
         <PreferencesModal open={store.isPreferencesOpen} onClose={closeModal} />
         <div className={classNames('errors', {'-has-errors': store.termsIsInvalid})}>
-          <Message color="red" compact>Can't find media (url is not supported or invalid)</Message>
+          <Message color="red" compact>Can't find media (url is not supported, invalid or private video)</Message>
         </div>
       </div>
     );
