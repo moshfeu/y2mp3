@@ -23,9 +23,10 @@ platform:
 init:
   - git config --global core.autocrlf input
 build_script:
-  - npm run generate-icons
-  - npm run dist
+  - npm run build
 test: true
+before_deploy:
+  - npm run electron-builder
 deploy:
   - provider: GitHub
     auth_token:
