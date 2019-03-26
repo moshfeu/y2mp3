@@ -21,6 +21,11 @@
 
   .name {
     padding-right: 10px;
+    cursor: pointer;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
