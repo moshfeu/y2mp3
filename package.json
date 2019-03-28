@@ -10,7 +10,11 @@
     "url": "https://github.com/moshfeu"
   },
   "contributors": [
-    "Shayan Yazdanpanah <shayanypn@gmail.com>"
+    {
+      "name": "Shayan Yazdanpanah",
+      "email": "shayanypn@gmail.com",
+      "url": "https://github.com/shayanypn"
+    }
   ],
   "email": "moshfeu.dev@gmail.com",
   "license": "MIT",
