@@ -20,7 +20,7 @@ export class Video extends React.Component<IVideoProps, any> {
     return `url(https://img.youtube.com/vi/${this.props.video.id}/mqdefault.jpg)`;
   }
 
-  onClickTitle():void {
+  onClickTitle = () =>  {
     const { video:{id} } = this.props;
     shell.openExternal(`https://www.youtube.com/watch?v=${this.props.video.id}`);
   }
@@ -35,7 +35,7 @@ export class Video extends React.Component<IVideoProps, any> {
       <div className="video" style={{backgroundImage, ...style}}>
         <div className="details">
           <div className="name"
-            onClick={this.onClickTitle.bind(this)}>
+            onClick={this.onClickTitle}>
             {video.name}
           </div>
           <div className="button">

@@ -35,6 +35,9 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 1.4.0
+make song title a link
+
 ##### 1.3.0
 - Allow to change the audio quality
 - display a proper message when the url is not supported or invalid
