@@ -51,6 +51,11 @@ Allow fetch and download a single video
 ##### 1.0.0
 Fetch videos from youtube playlist and download them one by one or all.
 
+## Contributors
+
+- [@shayanypn](https://github.com/shayanypn)
+
+
 <div>
   Os Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
 </div>
