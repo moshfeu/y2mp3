@@ -11,6 +11,10 @@ A simple desktop application to download Youtube videos to mp3, one by one or al
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
+#### Find us on Slack
+
+<a href="https://join.slack.com/t/y2mp3/shared_invite/enQtNTk0OTE0Njc4ODY4LTU5YjY3YmJkMGVjN2UwYTE4MzUwOWI0YmZlM2VhOWU1OGRhYmU4ZmRiNTcyMWUwNTAwYzQ5ZTdjNDlhYzU5OGM" target="_blank"><img src="https://cdn.brandfolder.io/5H442O3W/as/pl546j-7le8zk-ex8w65/Slack_RGB.png?width=120" alt="link to Slack channel" /></a>
+
 ## Disclaimer
 📢📢
 1. The app doesn't track you down in ANY way. Not Google Analytics, or any other service. We know nothing jon snow! So, if you have an idea about how to make this app even greater, we will not know unless you will tell us. Please fill a [Feature Request](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=enhancement&template=feature_request.md) or [Open a bug](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=bug&template=bug_report.md) and let we know what do you think.
