@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IModalProps, IQualityOption } from '../../types';
-import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps } from 'semantic-ui-react';
+import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
 import { DownloadQuality } from 'youtube-mp3-downloader';
@@ -14,13 +14,16 @@ const qualityOptions: IQualityOption[] = ['highest', 'lowest'].map(option => ({
 interface IPreferencesModalState extends IConfig {
   downloadsFolder: string;
   quality: DownloadQuality;
+  playlistFolder: boolean;
 }
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   componentWillMount() {
+    const { downloadsFolder, audioQuality: quality, playlistFolder } = settingsManager;
     this.setState({
-      downloadsFolder: settingsManager.downloadsFolder,
-      quality: settingsManager.audioQuality
+      downloadsFolder,
+      quality,
+      playlistFolder
     });
   }
 
@@ -49,9 +52,16 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
     });
   }
 
+  onChangeDedicatedFolder = (e: SyntheticEvent, data: CheckboxProps) => {
+    settingsManager.playlistFolder = data.checked;
+    this.setState({
+      playlistFolder: data.checked
+    });
+  }
+
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, quality } = this.state;
+    const { downloadsFolder, quality, playlistFolder } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -63,6 +73,12 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             <label>
               <span title={downloadsFolder} className="path-container">{downloadsFolder}</span>
               <Button className="open-directory-button" icon='folder open outline' onClick={this.openDirectoryExplorer} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>Save playlist in dedicated folder</label>
+            <label>
+              <Checkbox slider onChange={this.onChangeDedicatedFolder} checked={playlistFolder} />
             </label>
           </Form.Field>
           <Form.Field inline>

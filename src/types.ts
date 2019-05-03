@@ -6,6 +6,7 @@ export interface IVideoEntity {
   name: string;
   progress: number;
   status: EVideoStatus;
+  playlistName: string;
 }
 
 export interface IDownloadProgress {
@@ -21,6 +22,7 @@ export interface IDownloadProgress {
 
 export interface IPlaylistYoutube {
   data: {
+    name?: string;
     playlist: {
       id: string;
       name: string;

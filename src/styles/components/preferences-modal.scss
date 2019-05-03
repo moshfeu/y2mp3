@@ -11,4 +11,10 @@
   .open-directory-button {
     margin-left: 10px;
   }
+
+  .field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
