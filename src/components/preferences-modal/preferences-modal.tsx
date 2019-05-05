@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IModalProps, IQualityOption } from '../../types';
-import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps } from 'semantic-ui-react';
+import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps, Popup } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
 import { DownloadQuality } from 'youtube-mp3-downloader';
@@ -76,7 +76,12 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             </label>
           </Form.Field>
           <Form.Field inline>
-            <label>Save playlist in dedicated folder</label>
+            <label>
+              Save the playlist in a dedicated
+              folder <Popup trigger={<Icon name="help circle" />} content={`
+              If enabled, the app will save each playlist to a dedicated folder (${downloadsFolder}/{playlist_name})
+              `} inverted />
+            </label>
             <label>
               <Checkbox slider onChange={this.onChangeDedicatedFolder} checked={playlistFolder} />
             </label>
