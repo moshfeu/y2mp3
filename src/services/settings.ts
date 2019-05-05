@@ -4,6 +4,8 @@ import { DownloadQuality } from 'youtube-mp3-downloader';
 
 export interface IConfig {
   downloadsFolder: string;
+  audioQuality: DownloadQuality;
+  playlistFolder: boolean;
 }
 
 class SettingsManager implements IConfig {
@@ -23,6 +25,14 @@ class SettingsManager implements IConfig {
   set audioQuality(quality: DownloadQuality) {
     localStorage.setItem('audioQuality', '' + quality);
     downloader.setQuality(quality);
+  }
+
+  get playlistFolder(): boolean {
+    return localStorage.getItem('playlistFolder') === 'true';
+  }
+
+  set playlistFolder(playlistFolder: boolean) {
+    localStorage.setItem('playlistFolder', '' + playlistFolder);
   }
 }
 

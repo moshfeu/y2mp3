@@ -49,16 +49,22 @@ class Store {
 
   @action progress = ({videoId, progress}: IVideoTask) => {
     const video = this.getVideo(videoId);
-    video.status = EVideoStatus.DOWNLOADING;
-    video.progress = 20 + Math.floor(progress.percentage * 0.8);
-    console.log(toJS(this.videos), progress, 'progress');
+    // in case of searching while the download in progress
+    if (video) {
+      video.status = EVideoStatus.DOWNLOADING;
+      video.progress = 20 + Math.floor(progress.percentage * 0.8);
+      console.log(toJS(this.videos), progress, 'progress');
+    }
   }
 
   @action finished = (err, { videoId }: { videoId: string }) => {
     const video = this.getVideo(videoId);
-    video.status = EVideoStatus.DONE;
-    video.progress = 0;
-    console.log('done');
+    // in case of searching while the download in progress
+    if (video) {
+      video.status = EVideoStatus.DONE;
+      video.progress = 0;
+      console.log('done');
+    }
 
     if (err) {
       alert(err);

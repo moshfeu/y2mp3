@@ -39,8 +39,11 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 1.5.0
+Add the option to save each playlist to a dedicated folder - thanks to [@saydax](https://github.com/saydax) for the request
+
 ##### 1.4.0
-make song title a link
+Make song title a link - thanks to [@shayanypn](https://github.com/shayanypn)
 
 ##### 1.3.0
 - Allow to change the audio quality

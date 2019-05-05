@@ -25,11 +25,11 @@ class Main extends React.Component<{}, {}> {
   }
 
   downloadVideo = async (video: IVideoEntity) => {
-    download(video.id)
+    download(video);
   }
 
   downloadAll = () => {
-    download(store.videos.map(videos => videos.id));
+    download(store.videos);
   }
 
   public render() {
