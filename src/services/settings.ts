@@ -6,6 +6,7 @@ export interface IConfig {
   downloadsFolder: string;
   audioQuality: DownloadQuality;
   playlistFolder: boolean;
+  autoPaste: boolean;
 }
 
 class SettingsManager implements IConfig {
@@ -28,11 +29,19 @@ class SettingsManager implements IConfig {
   }
 
   get playlistFolder(): boolean {
-    return localStorage.getItem('playlistFolder') === 'true';
+    return JSON.parse(localStorage.getItem('playlistFolder'));
   }
 
   set playlistFolder(playlistFolder: boolean) {
     localStorage.setItem('playlistFolder', '' + playlistFolder);
+  }
+
+  get autoPaste(): boolean {
+    return JSON.parse(localStorage.getItem('autoPaste'));
+  }
+
+  set autoPaste(autoPaste: boolean) {
+    localStorage.setItem('autoPaste', '' + autoPaste);
   }
 }
 
