@@ -13,18 +13,21 @@ const qualityOptions: IQualityOption[] = ['highest', 'lowest'].map(option => ({
 
 interface IPreferencesModalState extends IConfig {
   downloadsFolder: string;
-  quality: DownloadQuality;
+  audioQuality: DownloadQuality;
   playlistFolder: boolean;
+  autoPaste: boolean;
 }
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   componentWillMount() {
-    const { downloadsFolder, audioQuality: quality, playlistFolder } = settingsManager;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste } = settingsManager;
     this.setState({
       downloadsFolder,
-      quality,
-      playlistFolder
+      audioQuality,
+      playlistFolder,
+      autoPaste,
     });
+    console.log(autoPaste);
   }
 
   openDirectoryExplorer = () => {
@@ -43,25 +46,17 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
     })
   }
 
-  onChangeQuality = (e: SyntheticEvent, data: DropdownProps) => {
-    const quality = data.value as DownloadQuality;
-
-    settingsManager.audioQuality = quality;
+  handleFieldChange = (e: SyntheticEvent, data: CheckboxProps | DropdownProps) => {
+    const prop = typeof data.checked === 'undefined' ? data.value : data.checked;
+    settingsManager[data.id] = prop;
     this.setState({
-      quality
-    });
-  }
-
-  onChangeDedicatedFolder = (e: SyntheticEvent, data: CheckboxProps) => {
-    settingsManager.playlistFolder = data.checked;
-    this.setState({
-      playlistFolder: data.checked
-    });
+      [data.id]: prop
+    } as Pick<IPreferencesModalState, keyof IPreferencesModalState>)
   }
 
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, quality, playlistFolder } = this.state;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -83,16 +78,27 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
               `} inverted />
             </label>
             <label>
-              <Checkbox slider onChange={this.onChangeDedicatedFolder} checked={playlistFolder} />
+              <Checkbox id="playlistFolder" slider onChange={this.handleFieldChange} checked={playlistFolder} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>
+              Auto paste Youtube URLs <Popup trigger={<Icon name="help circle" />} content={`
+              If enabled, when the app get focus and Youtube URL just copied, the URL will automatic pasted to the search's input
+              `} inverted />
+            </label>
+            <label>
+              <Checkbox id="autoPaste" slider onChange={this.handleFieldChange} checked={autoPaste} />
             </label>
           </Form.Field>
           <Form.Field inline>
             <label>Quality</label>
             <label>
               <Dropdown
+                id="audioQuality"
                 options={qualityOptions}
-                onChange={this.onChangeQuality}
-                value={quality} />
+                onChange={this.handleFieldChange}
+                value={audioQuality} />
             </label>
           </Form.Field>
         </Form>

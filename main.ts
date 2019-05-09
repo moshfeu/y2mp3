@@ -10,6 +10,7 @@ import { join } from 'path';
 import * as isDev from 'electron-is-dev';
 import { platform, homedir } from 'os';
 import { existsSync } from 'fs';
+import { EWindowEvents } from './src/types';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -70,6 +71,8 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     win = null
+  }).on('focus', () => {
+    win.webContents.send(EWindowEvents.WINDOW_FOCUS);
   });
 
   // Create the Application's main menu
@@ -78,14 +81,14 @@ function createWindow() {
       submenu: [{
           label: "About y2mp3",
           click: function () {
-            win.webContents.send('open-about');
+            win.webContents.send(EWindowEvents.OPEN_ABOUT);
           }
         },
         {
           label: "Preferences",
           accelerator: "CommandOrControl+,",
           click: function () {
-            win.webContents.send('open-preferences');
+            win.webContents.send(EWindowEvents.OPEN_PREFERENCES);
           }
         },
         {

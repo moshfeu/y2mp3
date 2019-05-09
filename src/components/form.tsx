@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { isDev } from '../services/additional-arguments';
+import { ipcRenderer, clipboard } from '../services/electron-adapter';
+import { EWindowEvents } from '../types';
+import { isYoutubeURL } from '../services/api';
+import { settingsManager } from '../services/settings';
 
 interface IFormProps {
   onSubmit: (url: string) => void;
@@ -15,13 +19,27 @@ interface IFormState {
 }
 
 export class Form extends React.Component<IFormProps, IFormState> {
-  constructor(props) {
+  constructor(props: IFormProps) {
     super(props);
     this.state = {
       terms: isDev ? 'https://www.youtube.com/watch?v=l_KUFBUC6Mg&list=PLtKALR6MChByCrbKkdxWwPOOMqM2ECPDv&index=2' : '',
       containerActive: true,
       inProcess: false
     }
+  }
+
+  componentDidMount() {
+    ipcRenderer.on(EWindowEvents.WINDOW_FOCUS, () => {
+      if (!settingsManager.autoPaste) {
+        return;
+      }
+      const clipboardContent = clipboard.readText();
+      if (isYoutubeURL(clipboardContent)) {
+        this.setState({
+          terms: clipboardContent
+        });
+      }
+    });
   }
 
   componentWillReceiveProps(newProps: IFormProps, currentProps: IFormProps) {

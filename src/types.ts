@@ -56,3 +56,9 @@ export interface IQualityOption {
   text: DownloadQuality;
   value: DownloadQuality;
 }
+
+export enum EWindowEvents {
+  OPEN_ABOUT = 'open-about',
+  OPEN_PREFERENCES = 'open-preferences',
+  WINDOW_FOCUS = 'window-focus'
+}

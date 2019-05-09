@@ -33,6 +33,10 @@ export function setFfmpegPath() {
   (ffmpeg as any).setFfmpegPath(ffmpegPath());
 }
 
+export function isYoutubeURL(url: string): boolean {
+  return !!url && !!urlParser.parse(url);
+}
+
 export function fetchVideos(term: string): Promise<IVideoEntity[]> {
   try {
     const parsedTerm = urlParser.parse(term);
