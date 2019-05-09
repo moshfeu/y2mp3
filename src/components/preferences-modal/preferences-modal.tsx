@@ -27,7 +27,6 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
       playlistFolder,
       autoPaste,
     });
-    console.log(autoPaste);
   }
 
   openDirectoryExplorer = () => {
