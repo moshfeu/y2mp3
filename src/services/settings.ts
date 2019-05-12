@@ -1,6 +1,6 @@
 import { DOWNLOADS_FOLDER } from './path';
 import { downloader } from './api';
-import { DownloadQuality } from 'youtube-mp3-downloader';
+import { DownloadQuality, DownloadFormat } from 'youtube-mp3-downloader';
 
 export interface IConfig {
   downloadsFolder: string;
@@ -42,6 +42,15 @@ class SettingsManager implements IConfig {
 
   set autoPaste(autoPaste: boolean) {
     localStorage.setItem('autoPaste', '' + autoPaste);
+  }
+
+  get downloadFormat(): DownloadFormat {
+    return (localStorage.getItem('downloadFormat') || 'mp3') as DownloadFormat;
+  }
+
+  set downloadFormat(downloadFormat: DownloadFormat) {
+    localStorage.setItem('downloadFormat', downloadFormat);
+    downloader.setFormat(downloadFormat);
   }
 }
 
