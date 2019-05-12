@@ -22,7 +22,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
     this.state = {
-      terms: isDev ? 'https://www.youtube.com/watch?v=l_KUFBUC6Mg&list=PLtKALR6MChByCrbKkdxWwPOOMqM2ECPDv&index=2' : '',
+      terms: isDev ? 'https://www.youtube.com/playlist?list=PLtKALR6MChBz1gYizYPwjggc5BGAmYRRK' : '',
       containerActive: true,
       inProcess: false
     }

@@ -18,7 +18,8 @@ export const downloader = new YoutubeMp3Downloader({
   youtubeVideoQuality: settingsManager.audioQuality,       // What video quality should be used?
   queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
   progressTimeout: 1000,                 // How long should be the interval of the progress reports
-  filter: 'audio'
+  filter: 'audio',
+  format: 'wma',
 })
   .on('addToQueue', videoId => store.addToQueue(videoId))
   .on('gettingInfo', videoId => store.gettingInfo(videoId))
