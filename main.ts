@@ -10,7 +10,12 @@ import { join } from 'path';
 import * as isDev from 'electron-is-dev';
 import { platform, homedir } from 'os';
 import { existsSync } from 'fs';
-import { EWindowEvents } from './src/types';
+
+enum EWindowEvents {
+  OPEN_ABOUT = 'open-about',
+  OPEN_PREFERENCES = 'open-preferences',
+  WINDOW_FOCUS = 'window-focus'
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
