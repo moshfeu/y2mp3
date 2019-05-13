@@ -1,5 +1,5 @@
 import { videoInfo } from 'ytdl-core';
-import { DownloadQuality } from 'youtube-mp3-downloader';
+import { SemanticCOLORS } from 'semantic-ui-react';
 
 export interface IVideoEntity {
   id: string;
@@ -61,4 +61,13 @@ export enum EWindowEvents {
   OPEN_ABOUT = 'open-about',
   OPEN_PREFERENCES = 'open-preferences',
   WINDOW_FOCUS = 'window-focus'
+}
+
+export type MessagePosition = 'top' | 'bottom';
+export type MessageContent = string | JSX.Element;
+export interface IMessage {
+  isVisible: boolean;
+  position?: MessagePosition,
+  color?: SemanticCOLORS;
+  content?: MessageContent;
 }

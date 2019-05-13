@@ -33,7 +33,7 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render() {
-    const { searchInProgress, videos } = store;
+    const { searchInProgress, videos, message } = store;
     return (
       <div className="main">
         <Form
@@ -65,8 +65,8 @@ class Main extends React.Component<{}, {}> {
         }
         <AboutModal open={store.isAboutOpen} onClose={closeModal} />
         <PreferencesModal open={store.isPreferencesOpen} onClose={closeModal} />
-        <div className={classNames('errors', {'-has-errors': store.termsIsInvalid})}>
-          <Message color="red" compact>Can't find media (url is not supported, invalid or private video)</Message>
+        <div className={classNames(['messages', message.position, {'-visible': message.isVisible}])}>
+          <Message color={message.color} compact>{message.content}</Message>
         </div>
       </div>
     );

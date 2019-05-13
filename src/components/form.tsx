@@ -4,6 +4,7 @@ import { ipcRenderer, clipboard } from '../services/electron-adapter';
 import { EWindowEvents } from '../types';
 import { isYoutubeURL } from '../services/api';
 import { settingsManager } from '../services/settings';
+import { showSuccessPasted } from '../services/modalsAndAlerts';
 
 interface IFormProps {
   onSubmit: (url: string) => void;
@@ -34,7 +35,8 @@ export class Form extends React.Component<IFormProps, IFormState> {
         return;
       }
       const clipboardContent = clipboard.readText();
-      if (isYoutubeURL(clipboardContent)) {
+      if (isYoutubeURL(clipboardContent) && clipboardContent !== this.state.terms) {
+        showSuccessPasted();
         this.setState({
           terms: clipboardContent
         });

@@ -1,9 +1,9 @@
 import { observable, computed, action, toJS } from 'mobx';
-import { IVideoEntity, EVideoStatus } from '../types';
+import { IVideoEntity, EVideoStatus, IMessage } from '../types';
 import { fetchVideos } from '../services/api';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
-import { showTermsIsInvalid } from '../services/modalsAndAlerts';
+import { showTermsIsInvalid, hideMessage } from '../services/modalsAndAlerts';
 
 class Store {
   @observable searchTerm: string;
@@ -13,6 +13,9 @@ class Store {
   @observable isAboutOpen: boolean;
   @observable isPreferencesOpen: boolean;
   @observable termsIsInvalid: boolean;
+  @observable message: IMessage = {
+    isVisible: false
+  };
 
   constructor() {
     this.isFFMpegInstalled = isFFMpegInstalled();
@@ -21,7 +24,7 @@ class Store {
   @action search = async (term: string): Promise<void> => {
     this.searchTerm = term;
     this.searchInProgress = true;
-    this.termsIsInvalid = false;
+    hideMessage();
     this.videos = await fetchVideos(this.searchTerm);
     if (!this.videos.length) {
       showTermsIsInvalid();

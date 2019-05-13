@@ -3,7 +3,7 @@
     margin-top: 10px;
   }
 
-  .errors {
+  .messages {
     position: fixed;
     opacity: 0;
     width: 100%;
@@ -11,7 +11,12 @@
     transition: opacity .3s ease;
     bottom: 10px;
 
-    &.-has-errors {
+    &.top {
+      bottom: auto;
+      top: 10px;
+    }
+
+    &.-visible {
       pointer-events: none;
       opacity: 1;
     }
