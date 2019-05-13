@@ -39,7 +39,7 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
-##### 1.6.0
+##### 1.6.0 (Thanks to [softpedia](https://www.softpedia.com/get/Internet/Download-Managers/y2mp3.shtml) for the ideas)
 - Allow to choose different audio formats (mp3, wav, flac, m4a, wma, ogg, aac)
 - Copied URLs will be automatically be loaded into the app.
 
