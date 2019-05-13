@@ -1,10 +1,16 @@
 import * as React from 'react';
+import { Popup, Icon, List, ListItemProps, Dropdown, PopupProps } from 'semantic-ui-react';
+import * as classNames from 'classnames';
+import { formatOptions } from '../preferences-modal/lists';
 
 export enum ButtonProgressStates {
   LOADING = 'state-loading',
   SUCCESS = 'state-success'
 }
 export interface IButtonProgressProps extends Partial<HTMLButtonElement> {
+  options?: string[];
+  onItemClick?: (event: React.MouseEvent<HTMLAnchorElement>, data: ListItemProps) => void;
+  isItemActive?: (option: string) => boolean;
   text: string;
   onClick: () => void;
   progress?: number;
@@ -87,14 +93,42 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     return '';
   }
 
+  optionsDropdown = () => {
+    const { options = [], onItemClick, isItemActive = () => false } = this.props;
+
+    const hasOptions = !!options.length;
+    if (!hasOptions) {
+      return;
+    }
+    const items = options.map(option => {
+      return <List.Item active={isItemActive(option)} key={option} value={option}><span>{option}</span></List.Item>
+    });
+    const dropdownHandler = () => <div><Icon name='angle down' /></div>;
+    const shouldShowDropdown = !this.isDone && !this.isLoading;
+
+    if (!shouldShowDropdown) {
+      return dropdownHandler()
+    }
+    return (
+      <Popup trigger={dropdownHandler()} flowing hoverable>
+        {!this.isLoading && !this.isDone &&
+          <List selection onItemClick={onItemClick} items={items} />
+        }
+      </Popup>
+    );
+  }
+
   render() {
-    const { text, disabled } = this.props;
+    const { text, disabled, options = [] } = this.props;
     const { progress } = this.state;
 
     return (
       <button data-hook="button" className={`button-progress ${this.buttonCssState}`} onClick={this.onClick} disabled={disabled} data-style="rotate-side-down" data-perspective="" data-horizontal="">
         <span className="progress-wrap">
-          <span className="content" data-hook="content">{text}</span>
+          <span className={classNames(['content', {'-with-options': options.length }])} data-hook="content">
+            {text}
+            {this.optionsDropdown()}
+          </span>
           <span className="progress">
             <span className={`progress-inner${!this.isLoading ? ' notransition' : ''}`} style={{width: `${progress}%`, opacity: 1}}></span>
             <span className="progress-counter" data-hook="progress-counter">{progress}%</span>

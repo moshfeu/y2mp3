@@ -31,13 +31,36 @@
   }
 
   .content {
+    $button-bg: #1d9650;
+    $button-bg-hover: #095027;
+
     padding: 0 30px;
-    background: #1d9650;
+    background: $button-bg;
     position: relative;
     display: block;
 
+    &.-with-options {
+      display: flex;
+      padding-right: 11px;
+
+      div {
+        margin-left: 3px;
+      }
+
+      i {
+        margin: 0;
+        width: 16px;
+        display: block;
+        height: auto;
+      }
+    }
+
     &:hover {
-      background: #095027;
+      background: $button-bg-hover;
+
+      &:before {
+        background: $button-bg-hover;
+      }
     }
 
     &::before,
@@ -48,9 +71,12 @@
       font-family: "icomoon";
       opacity: 0;
       transition: opacity 0.3s 0.3s;
+      pointer-events: none;
     }
 
     &::before {
+      background: $button-bg;
+      padding: 0 3px;
       content: "\e600";
 
       @include parent('.state-success') {
