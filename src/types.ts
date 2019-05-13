@@ -52,9 +52,9 @@ export enum EVideoStatus {
   DONE = 'Done'
 }
 
-export interface IQualityOption {
-  text: DownloadQuality;
-  value: DownloadQuality;
+export interface IDropdownOption {
+  text: string;
+  value: string;
 }
 
 export enum EWindowEvents {

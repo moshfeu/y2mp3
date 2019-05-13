@@ -1,31 +1,29 @@
 import * as React from 'react';
-import { IModalProps, IQualityOption } from '../../types';
+import { IModalProps, IDropdownOption } from '../../types';
 import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps, Popup } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
-import { DownloadQuality } from 'youtube-mp3-downloader';
+import { DownloadQuality, DownloadFormat } from 'youtube-mp3-downloader';
 import { SyntheticEvent } from 'react';
-
-const qualityOptions: IQualityOption[] = ['highest', 'lowest'].map(option => ({
-  text: option,
-  value: option,
-}));
+import { qualityOptions, formatOptions } from './lists';
 
 interface IPreferencesModalState extends IConfig {
   downloadsFolder: string;
   audioQuality: DownloadQuality;
   playlistFolder: boolean;
   autoPaste: boolean;
+  downloadFormat: DownloadFormat;
 }
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   componentWillMount() {
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste } = settingsManager;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat } = settingsManager;
     this.setState({
       downloadsFolder,
       audioQuality,
       playlistFolder,
       autoPaste,
+      downloadFormat,
     });
   }
 
@@ -55,7 +53,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
 
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste } = this.state;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -67,6 +65,16 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             <label>
               <span title={downloadsFolder} className="path-container">{downloadsFolder}</span>
               <Button className="open-directory-button" icon='folder open outline' onClick={this.openDirectoryExplorer} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>Download format</label>
+            <label>
+              <Dropdown
+                id="downloadFormat"
+                options={formatOptions}
+                onChange={this.handleFieldChange}
+                value={downloadFormat} />
             </label>
           </Form.Field>
           <Form.Field inline>
