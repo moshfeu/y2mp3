@@ -41,7 +41,7 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ##### 1.6.0
 - Allow to choose different audio formats (mp3, wav, flac, m4a, wma, ogg, aac)
-- Auto paste URL if a valid URL was copy
+- Auto paste URL if a valid URL was copied
 
 ##### 1.5.0
 Add the option to save each playlist to a dedicated folder - thanks to [@saydax](https://github.com/saydax) for the request
