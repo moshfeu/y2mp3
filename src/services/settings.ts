@@ -37,7 +37,7 @@ class SettingsManager implements IConfig {
   }
 
   get autoPaste(): boolean {
-    return JSON.parse(localStorage.getItem('autoPaste'));
+    return JSON.parse(localStorage.getItem('autoPaste') || 'true');
   }
 
   set autoPaste(autoPaste: boolean) {
