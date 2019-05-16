@@ -7,7 +7,7 @@
 
 ## What is "Y2Mp3" app?
 
-A simple desktop application to download Youtube videos to mp3, one by one or all of them.
+A simple desktop application to download Youtube videos to audio formats, one by one or all of them.
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
