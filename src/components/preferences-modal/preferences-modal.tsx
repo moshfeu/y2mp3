@@ -28,7 +28,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
   }
 
   openDirectoryExplorer = () => {
-    remote.dialog.showOpenDialog({
+    remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
       properties: [
         "openDirectory",
         "createDirectory",
