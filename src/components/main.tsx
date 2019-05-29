@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as DOM from 'react-dom';
 import store from '../mobx/store';
 import { observer } from 'mobx-react';
-import { download } from '../services/api';
+import { download, isFfmpegInPath } from '../services/api';
 import { IVideoEntity } from '../types';
 import { Video } from './video';
 import { Form } from './form';
@@ -13,7 +13,7 @@ import { InstallFFMpeg } from './install-ffmpeg';
 import { AboutModal } from './about-modal';
 import { PreferencesModal } from './preferences-modal/preferences-modal';
 import { ElectronEventsListener } from './electron-events-listener';
-import { closeModal} from '../services/modalsAndAlerts';
+import { closeModal } from '../services/modalsAndAlerts';
 import { Message } from 'semantic-ui-react';
 import * as classNames from 'classnames';
 
@@ -22,6 +22,12 @@ class Main extends React.Component<{}, {}> {
 
   constructor(props: any) {
     super(props);
+  }
+
+  async componentDidMount() {
+    if (await isFfmpegInPath()) {
+      store.isFFMpegInstalled = true;
+    }
   }
 
   downloadVideo = async (video: IVideoEntity) => {

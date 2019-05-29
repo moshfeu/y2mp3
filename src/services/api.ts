@@ -12,6 +12,14 @@ import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
+import * as commandExists from 'command-exists';
+
+export function isFfmpegInPath() {
+  return new Promise(resolve => {
+    commandExists('ffmpeg', (err, exists: boolean) => resolve(exists));
+  });
+}
+
 export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
   outputPath: settingsManager.downloadsFolder,         // Where should the downloaded and encoded files be stored?
