@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as DOM from 'react-dom';
 import store from '../mobx/store';
 import { observer } from 'mobx-react';
-import { download, isFfmpegInPath } from '../services/api';
+import { download } from '../services/api';
 import { IVideoEntity } from '../types';
 import { Video } from './video';
 import { Form } from './form';
@@ -22,12 +22,6 @@ class Main extends React.Component<{}, {}> {
 
   constructor(props: any) {
     super(props);
-  }
-
-  async componentDidMount() {
-    if (await isFfmpegInPath()) {
-      store.isFFMpegInstalled = true;
-    }
   }
 
   downloadVideo = async (video: IVideoEntity) => {

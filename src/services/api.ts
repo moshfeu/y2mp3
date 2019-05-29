@@ -12,12 +12,10 @@ import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-import * as commandExists from 'command-exists';
+import { sync as commandExistsSync } from 'command-exists';
 
 export function isFfmpegInPath() {
-  return new Promise(resolve => {
-    commandExists('ffmpeg', (err, exists: boolean) => resolve(exists));
-  });
+  return commandExistsSync('ffmpeg');
 }
 
 export const downloader = new YoutubeMp3Downloader({
