@@ -38,6 +38,7 @@
   "dependencies": {
     "@types/node": "^11.13.9",
     "classnames": "^2.2.6",
+    "command-exists": "^1.2.8",
     "downloads-folder": "^1.0.1",
     "electron-is-dev": "^1.0.1",
     "enzyme": "^3.7.0",
