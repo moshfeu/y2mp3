@@ -59,6 +59,7 @@ deploy:
   file:
     - dist/*.dmg
     - dist/*.AppImage
+    - dist/*.exe
   target_commitish: $TRAVIS_COMMIT
   tag_name: $TRAVIS_TAG
   overwrite: true
