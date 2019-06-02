@@ -43,6 +43,7 @@
     "electron-is-dev": "^1.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.1",
+    "fix-path": "^2.1.0",
     "js-video-url-parser": "^0.2.8",
     "mkdirp": "^0.5.1",
     "mobx": "^5.8.0",

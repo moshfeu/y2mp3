@@ -10,6 +10,8 @@ import { join } from 'path';
 import * as isDev from 'electron-is-dev';
 import { platform, homedir } from 'os';
 import { existsSync } from 'fs';
+import * as fixPath from 'fix-path';
+fixPath();
 
 enum EWindowEvents {
   OPEN_ABOUT = 'open-about',
