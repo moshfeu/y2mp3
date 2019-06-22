@@ -78,7 +78,7 @@ Fetch videos from youtube playlist and download them one by one or all.
 
 ## Development
 
-    mpm install
+    npm install
     npm start
 
 
