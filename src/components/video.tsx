@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { IVideoEntity, EVideoStatus } from '../types';
+import { IVideoEntity, EVideoStatus, IButtonProgressOptions } from '../types';
 import { ButtonProgress } from './button-progress';
 import { shell } from '../services/electron-adapter';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from 'youtube-mp3-downloader';
 
-const options = formatOptions.map(option => option.text);
+const options: IButtonProgressOptions[] = formatOptions.map(option => {
+  return {
+    content: option.text,
+    header: option.disabled
+  }
+});
 
 interface IVideoProps {
   style?: React.CSSProperties,

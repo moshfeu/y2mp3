@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { Popup, Icon, List, ListItemProps, Dropdown, PopupProps } from 'semantic-ui-react';
+import { Popup, Icon, List, ListItemProps, Dropdown, PopupProps, Menu, MenuItemProps } from 'semantic-ui-react';
 import * as classNames from 'classnames';
-import { formatOptions } from '../preferences-modal/lists';
+import { IButtonProgressOptions } from '../../types';
 
 export enum ButtonProgressStates {
   LOADING = 'state-loading',
   SUCCESS = 'state-success'
 }
+
 export interface IButtonProgressProps extends Partial<HTMLButtonElement> {
-  options?: string[];
+  options?: IButtonProgressOptions[];
   onItemClick?: (event: React.MouseEvent<HTMLAnchorElement>, data: ListItemProps) => void;
   isItemActive?: (option: string) => boolean;
   text: string;
@@ -62,7 +63,10 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     }, 2000);
   }
 
-  onClick = () => {
+  onClick = (e: React.SyntheticEvent) => {
+    if ((e.target as Element).classList.contains('disabled')) {
+      return;
+    }
     if (this.props.onClick) {
       return this.props.onClick();
     }
@@ -101,7 +105,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
       return;
     }
     const items = options.map(option => {
-      return <List.Item active={isItemActive(option)} key={option} value={option}><span>{option}</span></List.Item>
+      return <Menu.Item disabled={option.header} key={option.content} value={option.content}><span className={classNames({disabled: option.header})}>{option.content}</span></Menu.Item>
     });
     const dropdownHandler = () => <div><Icon name='angle down' /></div>;
     const shouldShowDropdown = !this.isDone && !this.isLoading;
@@ -112,7 +116,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     return (
       <Popup trigger={dropdownHandler()} flowing hoverable>
         {!this.isLoading && !this.isDone &&
-          <List selection onItemClick={onItemClick} items={items} />
+          <Menu vertical secondary onItemClick={onItemClick} items={items} activeIndex={options.findIndex(i => isItemActive(i.content))} />
         }
       </Popup>
     );
