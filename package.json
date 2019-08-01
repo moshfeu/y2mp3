@@ -84,7 +84,7 @@
     "typescript": "^3.2.4",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
-    "ytdl-core": "^0.26.3"
+    "ytdl-core": "^0.29.5"
   },
   "build": {
     "appId": "moshfeu.y2mp3",
