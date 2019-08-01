@@ -6,6 +6,7 @@ import { shell } from '../services/electron-adapter';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from 'youtube-mp3-downloader';
+import { Popup } from 'semantic-ui-react';
 
 const options: IButtonProgressOptions[] = formatOptions.map(option => {
   return {
@@ -50,10 +51,14 @@ export class Video extends React.Component<IVideoProps, any> {
     return (
       <div className="video" style={{backgroundImage, ...style}}>
         <div className="details">
-          <div className="name"
-            onClick={this.onClickTitle}>
-            {video.name}
-          </div>
+          <Popup
+            trigger={<div className="name"
+              onClick={this.onClickTitle}>
+              {video.name}
+            </div>}
+            content={video.name}
+            inverted
+          />
           <div className="button">
             <ButtonProgress
               text={text}

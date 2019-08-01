@@ -10,6 +10,7 @@
     text-align: center;
     transition: opacity .3s ease;
     bottom: 10px;
+    pointer-events: none;
 
     &.top {
       bottom: auto;

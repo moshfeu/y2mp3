@@ -25,6 +25,10 @@ export function closeModal() {
   }
 }
 
+export function showNoInternet() {
+  showMessage('red', `Seems like I'm not connected to the internet`, 3000);
+}
+
 export function showTermsIsInvalid() {
   showMessage('red', `Can't find media (url is not supported, invalid or private video)`, 3000);
 }
@@ -37,7 +41,7 @@ function showMessage(color: SemanticCOLORS, content: MessageContent, time: numbe
   const { message } = store;
   message.position = position;
   message.color = color;
-  message.content = content;
+  message.content = `🤖 ${content}`;
   message.isVisible = true;
   if (!!time) {
     hideMessage(time);
