@@ -4582,10 +4582,10 @@ m3u8stream@^0.2.1:
   dependencies:
     miniget "^1.1.0"
 
-m3u8stream@^0.4.2:
-  version "0.4.2"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/m3u8stream/-/m3u8stream-0.4.2.tgz#c93aefde522e4eaeac7e942cfab83973675a4f11"
-  integrity sha1-yTrv3lIuTq6sfpQs+rg5c2daTxE=
+m3u8stream@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.6.2.tgz#c2c62ddce88156d80378dd59be010c8b8e9d120b"
+  integrity sha512-WsuM2bd5pPN80xvfrB+1DZqr4M7+kJl8byi6+ZCy6cmVjEiHhmr/desN53Ngsa6Hs13kYumeVgT4wL0oIJ+v6g==
   dependencies:
     miniget "^1.4.0"
     sax "^1.2.4"
@@ -4801,6 +4801,11 @@ miniget@^1.1.0, miniget@^1.4.0:
   version "1.5.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/miniget/-/miniget-1.5.1.tgz#4f93840d5aaed21634cd12fd07d22f7d64e9d570"
   integrity sha1-T5OEDVqu0hY0zRL9B9IvfWTp1XA=
+
+miniget@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/miniget/-/miniget-1.5.3.tgz#d796c7291970d1dfa28b646d9aba3fa6b377c5e8"
+  integrity sha512-6xiJs3ZGBdrNMlPNlEWirHhY53hSW33nG1Ytub9Cg5+jLhFPn9PGe4FmPZK9WlmDE1N7/8DEL7PGr7r9kbxwgw==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -8043,12 +8048,12 @@ ytdl-core@^0.20.1:
     miniget "^1.1.0"
     sax "^1.1.3"
 
-ytdl-core@^0.26.3:
-  version "0.26.3"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/ytdl-core/-/ytdl-core-0.26.3.tgz#33b5b8991dff0d5b6a1ffea3edf4a4e945b46549"
-  integrity sha1-M7W4mR3/DVtqH/6j7fSk6UW0ZUk=
+ytdl-core@^0.29.5:
+  version "0.29.5"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.29.5.tgz#278052a1a5a1a75c5931c229b804c0798f18858c"
+  integrity sha512-6WOoLQCeovo/aFYeMKeEXjvS/L+0j/vq85AYF86KSmkSA3lMzUzMdtmlo0GjsrOUN79S03MDkSgXEWOZBWL1Rg==
   dependencies:
     html-entities "^1.1.3"
-    m3u8stream "^0.4.2"
-    miniget "^1.4.0"
+    m3u8stream "^0.6.2"
+    miniget "^1.5.3"
     sax "^1.1.3"

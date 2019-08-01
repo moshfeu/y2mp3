@@ -3,7 +3,7 @@ import { IVideoEntity, EVideoStatus, IMessage } from '../types';
 import { fetchVideos } from '../services/api';
 import { IVideoTask } from 'youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
-import { showTermsIsInvalid, hideMessage } from '../services/modalsAndAlerts';
+import { showTermsIsInvalid, hideMessage, showNoInternet } from '../services/modalsAndAlerts';
 
 class Store {
   @observable searchTerm: string;
@@ -25,11 +25,18 @@ class Store {
     this.searchTerm = term;
     this.searchInProgress = true;
     hideMessage();
-    this.videos = await fetchVideos(this.searchTerm);
-    if (!this.videos.length) {
-      showTermsIsInvalid();
+    try {
+      this.videos = await fetchVideos(this.searchTerm);
+      if (!this.videos.length) {
+        showTermsIsInvalid();
+      }
+    } catch (error) {
+      if (error.code === 'ENOTFOUND') {
+        showNoInternet();
+      }
+    } finally {
+      this.searchInProgress = false;
     }
-    this.searchInProgress = false;
   }
 
   @action clearResult(): void {
@@ -67,10 +74,6 @@ class Store {
       video.status = EVideoStatus.DONE;
       video.progress = 0;
       console.log('done');
-    }
-
-    if (err) {
-      alert(err);
     }
   }
 

@@ -23,6 +23,10 @@
     padding-right: 10px;
     cursor: pointer;
     opacity: 0.8;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
     &:hover {
       opacity: 1;
     }

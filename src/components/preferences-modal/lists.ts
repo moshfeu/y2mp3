@@ -1,10 +1,25 @@
 import { IDropdownOption } from '../../types';
-import { formats } from 'youtube-mp3-downloader/lib/options';
+import { audioFormats, videoFormats } from 'youtube-mp3-downloader/lib/options';
 
-const toDropdownItems = (option: string) => ({
-  text: option,
-  value: option,
+const toDropdownItems = (option: string, isHeader: boolean = false) => {
+  const optionItem: IDropdownOption = {
+    text: option,
+    value: option,
+  }
+  if (isHeader) {
+    optionItem.disabled = true;
+  }
+  return optionItem;
+};
+
+export const qualityOptions: IDropdownOption[] = ['highest', 'lowest'].map(option => toDropdownItems(option));
+
+const formatsItems = {
+  'Audio Formats': 'header',
+  ...audioFormats,
+  'Video Formats': 'header',
+  ...videoFormats,
+};
+export const formatOptions: IDropdownOption[] = Object.keys(formatsItems).map(key => {
+  return toDropdownItems(key, formatsItems[key] === 'header')
 });
-
-export const qualityOptions: IDropdownOption[] = ['highest', 'lowest'].map(toDropdownItems);
-export const formatOptions: IDropdownOption[] = Object.keys(formats).map(toDropdownItems);

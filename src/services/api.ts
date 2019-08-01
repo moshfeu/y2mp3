@@ -31,10 +31,25 @@ export const downloader = new YoutubeMp3Downloader({
   .on('gettingInfo', videoId => store.gettingInfo(videoId))
   .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
   .on('finished', (err, { videoId }) => store.finished(err, { videoId }))
-  .on('error', err => {
+  .on('error', (err, { videoId }) => {
     alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
     console.error(err);
+    finishVideoOnError(err, videoId);
   });
+
+function finishVideoOnError(err, videoId: string) {
+  store.progress({videoId, progress: {
+    delta: 0,
+    eta: 0,
+    length: 0,
+    percentage: 100,
+    transferred: 0,
+    remaining: 0,
+    runtime: 0,
+    speed: 0
+  }})
+  store.finished(err, { videoId })
+}
 
 export function setFfmpegPath() {
   (ffmpeg as any).setFfmpegPath(ffmpegPath());
@@ -45,18 +60,14 @@ export function isYoutubeURL(url: string): boolean {
 }
 
 export function fetchVideos(term: string): Promise<IVideoEntity[]> {
-  try {
-    const parsedTerm = urlParser.parse(term);
-    if (!parsedTerm) {
-      return Promise.resolve([]);
-    }
-    if (parsedTerm.list) {
-      return fetchVideosFromList(term);
-    }
-    return fetchVideoFromSingle(term);
-  } catch (error) {
-    console.error(error);
+  const parsedTerm = urlParser.parse(term);
+  if (!parsedTerm) {
+    return Promise.resolve([]);
   }
+  if (parsedTerm.list) {
+    return fetchVideosFromList(term);
+  }
+  return fetchVideoFromSingle(term);
 }
 
 async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {

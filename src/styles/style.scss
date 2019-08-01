@@ -1,5 +1,6 @@
 @import './colors.scss';
 @import './mixin.scss';
+@import './semantic-reset.scss';
 @import './components/index.scss';
 
 @font-face {
@@ -31,8 +32,4 @@ body {
 
 .hidden {
   display: none;
-}
-
-.ui.dimmer {
-  background: rgba(0, 0, 0, .95);
 }

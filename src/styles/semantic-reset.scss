@@ -1,0 +1,22 @@
+.ui.dropdown .menu>.disabled.item {
+  pointer-events: none !important;
+}
+
+.ui.dropdown.menu-right {
+  .menu {
+    left: auto;
+    right: 0;
+  }
+  .disabled {
+    cursor: default;
+    color: #333;
+  }
+}
+
+.ui.vertical.menu {
+  width: auto;
+}
+
+.ui.dimmer {
+  background: rgba(0, 0, 0, .95);
+}

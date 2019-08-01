@@ -7,7 +7,7 @@
 
 ## What is "Y2Mp3" app?
 
-A simple desktop application to download Youtube videos to audio formats, one by one or all of them.
+A simple desktop application to download Youtube videos to video and audio formats, one by one or all of them.
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
@@ -38,6 +38,11 @@ A simple desktop application to download Youtube videos to audio formats, one by
 Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://github.com/moshfeu/y2mp3/releases/latest)
 
 ## Change log
+
+##### 2.0.0
+
+- Allow to download videos! (supported formats: mp4, wmv, mpg)
+- Bug fixes and UI improvements
 
 ##### 1.7.0
 
@@ -81,6 +86,10 @@ Fetch videos from youtube playlist and download them one by one or all.
     npm install
     npm start
 
+Or
+
+    yarn
+    yarn start
 
 ### Stack
 

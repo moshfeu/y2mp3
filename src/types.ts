@@ -1,5 +1,5 @@
 import { videoInfo } from 'ytdl-core';
-import { SemanticCOLORS } from 'semantic-ui-react';
+import { SemanticCOLORS, MenuItemProps } from 'semantic-ui-react';
 
 export interface IVideoEntity {
   id: string;
@@ -53,8 +53,14 @@ export enum EVideoStatus {
 }
 
 export interface IDropdownOption {
+  disabled?: boolean;
   text: string;
   value: string;
+}
+
+export interface IButtonProgressOptions extends MenuItemProps {
+  content: string;
+  header: boolean;
 }
 
 export enum EWindowEvents {

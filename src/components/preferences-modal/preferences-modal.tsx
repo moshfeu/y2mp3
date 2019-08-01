@@ -71,6 +71,8 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             <label>Download format</label>
             <label>
               <Dropdown
+                scrolling
+                className="menu-right"
                 id="downloadFormat"
                 options={formatOptions}
                 onChange={this.handleFieldChange}
