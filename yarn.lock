@@ -4575,13 +4575,6 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-m3u8stream@^0.2.1:
-  version "0.2.2"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/m3u8stream/-/m3u8stream-0.2.2.tgz#02ef837253595f2557efab86c4234018e8a60da2"
-  integrity sha1-Au+DclNZXyVX76uGxCNAGOimDaI=
-  dependencies:
-    miniget "^1.1.0"
-
 m3u8stream@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.6.2.tgz#c2c62ddce88156d80378dd59be010c8b8e9d120b"
@@ -4797,7 +4790,7 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-miniget@^1.1.0, miniget@^1.4.0:
+miniget@^1.4.0:
   version "1.5.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/miniget/-/miniget-1.5.1.tgz#4f93840d5aaed21634cd12fd07d22f7d64e9d570"
   integrity sha1-T5OEDVqu0hY0zRL9B9IvfWTp1XA=
@@ -8022,14 +8015,14 @@ yauzl@2.4.1:
     fd-slicer "~1.0.1"
 
 "youtube-mp3-downloader@git+https://github.com/moshfeu/youtube-mp3-downloader.git":
-  version "0.6.0"
-  resolved "git+https://github.com/moshfeu/youtube-mp3-downloader.git#42abded2ec7095284b1f04de17d5a2ded0db0700"
+  version "1.0.0"
+  resolved "git+https://github.com/moshfeu/youtube-mp3-downloader.git#3b21e74be0559ffebef239102f4e33eec53d9857"
   dependencies:
     async "^2.6.0"
     fluent-ffmpeg "2.1.2"
     progress-stream "^2.0.0"
     sanitize-filename "^1.6.1"
-    ytdl-core "^0.20.1"
+    ytdl-core "^0.29.4"
 
 "youtube-playlist@git+https://github.com/moshfeu/youtube-playlist.git":
   version "1.0.2"
@@ -8038,17 +8031,7 @@ yauzl@2.4.1:
     cheerio "^1.0.0-rc.2"
     got "^6.3.0"
 
-ytdl-core@^0.20.1:
-  version "0.20.4"
-  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/ytdl-core/-/ytdl-core-0.20.4.tgz#91108882e1fe526e14c1e99a589b4971180ba42a"
-  integrity sha1-kRCIguH+Um4UwemaWJtJcRgLpCo=
-  dependencies:
-    html-entities "^1.1.3"
-    m3u8stream "^0.2.1"
-    miniget "^1.1.0"
-    sax "^1.1.3"
-
-ytdl-core@^0.29.5:
+ytdl-core@^0.29.4, ytdl-core@^0.29.5:
   version "0.29.5"
   resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.29.5.tgz#278052a1a5a1a75c5931c229b804c0798f18858c"
   integrity sha512-6WOoLQCeovo/aFYeMKeEXjvS/L+0j/vq85AYF86KSmkSA3lMzUzMdtmlo0GjsrOUN79S03MDkSgXEWOZBWL1Rg==
