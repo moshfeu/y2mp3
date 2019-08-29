@@ -1,4 +1,4 @@
-import * as YoutubeMp3Downloader from 'youtube-mp3-downloader';
+import YoutubeMp3Downloader from './youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
 import { IVideoEntity, IPlaylistYoutube } from '../types';

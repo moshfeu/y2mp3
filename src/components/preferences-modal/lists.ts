@@ -1,5 +1,5 @@
 import { IDropdownOption } from '../../types';
-import { audioFormats, videoFormats } from 'youtube-mp3-downloader/lib/options';
+import { audioFormats, videoFormats } from '../../services/youtube-mp3-downloader/options';
 
 const toDropdownItems = (option: string, isHeader: boolean = false) => {
   const optionItem: IDropdownOption = {

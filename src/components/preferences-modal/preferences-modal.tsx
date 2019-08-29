@@ -3,7 +3,7 @@ import { IModalProps, IDropdownOption } from '../../types';
 import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps, Popup } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
-import { DownloadQuality, DownloadFormat } from 'youtube-mp3-downloader';
+import { DownloadQuality, DownloadFormat } from '../../services/youtube-mp3-downloader'
 import { SyntheticEvent } from 'react';
 import { qualityOptions, formatOptions } from './lists';
 

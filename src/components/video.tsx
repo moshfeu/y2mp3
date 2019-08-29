@@ -5,7 +5,7 @@ import { ButtonProgress } from './button-progress';
 import { shell } from '../services/electron-adapter';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
-import { DownloadFormat } from 'youtube-mp3-downloader';
+import { DownloadFormat } from '../services/youtube-mp3-downloader';
 import { Popup } from 'semantic-ui-react';
 
 const options: IButtonProgressOptions[] = formatOptions.map(option => {

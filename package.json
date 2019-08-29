@@ -51,7 +51,11 @@
     "semantic-ui-react": "^0.84.0",
     "youtube-mp3-downloader": "git+https://github.com/moshfeu/youtube-mp3-downloader.git",
     "youtube-playlist": "git+https://github.com/moshfeu/youtube-playlist.git",
-    "ytdl-core": "^0.29.5"
+    "ytdl-core": "^0.29.5",
+    "async": "^2.6.0",
+    "fluent-ffmpeg": "2.1.2",
+    "progress-stream": "^2.0.0",
+    "sanitize-filename": "^1.6.1"
   },
   "devDependencies": {
     "@types/electron-is-dev": "^0.3.0",
