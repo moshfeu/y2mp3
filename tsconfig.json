@@ -8,8 +8,6 @@
     "module": "commonjs",
     "jsx": "react",
     "experimentalDecorators": true,
-    // https://stackoverflow.com/a/54785103/863110
-    "esModuleInterop": true,
   },
   "exclude": [
     "node_modules"
