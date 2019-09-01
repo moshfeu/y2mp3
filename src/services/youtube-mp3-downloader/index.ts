@@ -1,12 +1,12 @@
 "use strict";
 const ffmpeg = require('fluent-ffmpeg');
+const sanitize = require('sanitize-filename');
 import * as os from 'os';
 import * as util from 'util';
 import * as EventEmitter from 'events';
 import * as ytdl from 'ytdl-core';
 import * as async from 'async';
 import * as progress from 'progress-stream';
-import * as sanitize from 'sanitize-filename';
 import { audioFormats, videoFormats } from './options';
 
 function YoutubeMp3Downloader(options) {
