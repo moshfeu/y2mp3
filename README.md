@@ -13,7 +13,7 @@ A simple desktop application to download Youtube videos to video (mp4, mpg, wmv)
 
 #### Find us on Slack
 
-<a href="https://join.slack.com/t/y2mp3/shared_invite/enQtNTk0OTE0Njc4ODY4LTU5YjY3YmJkMGVjN2UwYTE4MzUwOWI0YmZlM2VhOWU1OGRhYmU4ZmRiNTcyMWUwNTAwYzQ5ZTdjNDlhYzU5OGM" target="_blank"><img src="https://cdn.brandfolder.io/5H442O3W/as/pl546j-7le8zk-ex8w65/Slack_RGB.png?width=120" alt="link to Slack channel" /></a>
+<a href="https://join.slack.com/t/y2mp3/shared_invite/enQtNTk0OTE0Njc4ODY4LTYzYmY1M2MwMWFmZmQ1NTA2MDMxNWIzZTFkYzcyOTdkMjE3ZmNmMzk4NmM4YWY5OThkYTJjNzFhZTA0NGI3OTk" target="_blank"><img src="https://cdn.brandfolder.io/5H442O3W/as/pl546j-7le8zk-ex8w65/Slack_RGB.png?width=120" alt="link to Slack channel" /></a>
 
 ## Disclaimer
 📢📢
