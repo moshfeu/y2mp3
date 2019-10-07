@@ -43,6 +43,8 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 - Check for updates automatically (Thanks (again) to [@iahmedhendi](https://github.com/iahmedhendi))
 
+<img width="288" alt="Screen Shot" src="https://user-images.githubusercontent.com/3723951/66351800-f356d180-e966-11e9-8ede-a3bbfad9a2b0.png">
+
 ##### 2.0.0
 
 - Allow to download videos! (supported formats: mp4, wmv, mpg)
