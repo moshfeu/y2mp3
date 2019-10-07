@@ -17,13 +17,14 @@ interface IPreferencesModalState extends IConfig {
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   componentWillMount() {
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat } = settingsManager;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate } = settingsManager;
     this.setState({
       downloadsFolder,
       audioQuality,
       playlistFolder,
       autoPaste,
       downloadFormat,
+      checkForUpdate,
     });
   }
 
@@ -53,7 +54,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
 
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat } = this.state;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -98,6 +99,14 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             </label>
             <label>
               <Checkbox id="autoPaste" slider onChange={this.handleFieldChange} checked={autoPaste} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>
+              Check for updates on launch
+            </label>
+            <label>
+              <Checkbox id="checkForUpdate" slider onChange={this.handleFieldChange} checked={checkForUpdate} />
             </label>
           </Form.Field>
           <Form.Field inline>

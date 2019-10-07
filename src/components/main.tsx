@@ -16,6 +16,8 @@ import { ElectronEventsListener } from './electron-events-listener';
 import { closeModal } from '../services/modalsAndAlerts';
 import { Message } from 'semantic-ui-react';
 import * as classNames from 'classnames';
+import { settingsManager } from '../services/settings';
+import { checkForUpdateAndNotify } from '../services/check-for-update';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -30,6 +32,13 @@ class Main extends React.Component<{}, {}> {
 
   downloadAll = () => {
     download(store.videos);
+  }
+
+  async componentDidMount() {
+    const { checkForUpdate } = settingsManager;
+    if (checkForUpdate) {
+      checkForUpdateAndNotify();
+    }
   }
 
   public render() {

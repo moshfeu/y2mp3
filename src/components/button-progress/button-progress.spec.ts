@@ -25,7 +25,7 @@ describe('ButtonProgress', () => {
       .given.onClick(onClick)
       .when.render();
 
-    driver.get.button().simulate('click');
+    driver.get.button().simulate('click', { target: driver.get.buttonDOMLike() });
     expect(onClick).toHaveBeenCalled();
   });
 

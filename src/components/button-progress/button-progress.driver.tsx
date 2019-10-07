@@ -43,6 +43,11 @@ export default class ButtonProgressDriver extends BaseDriver {
 
   get = {
     button: () => this.wrapper.find('[data-hook="button"]'),
+    buttonDOMLike: () => {
+      const button = document.createElement('button');
+      button.outerHTML = this.wrapper.find('[data-hook="button"]').html();
+      return button;
+    },
     buttonText: () => this.get.button().find('[data-hook="content"]').text(),
     progressCounter: () => this.wrapper.find('[data-hook="progress-counter"]')
   }

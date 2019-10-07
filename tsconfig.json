@@ -7,7 +7,7 @@
     "removeComments": true,
     "module": "commonjs",
     "jsx": "react",
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"
