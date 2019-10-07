@@ -44,7 +44,7 @@ export function showAppHasUpdate() {
     <span>
       🎉 There is a new version - <ExternalLink className='has-underline' href="https://github.com/moshfeu/y2mp3/releases/latest">Download</ExternalLink>
     </span>,
-  40000, 'top');
+  4000, 'top');
 }
 
 function showMessage(color: SemanticCOLORS, content: MessageContent, time: number = 0, position: MessagePosition = 'bottom') {
