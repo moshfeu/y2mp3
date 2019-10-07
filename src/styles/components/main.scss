@@ -1,3 +1,7 @@
+a.has-underline {
+  text-decoration: underline;
+}
+
 .main {
   .videos {
     margin-top: 10px;
@@ -10,7 +14,8 @@
     text-align: center;
     transition: opacity .3s ease;
     bottom: 10px;
-    pointer-events: none;
+    // if it's here for some time, delete it
+    // pointer-events: none;
 
     &.top {
       bottom: auto;
@@ -18,7 +23,7 @@
     }
 
     &.-visible {
-      pointer-events: none;
+      // pointer-events: none;
       opacity: 1;
     }
   }

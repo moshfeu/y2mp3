@@ -1,6 +1,8 @@
+import * as React from 'react';
 import store from '../mobx/store';
 import { SemanticCOLORS } from 'semantic-ui-react';
 import { MessagePosition, MessageContent } from '../types';
+import { ExternalLink } from '../components/ExternalLink';
 
 let currentOpen: 'about' | 'preferences';
 
@@ -37,11 +39,19 @@ export function showSuccessPasted() {
   showMessage('green', 'The url was taken from the clipboard! Just hit the "search" button', 4000, 'top');
 }
 
+export function showAppHasUpdate() {
+  showMessage('blue',
+    <span>
+      🎉 There is a new version - <ExternalLink className='has-underline' href="https://github.com/moshfeu/y2mp3/releases/latest">Download</ExternalLink>
+    </span>,
+  40000, 'top');
+}
+
 function showMessage(color: SemanticCOLORS, content: MessageContent, time: number = 0, position: MessagePosition = 'bottom') {
   const { message } = store;
   message.position = position;
   message.color = color;
-  message.content = `🤖 ${content}`;
+  message.content = <div>🤖 {content}</div>;
   message.isVisible = true;
   if (!!time) {
     hideMessage(time);

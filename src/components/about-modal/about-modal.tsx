@@ -5,14 +5,12 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import { remote, shell } from '../../services/electron-adapter';
 import { IModalProps } from '../../types';
+import { ExternalLink } from '../ExternalLink';
 import './about-modal.scss';
 
 export class AboutModal extends React.Component<IModalProps> {
   render() {
     const { open, onClose } = this.props;
-    const ExternalLink = props => <a href="javascript:void(0)" onClick={() => {
-      shell.openExternal(props.href);
-    }}>{props.children}</a>
 
     return (
       <Modal open={open} basic size='small' className="about-modal">

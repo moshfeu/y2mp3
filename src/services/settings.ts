@@ -7,6 +7,7 @@ export interface IConfig {
   audioQuality: DownloadQuality;
   playlistFolder: boolean;
   autoPaste: boolean;
+  checkForUpdate: boolean;
 }
 
 class SettingsManager implements IConfig {
@@ -42,6 +43,14 @@ class SettingsManager implements IConfig {
 
   set autoPaste(autoPaste: boolean) {
     localStorage.setItem('autoPaste', '' + autoPaste);
+  }
+
+  get checkForUpdate(): boolean {
+    return JSON.parse(localStorage.getItem('checkForUpdate') || 'false');
+  }
+
+  set checkForUpdate(checkForUpdate: boolean) {
+    localStorage.setItem('checkForUpdate', '' + checkForUpdate);
   }
 
   get downloadFormat(): DownloadFormat {
