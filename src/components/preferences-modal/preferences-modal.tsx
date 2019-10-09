@@ -16,16 +16,17 @@ interface IPreferencesModalState extends IConfig {
 }
 
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
-  componentWillMount() {
+  constructor(props: IModalProps) {
+    super(props);
     const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate } = settingsManager;
-    this.setState({
+    this.state = {
       downloadsFolder,
       audioQuality,
       playlistFolder,
       autoPaste,
       downloadFormat,
       checkForUpdate,
-    });
+    };
   }
 
   openDirectoryExplorer = () => {

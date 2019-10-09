@@ -112,7 +112,7 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
           const fileName = (task.fileName ? self.outputPath + "/" + task.fileName : self.outputPath + "/" + (sanitize(videoTitle) || info.video_id) + "." + self.format);
           let artist = "Unknown";
           let title = "Unknown";
-          const thumbnail = info.iurlhq || null;
+          const thumbnail = `https://img.youtube.com/vi/${task.videoId}/mqdefault.jpg`;
           if (videoTitle.indexOf("-") > -1) {
               const temp = videoTitle.split("-");
               if (temp.length >= 2) {
@@ -176,7 +176,20 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                   resultObj.artist = artist;
                   resultObj.title = title;
                   resultObj.thumbnail = thumbnail;
-                  callback(null, resultObj);
+
+                ffmpeg(fileName)
+                  .on('error', e => {
+                    console.error('error in adding cover', JSON.stringify(e, null, 2))
+                  })
+                  .on('end', e => {
+                    callback(null, resultObj);
+                    console.log('end in adding cover')
+                  })
+                  .addInput(resultObj.thumbnail)
+                  .addOutputOption(["-map", '0:0'])
+                  .addOutputOption(["-map", '1:0'])
+                  .addOutputOption('-c', 'copy')
+                  .saveToFile(fileName);
               });
 
               if (!(self.format in videoFormats)) {
