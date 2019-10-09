@@ -75,7 +75,7 @@ YoutubeMp3Downloader.prototype.download = function(videoId, fileName) {
         self.emit("queueSize", self.downloadQueue.running() + self.downloadQueue.length());
 
         if (err) {
-            self.emit("error", err, data);
+          self.emit("error", err, task);
         } else {
           self.emit("finished", err, data);
         }
