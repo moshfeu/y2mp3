@@ -8,6 +8,7 @@ import * as ytdl from 'ytdl-core';
 import * as async from 'async';
 import * as progress from 'progress-stream';
 import { audioFormats, videoFormats } from './options';
+import { settingsManager } from '../settings';
 
 function YoutubeMp3Downloader(options) {
     const self = this;
@@ -177,19 +178,23 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                   resultObj.title = title;
                   resultObj.thumbnail = thumbnail;
 
-                ffmpeg(fileName)
-                  .on('error', e => {
-                    console.error('error in adding cover', JSON.stringify(e, null, 2))
-                  })
-                  .on('end', e => {
-                    callback(null, resultObj);
-                    console.log('end in adding cover')
-                  })
-                  .addInput(resultObj.thumbnail)
-                  .addOutputOption(["-map", '0:0'])
-                  .addOutputOption(["-map", '1:0'])
-                  .addOutputOption('-c', 'copy')
-                  .saveToFile(fileName);
+                if (settingsManager.albumArt) {
+                  ffmpeg(fileName)
+                    .on('error', e => {
+                      console.error('error in adding cover', JSON.stringify(e, null, 2))
+                    })
+                    .on('end', e => {
+                      callback(null, resultObj);
+                      console.log('end in adding cover')
+                    })
+                    .addInput(resultObj.thumbnail)
+                    .addOutputOption(["-map", '0:0'])
+                    .addOutputOption(["-map", '1:0'])
+                    .addOutputOption('-c', 'copy')
+                    .saveToFile(fileName);
+                } else {
+                  callback(null, resultObj);
+                }
               });
 
               if (!(self.format in videoFormats)) {

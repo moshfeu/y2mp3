@@ -1,7 +1,7 @@
 import { observable, computed, action, toJS } from 'mobx';
 import { IVideoEntity, EVideoStatus, IMessage } from '../types';
 import { fetchVideos } from '../services/api';
-import { IVideoTask } from 'youtube-mp3-downloader';
+import { IVideoTask } from '../services/youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { showTermsIsInvalid, hideMessage, showNoInternet } from '../services/modalsAndAlerts';
 
@@ -13,6 +13,7 @@ class Store {
   @observable isAboutOpen: boolean;
   @observable isPreferencesOpen: boolean;
   @observable termsIsInvalid: boolean;
+  @observable hasUpdate: boolean;
   @observable message: IMessage = {
     isVisible: false
   };

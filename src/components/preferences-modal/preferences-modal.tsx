@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IModalProps, IDropdownOption } from '../../types';
+import { IModalProps } from '../../types';
 import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps, Popup } from 'semantic-ui-react';
 import { remote } from '../../services/electron-adapter';
 import { settingsManager, IConfig } from '../../services/settings';
@@ -18,7 +18,7 @@ interface IPreferencesModalState extends IConfig {
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   constructor(props: IModalProps) {
     super(props);
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate } = settingsManager;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt } = settingsManager;
     this.state = {
       downloadsFolder,
       audioQuality,
@@ -26,6 +26,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
       autoPaste,
       downloadFormat,
       checkForUpdate,
+      albumArt,
     };
   }
 
@@ -55,7 +56,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
 
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate } = this.state;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -108,6 +109,14 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             </label>
             <label>
               <Checkbox id="checkForUpdate" slider onChange={this.handleFieldChange} checked={checkForUpdate} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>
+              Download with the video thumbnail
+            </label>
+            <label>
+              <Checkbox id="albumArt" slider onChange={this.handleFieldChange} checked={albumArt} />
             </label>
           </Form.Field>
           <Form.Field inline>

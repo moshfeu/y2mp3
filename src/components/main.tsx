@@ -18,6 +18,7 @@ import { Message } from 'semantic-ui-react';
 import * as classNames from 'classnames';
 import { settingsManager } from '../services/settings';
 import { checkForUpdateAndNotify } from '../services/check-for-update';
+import AppMenu from './menu';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -45,6 +46,7 @@ class Main extends React.Component<{}, {}> {
     const { searchInProgress, videos, message } = store;
     return (
       <div className="main">
+        <AppMenu />
         <Form
           hasResult={!!videos.length}
           onSubmit={store.search}

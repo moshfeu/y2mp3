@@ -1,0 +1,14 @@
+.app-menu {
+  margin: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #fff;
+  z-index: 999;
+
+  .ui.floating.label.has-update-not {
+    top: -5px;
+    right: 0;
+    left: auto;
+  }
+}
