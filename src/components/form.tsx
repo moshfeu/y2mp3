@@ -44,10 +44,10 @@ export class Form extends React.Component<IFormProps, IFormState> {
     });
   }
 
-  componentWillReceiveProps(newProps: IFormProps, currentProps: IFormProps) {
-    if (newProps.inProcess !== currentProps.inProcess) {
+  componentDidUpdate(prevProps: IFormProps) {
+    if (prevProps.inProcess !== this.props.inProcess) {
       this.setState({
-        inProcess: newProps.inProcess
+        inProcess: this.props.inProcess
       });
     }
   }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import store from '../mobx/store';
 import { SemanticCOLORS } from 'semantic-ui-react';
 import { MessagePosition, MessageContent } from '../types';
-import { ExternalLink } from '../components/ExternalLink';
+import { ExternalLink } from '../components/external-link';
 
 let currentOpen: 'about' | 'preferences';
 

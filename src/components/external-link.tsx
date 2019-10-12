@@ -7,6 +7,7 @@ interface ExternalLinkProps {
   className?: string;
 }
 
-export const ExternalLink = (props: ExternalLinkProps) => <a className={props.className} href="javascript:void(0)" onClick={() => {
+export const ExternalLink = (props: ExternalLinkProps) => <a className={props.className} href="#" onClick={e => {
+  e.preventDefault();
   shell.openExternal(props.href);
 }}>{props.children}</a>

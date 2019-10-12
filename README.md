@@ -39,6 +39,16 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 2.2.0
+
+- Attach the video's thumbnail as album art
+
+<img width="265" alt="Album art (feature screenshot)" src="https://user-images.githubusercontent.com/3723951/66707744-4ad1b480-ed4e-11e9-927f-a92c940ee574.png">
+
+- Add menu for better accesibility to useful options
+
+<img width="296" alt="New Menu (feature screenshot)" src="https://user-images.githubusercontent.com/3723951/66707712-dc8cf200-ed4d-11e9-889d-8b36cca17772.png">
+
 ##### 2.1.0
 
 - Check for updates automatically (Thanks (again) to [@iahmedhendi](https://github.com/iahmedhendi))

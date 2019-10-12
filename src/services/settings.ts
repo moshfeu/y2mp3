@@ -1,6 +1,6 @@
 import { DOWNLOADS_FOLDER } from './path';
 import { downloader } from './api';
-import { DownloadQuality, DownloadFormat } from 'youtube-mp3-downloader';
+import { DownloadQuality, DownloadFormat } from '../services/youtube-mp3-downloader';
 
 export interface IConfig {
   downloadsFolder: string;
@@ -8,6 +8,7 @@ export interface IConfig {
   playlistFolder: boolean;
   autoPaste: boolean;
   checkForUpdate: boolean;
+  albumArt: boolean;
 }
 
 class SettingsManager implements IConfig {
@@ -51,6 +52,14 @@ class SettingsManager implements IConfig {
 
   set checkForUpdate(checkForUpdate: boolean) {
     localStorage.setItem('checkForUpdate', '' + checkForUpdate);
+  }
+
+  get albumArt(): boolean {
+    return JSON.parse(localStorage.getItem('albumArt') || 'true');
+  }
+
+  set albumArt(albumArt: boolean) {
+    localStorage.setItem('albumArt', '' + albumArt);
   }
 
   get downloadFormat(): DownloadFormat {

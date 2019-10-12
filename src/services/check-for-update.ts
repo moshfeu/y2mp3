@@ -1,5 +1,6 @@
 import { remote } from './electron-adapter';
 import { showAppHasUpdate } from './modalsAndAlerts';
+import store from '../mobx/store';
 
 
 export async function checkForUpdateAndNotify() {
@@ -8,6 +9,7 @@ export async function checkForUpdateAndNotify() {
                                 .then(data => data.json())
                                 .then(data => data.name.replace('v', ''));
   if (currentVersion !== latestVersion) {
+    store.hasUpdate = true;
     showAppHasUpdate();
   }
 }

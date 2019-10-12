@@ -39,17 +39,18 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     return this.state.progress === this.progressDone;
   }
 
-  componentWillReceiveProps(nextProps: IButtonProgressProps, currentProps: IButtonProgressProps) {
-    if (nextProps.progress && currentProps.progress !== nextProps.progress) {
-      if (nextProps.progress === this.progressDone) {
+  componentDidUpdate(oldProps: IButtonProgressProps) {
+    const { progress } = this.props;
+    if (progress && oldProps.progress !== progress) {
+      if (progress === this.progressDone) {
         this.done();
       }
 
-      if (currentProps.progress != this.progressDone) {
+      if (oldProps.progress != this.progressDone) {
         // if current progress is complete which means this operation is reset it again to the start
         // and that what `done` function do for the UI so ignore it
         this.setState({
-          progress: nextProps.progress
+          progress: progress
         });
       }
     }

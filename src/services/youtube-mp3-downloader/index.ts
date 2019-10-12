@@ -8,6 +8,7 @@ import * as ytdl from 'ytdl-core';
 import * as async from 'async';
 import * as progress from 'progress-stream';
 import { audioFormats, videoFormats } from './options';
+import { settingsManager } from '../settings';
 
 function YoutubeMp3Downloader(options) {
     const self = this;
@@ -75,7 +76,7 @@ YoutubeMp3Downloader.prototype.download = function(videoId, fileName) {
         self.emit("queueSize", self.downloadQueue.running() + self.downloadQueue.length());
 
         if (err) {
-            self.emit("error", err, data);
+          self.emit("error", err, task);
         } else {
           self.emit("finished", err, data);
         }
@@ -112,7 +113,7 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
           const fileName = (task.fileName ? self.outputPath + "/" + task.fileName : self.outputPath + "/" + (sanitize(videoTitle) || info.video_id) + "." + self.format);
           let artist = "Unknown";
           let title = "Unknown";
-          const thumbnail = info.iurlhq || null;
+          const thumbnail = `https://img.youtube.com/vi/${task.videoId}/mqdefault.jpg`;
           if (videoTitle.indexOf("-") > -1) {
               const temp = videoTitle.split("-");
               if (temp.length >= 2) {
@@ -176,7 +177,24 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                   resultObj.artist = artist;
                   resultObj.title = title;
                   resultObj.thumbnail = thumbnail;
+
+                if (settingsManager.albumArt) {
+                  ffmpeg(fileName)
+                    .on('error', e => {
+                      console.error('error in adding cover', JSON.stringify(e, null, 2))
+                    })
+                    .on('end', e => {
+                      callback(null, resultObj);
+                      console.log('end in adding cover')
+                    })
+                    .addInput(resultObj.thumbnail)
+                    .addOutputOption(["-map", '0:0'])
+                    .addOutputOption(["-map", '1:0'])
+                    .addOutputOption('-c', 'copy')
+                    .saveToFile(fileName);
+                } else {
                   callback(null, resultObj);
+                }
               });
 
               if (!(self.format in videoFormats)) {

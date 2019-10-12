@@ -3,9 +3,10 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-import { remote, shell } from '../../services/electron-adapter';
+import { remote } from '../../services/electron-adapter';
 import { IModalProps } from '../../types';
-import { ExternalLink } from '../ExternalLink';
+import { ExternalLink } from '../external-link';
+import { TWITTER_LINK, GITHUB_LINK, CONTACT_EMAIL } from '../../constants';
 import './about-modal.scss';
 
 export class AboutModal extends React.Component<IModalProps> {
@@ -20,13 +21,13 @@ export class AboutModal extends React.Component<IModalProps> {
             <b>Version:</b> {remote.app.getVersion()}
           </p>
           <p>
-            <b>Contact me:</b> <ExternalLink href="mailto:moshfeu.dev@gmail.com">moshfeu.dev@gmail.com</ExternalLink>
+            <b>Contact me:</b> <ExternalLink href={CONTACT_EMAIL}>moshfeu.dev@gmail.com</ExternalLink>
           </p>
           <p>
-            <ExternalLink href="https://twitter.com/@y2mp3"><Icon name="twitter" />@y2mp3</ExternalLink>
+            <ExternalLink href={TWITTER_LINK}><Icon name="twitter" />@y2mp3</ExternalLink>
           </p>
           <p>
-            <ExternalLink href="https://github.com/moshfeu/y2mp3"><Icon name="github" />moshfeu/y2mp3</ExternalLink>
+            <ExternalLink href={GITHUB_LINK}><Icon name="github" />moshfeu/y2mp3</ExternalLink>
           </p>
         </Modal.Content>
         <Modal.Actions>
