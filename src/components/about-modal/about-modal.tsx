@@ -5,7 +5,7 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import { remote } from '../../services/electron-adapter';
 import { IModalProps } from '../../types';
-import { ExternalLink } from '../external-Link';
+import { ExternalLink } from '../external-link';
 import { TWITTER_LINK, GITHUB_LINK, CONTACT_EMAIL } from '../../constants';
 import './about-modal.scss';
 
