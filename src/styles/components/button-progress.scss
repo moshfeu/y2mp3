@@ -122,3 +122,8 @@
     transition: none !important;
   }
 }
+
+.format-options .menu {
+  max-height: 200px;
+  overflow-y: auto;
+}

@@ -112,10 +112,10 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
     const shouldShowDropdown = !this.isDone && !this.isLoading;
 
     if (!shouldShowDropdown) {
-      return dropdownHandler()
+      return dropdownHandler();
     }
     return (
-      <Popup trigger={dropdownHandler()} flowing hoverable>
+      <Popup trigger={dropdownHandler()} className="format-options" flowing hoverable >
         {!this.isLoading && !this.isDone &&
           <Menu vertical secondary onItemClick={onItemClick} items={items} activeIndex={options.findIndex(i => isItemActive(i.content))} />
         }

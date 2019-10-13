@@ -182,8 +182,9 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                   ffmpeg(fileName)
                     .on('error', e => {
                       console.error('error in adding cover', JSON.stringify(e, null, 2))
+                      callback(e, resultObj);
                     })
-                    .on('end', e => {
+                    .on('end', () => {
                       callback(null, resultObj);
                       console.log('end in adding cover')
                     })

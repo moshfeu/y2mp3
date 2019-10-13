@@ -14,8 +14,12 @@ a.has-underline {
     text-align: center;
     transition: opacity .3s ease;
     bottom: 10px;
-    // if it's here for some time, delete it
-    // pointer-events: none;
+    // to not block the user to click on the last video
+    pointer-events: none;
+
+    a {
+      pointer-events: all;
+    }
 
     &.top {
       bottom: auto;

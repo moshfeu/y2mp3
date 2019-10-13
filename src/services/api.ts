@@ -88,8 +88,8 @@ async function fetchVideosFromList(playlistUrl: string): Promise<IVideoEntity[]>
     .map(video => createVideoEntity(video.name, video.id, name));
 }
 
-export function download(videoId: IVideoEntity);
-export function download(videos: IVideoEntity[]);
+export function download(videoId: IVideoEntity): void;
+export function download(videos: IVideoEntity[]): void;
 
 export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
   if (videoOrVideos instanceof Array) {
