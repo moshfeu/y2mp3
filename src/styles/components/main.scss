@@ -16,6 +16,7 @@ a.has-underline {
     bottom: 10px;
     // to not block the user to click on the last video
     pointer-events: none;
+    z-index: $z-index-messages;
 
     a {
       pointer-events: all;
