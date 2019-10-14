@@ -30,7 +30,16 @@ export const downloader = new YoutubeMp3Downloader({
   .on('addToQueue', videoId => store.addToQueue(videoId))
   .on('gettingInfo', videoId => store.gettingInfo(videoId))
   .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
-  .on('finished', (err, { videoId }) => store.finished(err, { videoId }))
+  .on('finished', (err, { videoId, thumbnail, videoTitle }) => {
+    store.finished(err, { videoId })
+    if (settingsManager.notificationWhenDone) {
+      new Notification('Download completed', {
+        icon: './app-resources/logo-128.png',
+        body: `The video "${videoTitle}" downloaded successfully`,
+        image: thumbnail
+      });
+    }
+  })
   .on('error', (err, { videoId }) => {
     alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
     console.error(err);
