@@ -6,7 +6,7 @@ import { shell } from '../services/electron-adapter';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from '../services/youtube-mp3-downloader';
-import { Popup } from 'semantic-ui-react';
+import { Popup, Button } from 'semantic-ui-react';
 
 const options: IButtonProgressOptions[] = formatOptions.map(option => {
   return {
@@ -19,6 +19,7 @@ interface IVideoProps {
   style?: React.CSSProperties,
   video: IVideoEntity;
   onVideoDownloadClick: (video :IVideoEntity) => void;
+  onRemoveVideo: (videoId: string) => void;
 }
 
 @observer
@@ -42,7 +43,7 @@ export class Video extends React.Component<IVideoProps, any> {
   }
 
   render() {
-    const { video, onVideoDownloadClick, style } = this.props;
+    const { video, onVideoDownloadClick, style, onRemoveVideo } = this.props;
     const { backgroundImage } = this;
     const text = video.status === EVideoStatus.PENDING ? 'Waiting' : 'Download';
     const isDisabled = video.status !== EVideoStatus.NOT_STARTED && video.status !== EVideoStatus.DONE;
@@ -50,6 +51,13 @@ export class Video extends React.Component<IVideoProps, any> {
 
     return (
       <div className="video" style={{backgroundImage, ...style}}>
+        <Popup
+          trigger={
+            <Button className="remove" color="red" circular basic icon="close" onClick={() => onRemoveVideo(video.id)}></Button>
+          }
+          content="Remove"
+          inverted
+        />
         <div className="details">
           <Popup
             trigger={<div className="name"

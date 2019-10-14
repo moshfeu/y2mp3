@@ -40,6 +40,11 @@ class Store {
     }
   }
 
+  @action onRemoveVideo = (videoId: string): void => {
+    const videoIndex = this.videos.findIndex(v => v.id === videoId);
+    this.videos.splice(videoIndex, 1);
+  }
+
   @action clearResult(): void {
     this.videos = [];
   }

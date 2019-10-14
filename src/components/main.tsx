@@ -43,7 +43,7 @@ class Main extends React.Component<{}, {}> {
   }
 
   public render() {
-    const { searchInProgress, videos, message } = store;
+    const { searchInProgress, videos, message, onRemoveVideo } = store;
     return (
       <div className="main">
         <AppMenu />
@@ -55,13 +55,14 @@ class Main extends React.Component<{}, {}> {
         >
           {videos.length ?
             <div>
-              <ButtonProgress text="Download All" onClick={this.downloadAll} />
+              <ButtonProgress text={`Download All (${videos.length})`}  onClick={this.downloadAll} />
               <div className="videos">
                 {videos.map((video, i) => (
                   <Video
                     key={video.id}
                     video={video}
                     onVideoDownloadClick={this.downloadVideo}
+                    onRemoveVideo={onRemoveVideo}
                     style={{
                       animationDelay: `${(i + 1) * 200}ms`
                     }}
