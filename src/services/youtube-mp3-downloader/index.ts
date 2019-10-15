@@ -9,6 +9,7 @@ import * as async from 'async';
 import * as progress from 'progress-stream';
 import { audioFormats, videoFormats } from './options';
 import { settingsManager } from '../settings';
+import { unlinkSync, rename } from 'fs';
 
 function YoutubeMp3Downloader(options) {
     const self = this;
@@ -179,6 +180,8 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                   resultObj.thumbnail = thumbnail;
 
                 if (settingsManager.albumArt) {
+                  const tempFileName = fileName.replace(resultObj.title, `${resultObj.title}-ac`);
+
                   ffmpeg(fileName)
                     .on('error', e => {
                       console.error('error in adding cover', JSON.stringify(e, null, 2))
@@ -186,13 +189,18 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
                     })
                     .on('end', () => {
                       callback(null, resultObj);
-                      console.log('end in adding cover')
+                      // once the new file saved, delete the original (w/o the album art) and rename the new to the original name
+                      unlinkSync(fileName);
+                      rename(tempFileName, fileName, () => ({}));
+                      console.log('end in adding cover');
                     })
                     .addInput(resultObj.thumbnail)
                     .addOutputOption(["-map", '0:0'])
                     .addOutputOption(["-map", '1:0'])
                     .addOutputOption('-c', 'copy')
-                    .saveToFile(fileName);
+                    // has to save it in a different name otherwise, ffmpeg take only the first 2 seconds (weird behaviour)
+                    .saveToFile(tempFileName);
+
                 } else {
                   callback(null, resultObj);
                 }
