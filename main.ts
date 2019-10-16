@@ -83,7 +83,7 @@ function createWindow() {
   });
 
   try {
-    tray = new Tray('./app-resources/tray.png');
+    tray = new Tray(join(app.getAppPath(), 'assets', 'tray.png'));
     tray.on('click', () => win.focus());
 
     ipcMain.on('tray', (_, message: string) => {

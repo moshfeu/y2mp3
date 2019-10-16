@@ -94,7 +94,8 @@
     "files": [
       "index.html",
       "main.js",
-      "resources/**"
+      "resources/**",
+      "assets/**"
     ],
     "mac": {
       "icon": "resources/icons/mac/icon.icns"
