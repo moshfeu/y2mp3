@@ -3,16 +3,19 @@ import { existsSync } from 'fs';
 import { ffmpegPath, APPDATA_FOLDER } from './path';
 import { isFfmpegInPath } from './api';
 
-export function installFfmpeg(tickerFn: (data) => void): Promise<void> {
-  return new Promise((resolve) => {
-    ffbinaries.downloadBinaries(['ffmpeg'], {destination: APPDATA_FOLDER, tickerFn}, function () {
-      tickerFn({progress: 1});
-      resolve();
+export function installFfmpeg(tickerFn: (data: ffbinaries.Progress) => void): Promise<void> {
+  return new Promise((resolve, reject) => {
+    ffbinaries.downloadBinaries(['ffmpeg'], {destination: APPDATA_FOLDER, tickerFn}, (error: string) => {
+      if (error) {
+        reject(error);
+      } else {
+        tickerFn({progress: 1});
+        resolve();
+      }
     });
   });
 }
 
 export function isFFMpegInstalled(): boolean {
-  console.log('isFFMpegInstalled');
   return isFfmpegInPath() || existsSync(ffmpegPath());
 }

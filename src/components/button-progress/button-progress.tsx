@@ -41,7 +41,7 @@ export class ButtonProgress extends React.Component<IButtonProgressProps, IButto
 
   componentDidUpdate(oldProps: IButtonProgressProps) {
     const { progress } = this.props;
-    if (progress && oldProps.progress !== progress) {
+    if ((progress || progress === 0) && oldProps.progress !== progress) {
       if (progress === this.progressDone) {
         this.done();
       }

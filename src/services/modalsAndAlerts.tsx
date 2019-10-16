@@ -31,6 +31,10 @@ export function showNoInternet() {
   showMessage('red', `Seems like I'm not connected to the internet`, 3000);
 }
 
+export function showCustomError(error: string) {
+  showMessage('red', error, 3000);
+}
+
 export function showTermsIsInvalid() {
   showMessage('red', `Can't find media (url is not supported, invalid or private video)`, 3000);
 }
