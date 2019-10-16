@@ -40,7 +40,7 @@ class Store {
     }
   }
 
-  @action onRemoveVideo = (videoId: string): void => {
+  @action removeVideo = (videoId: string): void => {
     const videoIndex = this.videos.findIndex(v => v.id === videoId);
     this.videos.splice(videoIndex, 1);
   }
@@ -63,8 +63,7 @@ class Store {
     console.log(toJS(this.videos), 'gettingInfo');
   }
 
-  @action progress = ({videoId, progress}: IVideoTask) => {
-    const video = this.getVideo(videoId);
+  @action progress = ({videoId, progress}: IVideoTask, video: IVideoEntity = this.getVideo(videoId)) => {
     // in case of searching while the download in progress
     if (video) {
       video.status = EVideoStatus.DOWNLOADING;
@@ -87,7 +86,7 @@ class Store {
     return !!this.videos.length;
   }
 
-  private getVideo(videoId: string): IVideoEntity {
+  getVideo(videoId: string): IVideoEntity {
     return this.videos.find(video => video.id === videoId);
   }
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as DOM from 'react-dom';
 import store from '../mobx/store';
 import { observer } from 'mobx-react';
-import { download } from '../services/api';
+import { download, search } from '../services/api';
 import { IVideoEntity } from '../types';
 import { Video } from './video';
 import { Form } from './form';
@@ -19,7 +19,7 @@ import * as classNames from 'classnames';
 import { settingsManager } from '../services/settings';
 import { checkForUpdateAndNotify } from '../services/check-for-update';
 import AppMenu from './menu';
-import { clear as clearTrayTooltip, inResult } from '../services/tray-messanger';
+import { clear as clearTrayTooltip } from '../services/tray-messanger';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -45,12 +45,11 @@ class Main extends React.Component<{}, {}> {
   }
 
   async onSearch(url: string) {
-    await store.search(url);
-    inResult();
+    search(url);
   }
 
   public render() {
-    const { searchInProgress, videos, message, onRemoveVideo } = store;
+    const { searchInProgress, videos, message } = store;
     return (
       <div className="main">
         <AppMenu />
@@ -69,7 +68,6 @@ class Main extends React.Component<{}, {}> {
                     key={video.id}
                     video={video}
                     onVideoDownloadClick={this.downloadVideo}
-                    onRemoveVideo={onRemoveVideo}
                     style={{
                       animationDelay: `${(i + 1) * 200}ms`
                     }}

@@ -96,6 +96,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/async@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.0.3.tgz#ea3694128c757580e4f9328cd941b81d9c3e9bf6"
+  integrity sha512-FrIcC67Zpko1jO8K4d30C41/KVhAABbMbaSxccvXacxPcKbDBav+8WoFzv72BA2zJvyX4T9PFz0we1hcNymgGA==
+
 "@types/cheerio@*":
   version "0.22.13"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.13.tgz#5eecda091a24514185dcba99eda77e62bf6523e6"

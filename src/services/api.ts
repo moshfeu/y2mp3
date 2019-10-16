@@ -12,7 +12,7 @@ import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { sync as commandExistsSync } from 'command-exists';
-import { downloading, gettingInfo } from './tray-messanger';
+import { downloading, gettingInfo, inResult } from './tray-messanger';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -33,12 +33,15 @@ export const downloader = new YoutubeMp3Downloader({
     store.gettingInfo(videoId)
   })
   .on('progress', ({videoId, progress}: {videoId: string, progress: IDownloadProgress}) => {
-    downloading(videoId, progress.speed, progress.eta);
-    store.progress({videoId, progress})
+    const video = store.getVideo(videoId);
+    if (video) {
+      downloading(videoId, progress.speed, progress.eta);
+      store.progress({videoId, progress}, video);
+    }
   })
   .on('finished', (err, { videoId, thumbnail, videoTitle }) => {
     store.finished(err, { videoId })
-    if (settingsManager.notificationWhenDone) {
+    if (videoTitle && settingsManager.notificationWhenDone) {
       new Notification('Download completed', {
         icon: './app-resources/logo-128.png',
         body: `The video "${videoTitle}" downloaded successfully`,
@@ -112,6 +115,18 @@ export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
   } else {
     performDownload(videoOrVideos);
   }
+}
+
+// not in use currently
+export function removeVideo(videoId: string) {
+  store.removeVideo(videoId);
+  downloader.cancelDownload(videoId);
+  inResult();
+}
+
+export async function search(url: string) {
+  await store.search(url);
+  inResult();
 }
 
 function setVideoDownloadPath(video: IVideoEntity) {
