@@ -1,7 +1,7 @@
 import YoutubeMp3Downloader from './youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
-import { IVideoEntity, IPlaylistYoutube } from '../types';
+import { IVideoEntity, IPlaylistYoutube, IDownloadProgress } from '../types';
 import { ffmpegPath } from './path';
 import * as urlParser from 'js-video-url-parser';
 import { getBasicInfo } from 'ytdl-core';
@@ -11,8 +11,8 @@ import { settingsManager } from './settings';
 import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
-
 import { sync as commandExistsSync } from 'command-exists';
+import { downloading, gettingInfo } from './tray-messanger';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -28,8 +28,14 @@ export const downloader = new YoutubeMp3Downloader({
   format: settingsManager.downloadFormat,
 })
   .on('addToQueue', videoId => store.addToQueue(videoId))
-  .on('gettingInfo', videoId => store.gettingInfo(videoId))
-  .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
+  .on('gettingInfo', videoId => {
+    gettingInfo(videoId);
+    store.gettingInfo(videoId)
+  })
+  .on('progress', ({videoId, progress}: {videoId: string, progress: IDownloadProgress}) => {
+    downloading(videoId, progress.speed, progress.eta);
+    store.progress({videoId, progress})
+  })
   .on('finished', (err, { videoId, thumbnail, videoTitle }) => {
     store.finished(err, { videoId })
     if (settingsManager.notificationWhenDone) {

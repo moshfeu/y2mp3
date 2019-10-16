@@ -4,6 +4,8 @@ import {
   shell,
   BrowserWindow,
   MenuItemConstructorOptions,
+  Tray,
+  ipcMain,
 } from 'electron';
 
 import { join } from 'path';
@@ -11,7 +13,6 @@ import * as isDev from 'electron-is-dev';
 import { platform, homedir } from 'os';
 import { existsSync } from 'fs';
 import * as fixPath from 'fix-path';
-fixPath();
 
 enum EWindowEvents {
   OPEN_ABOUT = 'open-about',
@@ -19,15 +20,14 @@ enum EWindowEvents {
   WINDOW_FOCUS = 'window-focus'
 }
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-
 enum eos {
   MAC = 'darwin',
   WINDOWS = 'win32',
 };
 
+fixPath();
 let win: BrowserWindow;
+let tray: Tray;
 
 function getIconFile() {
   switch (platform()) {
@@ -56,6 +56,8 @@ function createWindow() {
     icon: join(__dirname, 'resources/icons', getIconFile())
   });
 
+  createMenu();
+
   // and load the index.html of the app.
   win.loadFile('index.html');
 
@@ -72,53 +74,77 @@ function createWindow() {
     }
   }
 
-  // Emitted when the window is closed.
   win.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null
+    win = null;
+    tray.destroy();
+    tray = null;
   }).on('focus', () => {
     win.webContents.send(EWindowEvents.WINDOW_FOCUS);
   });
 
+  try {
+    tray = new Tray('./app-resources/tray.png');
+    tray.on('click', () => win.focus());
+
+    ipcMain.on('tray', (_, message: string) => {
+      tray.setToolTip(message);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+app.on('ready', createWindow)
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', () => {
+  if (win === null) {
+    createWindow()
+  }
+})
+
+function createMenu() {
   // Create the Application's main menu
   const template: MenuItemConstructorOptions[] = [{
-      label: "Application",
-      submenu: [{
-          label: "About y2mp3",
-          click: function () {
-            win.webContents.send(EWindowEvents.OPEN_ABOUT);
-          }
-        },
-        {
-          label: "Preferences",
-          accelerator: "CommandOrControl+,",
-          click: function () {
-            win.webContents.send(EWindowEvents.OPEN_PREFERENCES);
-          }
-        },
-        {
-          type: "separator"
-        },
-        {
-          label: "Toggle Developer Tools",
-          accelerator: "CommandOrControl+Option+J",
-          click: function () {
-            win.webContents.openDevTools()
-          }
-        },
-        {
-          type: "separator"
-        },
-        {
-          label: "Quit",
-          accelerator: "CommandOrControl+Q",
-          click: function () {
-            app.quit();
-          }
+    label: "Application",
+    submenu: [{
+        label: "About y2mp3",
+        click: function () {
+          win.webContents.send(EWindowEvents.OPEN_ABOUT);
         }
-      ]
+      },
+      {
+        label: "Preferences",
+        accelerator: "CommandOrControl+,",
+        click: function () {
+          win.webContents.send(EWindowEvents.OPEN_PREFERENCES);
+        }
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "Toggle Developer Tools",
+        accelerator: "CommandOrControl+Option+J",
+        click: function () {
+          win.webContents.openDevTools()
+        }
+      },
+      {
+        type: "separator"
+      },
+      {
+        label: "Quit",
+        accelerator: "CommandOrControl+Q",
+        click: function () {
+          app.quit();
+        }
+      }]
     },
     {
       label: "Edit",
@@ -196,28 +222,3 @@ function createWindow() {
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (win === null) {
-    createWindow()
-  }
-})
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

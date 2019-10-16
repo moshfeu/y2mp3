@@ -19,6 +19,7 @@ import * as classNames from 'classnames';
 import { settingsManager } from '../services/settings';
 import { checkForUpdateAndNotify } from '../services/check-for-update';
 import AppMenu from './menu';
+import { clear as clearTrayTooltip, inResult } from '../services/tray-messanger';
 
 @observer
 class Main extends React.Component<{}, {}> {
@@ -36,10 +37,16 @@ class Main extends React.Component<{}, {}> {
   }
 
   async componentDidMount() {
+    clearTrayTooltip();
     const { checkForUpdate } = settingsManager;
     if (checkForUpdate) {
       checkForUpdateAndNotify();
     }
+  }
+
+  async onSearch(url: string) {
+    await store.search(url);
+    inResult();
   }
 
   public render() {
@@ -49,13 +56,13 @@ class Main extends React.Component<{}, {}> {
         <AppMenu />
         <Form
           hasResult={!!videos.length}
-          onSubmit={store.search}
+          onSubmit={this.onSearch}
           onClear={() => store.clearResult()}
           inProcess={searchInProgress}
         >
           {videos.length ?
             <div>
-              <ButtonProgress text={`Download All (${videos.length})`}  onClick={this.downloadAll} />
+              <ButtonProgress text={`Download All (${videos.length})`} onClick={this.downloadAll} />
               <div className="videos">
                 {videos.map((video, i) => (
                   <Video

@@ -7,6 +7,8 @@ import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from '../services/youtube-mp3-downloader';
 import { Popup, Button } from 'semantic-ui-react';
+import store from '../mobx/store';
+import { inResult } from '../services/tray-messanger';
 
 const options: IButtonProgressOptions[] = formatOptions.map(option => {
   return {
@@ -42,8 +44,13 @@ export class Video extends React.Component<IVideoProps, any> {
     settingsManager.downloadFormat = format;
   }
 
+  onRemoveVideo(videoId: string) {
+    store.onRemoveVideo(videoId);
+    inResult();
+  }
+
   render() {
-    const { video, onVideoDownloadClick, style, onRemoveVideo } = this.props;
+    const { video, onVideoDownloadClick, style } = this.props;
     const { backgroundImage } = this;
     const text = video.status === EVideoStatus.PENDING ? 'Waiting' : 'Download';
     const isDisabled = video.status !== EVideoStatus.NOT_STARTED && video.status !== EVideoStatus.DONE;
@@ -53,7 +60,7 @@ export class Video extends React.Component<IVideoProps, any> {
       <div className="video" style={{backgroundImage, ...style}}>
         <Popup
           trigger={
-            <Button className="remove" color="red" circular basic icon="close" onClick={() => onRemoveVideo(video.id)}></Button>
+            <Button className="remove" color="red" circular basic icon="close" onClick={this.onRemoveVideo.bind(video.id)}></Button>
           }
           content="Remove"
           inverted
