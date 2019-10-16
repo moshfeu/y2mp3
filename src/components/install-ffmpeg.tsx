@@ -2,6 +2,7 @@ import * as React from 'react';
 import { installFfmpeg } from '../services/ffmpeg-installer';
 import { ButtonProgress } from './button-progress';
 import { setFfmpegPath } from '../services/api';
+import { Progress } from 'ffbinaries';
 
 interface IInstallFFMpegState {
   downloadProgress: number;
@@ -9,6 +10,7 @@ interface IInstallFFMpegState {
 
 interface IInstallFFMpegProps {
   onDone: () => void;
+  onError: (error: string) => void;
 }
 
 export class InstallFFMpeg extends React.Component<IInstallFFMpegProps, IInstallFFMpegState> {
@@ -20,24 +22,28 @@ export class InstallFFMpeg extends React.Component<IInstallFFMpegProps, IInstall
     }
   }
 
-  updateDownloadProgress = (data) => {
+  updateDownloadProgress = (data: Progress) => {
     this.setState({
-      downloadProgress: Math.floor(data.progress * 100)
-    }, () => {
-      if (this.state.downloadProgress === 100) {
-        setFfmpegPath();
-        setTimeout(() => {
-          this.props.onDone();
-        }, 2000);
-      }
+      downloadProgress: Math.max(1, Math.floor(data.progress * 100))
     });
   }
 
-  download = () => {
-    this.setState({
-      downloadProgress: 1
-    });
-    installFfmpeg(this.updateDownloadProgress);
+  download = async () => {
+    try {
+      this.setState({
+        downloadProgress: 1
+      });
+      await installFfmpeg(this.updateDownloadProgress);
+      setFfmpegPath();
+      setTimeout(() => {
+        this.props.onDone();
+      }, 2000);
+    } catch (error) {
+      this.props.onError(error);
+      this.setState({
+        downloadProgress: 0
+      });
+    }
   }
 
   render() {

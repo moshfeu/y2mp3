@@ -18,7 +18,7 @@ interface IPreferencesModalState extends IConfig {
 export class PreferencesModal extends React.Component<IModalProps, IPreferencesModalState> {
   constructor(props: IModalProps) {
     super(props);
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt } = settingsManager;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt, notificationWhenDone } = settingsManager;
     this.state = {
       downloadsFolder,
       audioQuality,
@@ -27,6 +27,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
       downloadFormat,
       checkForUpdate,
       albumArt,
+      notificationWhenDone,
     };
   }
 
@@ -56,7 +57,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
 
   render() {
     const { open, onClose } = this.props;
-    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt } = this.state;
+    const { downloadsFolder, audioQuality, playlistFolder, autoPaste, downloadFormat, checkForUpdate, albumArt, notificationWhenDone } = this.state;
 
     return (
       <Modal open={open} size='small' className="preferences-modal">
@@ -117,6 +118,14 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
             </label>
             <label>
               <Checkbox id="albumArt" slider onChange={this.handleFieldChange} checked={albumArt} />
+            </label>
+          </Form.Field>
+          <Form.Field inline>
+            <label>
+              Show a notification when download is finished
+            </label>
+            <label>
+              <Checkbox id="notificationWhenDone" slider onChange={this.handleFieldChange} checked={notificationWhenDone} />
             </label>
           </Form.Field>
           <Form.Field inline>

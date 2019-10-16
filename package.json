@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -57,6 +57,7 @@
     "ytdl-core": "^0.29.5"
   },
   "devDependencies": {
+    "@types/async": "^3.0.3",
     "@types/electron-is-dev": "^0.3.0",
     "@types/enzyme": "^3.1.15",
     "@types/fluent-ffmpeg": "2.1.2",
@@ -94,7 +95,8 @@
     "files": [
       "index.html",
       "main.js",
-      "resources/**"
+      "resources/**",
+      "assets/**"
     ],
     "mac": {
       "icon": "resources/icons/mac/icon.icns"

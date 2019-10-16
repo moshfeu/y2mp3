@@ -12,7 +12,7 @@ import { settingsManager } from '../settings';
 import { unlinkSync, rename } from 'fs';
 
 function YoutubeMp3Downloader(options) {
-    const self = this;
+    const self: YoutubeMp3DownloaderClass = this;
 
     self.youtubeBaseUrl = "http://www.youtube.com/watch?v=";
     self.youtubeVideoQuality = (options && options.youtubeVideoQuality ? options.youtubeVideoQuality : "highest");
@@ -24,17 +24,18 @@ function YoutubeMp3Downloader(options) {
     self.outputOptions = (options && options.outputOptions ? options.outputOptions : []);
     self.filter = (options && options.filter ? options.filter : null);
     self.format = (options && options.format ? options.format : 'mp3');
+    self.stream = undefined;
 
     if (options && options.ffmpegPath) {
         ffmpeg.setFfmpegPath(options.ffmpegPath);
     }
 
     //Async download/transcode queue
-    self.downloadQueue = async.queue(function (task, callback) {
+    self.downloadQueue = async.queue(function (task, callback: Function) {
         self.emit("queueSize", self.downloadQueue.running() + self.downloadQueue.length());
-
+        task.abort = callback;
         self.performDownload(task, function(err, result) {
-            callback(err, result);
+          callback(err, result);
         });
 
     }, self.queueParallelism);
@@ -43,19 +44,19 @@ function YoutubeMp3Downloader(options) {
 
 util.inherits(YoutubeMp3Downloader, EventEmitter);
 
-YoutubeMp3Downloader.prototype.setOutputPath = function(path) {
+YoutubeMp3Downloader.prototype.setOutputPath = function(path: string) {
   this.outputPath = path;
 }
 
-YoutubeMp3Downloader.prototype.setQuality = function(quality) {
+YoutubeMp3Downloader.prototype.setQuality = function(quality: DownloadQuality) {
   this.youtubeVideoQuality = quality;
 }
 
-YoutubeMp3Downloader.prototype.setFormat = function(format) {
+YoutubeMp3Downloader.prototype.setFormat = function(format: DownloadFormat) {
   this.format = format;
 }
 
-YoutubeMp3Downloader.prototype.cleanFileName = function(fileName) {
+YoutubeMp3Downloader.prototype.cleanFileName = function(fileName: string) {
     const self = this;
 
     self.fileNameReplacements.forEach(function(replacement) {
@@ -65,10 +66,10 @@ YoutubeMp3Downloader.prototype.cleanFileName = function(fileName) {
     return fileName;
 };
 
-YoutubeMp3Downloader.prototype.download = function(videoId, fileName) {
+YoutubeMp3Downloader.prototype.download = function(videoId: string, fileName: string) {
 
-    const self = this;
-    const task: IDwonloadTask = {
+    const self: YoutubeMp3DownloaderClass = this;
+    const task: IDownloadTask = {
         videoId: videoId,
         fileName: fileName
     };
@@ -85,12 +86,22 @@ YoutubeMp3Downloader.prototype.download = function(videoId, fileName) {
           self.emit("doneAll");
         }
     });
-
 };
+
+YoutubeMp3Downloader.prototype.cancelDownload = function(videoId: string) {
+  const self: YoutubeMp3DownloaderClass = this;
+  const task = self.downloadQueue.workersList().find(v => v.data.videoId === videoId);
+  // if video is not yet in the tasks
+  if (task) {
+    task.data.aborted = true;
+    task.data.abort && task.data.abort(null, {videoId});
+    self.downloadQueue.remove(v => v.data.videoId === videoId);
+  }
+}
 
 YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
 
-    const self = this;
+    const self: YoutubeMp3DownloaderClass = this;
     const videoUrl = self.youtubeBaseUrl+task.videoId;
     const resultObj = {
       videoId: task.videoId,
@@ -103,12 +114,16 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
       thumbnail: '',
     };
 
-
     self.emit("gettingInfo", task.videoId);
     ytdl.getInfo(videoUrl, {
       quality: self.youtubeVideoQuality,
       filter: self.filter
     }).then( function(info) {
+        // that means that the download already canceled
+        if (task.aborted) {
+          console.log(`"${info.title}" was deleted`);
+          return;
+        }
         try {
           const videoTitle = self.cleanFileName(info.title);
           const fileName = (task.fileName ? self.outputPath + "/" + task.fileName : self.outputPath + "/" + (sanitize(videoTitle) || info.video_id) + "." + self.format);
@@ -225,7 +240,7 @@ YoutubeMp3Downloader.prototype.performDownload = function(task, callback) {
 
 export default YoutubeMp3Downloader;
 
-export type DownloadFilter = 'audioandvideo' | 'video' | 'videoonly' | 'audio' | 'audioonly';
+export type DownloadFilter = ytdl.downloadOptions['filter'];
 export type DownloadQuality = 'lowest' | 'highest' | string | number;
 export type DownloadFormat = 'mp3' | 'ogg' | 'wav' | 'flac' | 'm4a' | 'wma' | 'aac' | 'mp4' | 'mpg' | 'wmv';
 
@@ -259,7 +274,33 @@ export interface IVideoTask {
   }
 }
 
-interface IDwonloadTask {
+declare class YoutubeMp3DownloaderClass extends EventEmitter.EventEmitter {
+  setOutputPath: (path: string) => void;
+  setQuality: (quality: DownloadQuality) => void;
+  setFormat: (format: DownloadFormat) => void;
+  cleanFileName: (fileName: string) => string;
+  download: (videoId: string, fileName: string) => void;
+  cancelDownload: (videoId: string) => void;
+  abort: () => any;
+  performDownload(task: any, callback: (err: any, result: any) => void): void;
+
+  youtubeBaseUrl: string;
+  youtubeVideoQuality: DownloadQuality;
+  outputPath: string;
+  queueParallelism: number;
+  progressTimeout: number;
+  fileNameReplacements: (string | RegExp)[][];
+  requestOptions: any;
+  outputOptions: string[];
+  filter: DownloadFilter;
+  format: DownloadFormat;
+  stream: any;
+  downloadQueue: async.AsyncQueue<IDownloadTask>;
+}
+
+interface IDownloadTask {
   videoId: string;
   fileName: string;
+  abort?: Function;
+  aborted?: boolean;
 }

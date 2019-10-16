@@ -9,6 +9,7 @@ export interface IConfig {
   autoPaste: boolean;
   checkForUpdate: boolean;
   albumArt: boolean;
+  notificationWhenDone: boolean;
 }
 
 class SettingsManager implements IConfig {
@@ -60,6 +61,14 @@ class SettingsManager implements IConfig {
 
   set albumArt(albumArt: boolean) {
     localStorage.setItem('albumArt', '' + albumArt);
+  }
+
+  get notificationWhenDone(): boolean {
+    return JSON.parse(localStorage.getItem('notificationWhenDone') || 'true');
+  }
+
+  set notificationWhenDone(notificationWhenDone: boolean) {
+    localStorage.setItem('notificationWhenDone', '' + notificationWhenDone);
   }
 
   get downloadFormat(): DownloadFormat {

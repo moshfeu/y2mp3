@@ -1,7 +1,7 @@
 import YoutubeMp3Downloader from './youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
-import { IVideoEntity, IPlaylistYoutube } from '../types';
+import { IVideoEntity, IPlaylistYoutube, IDownloadProgress } from '../types';
 import { ffmpegPath } from './path';
 import * as urlParser from 'js-video-url-parser';
 import { getBasicInfo } from 'ytdl-core';
@@ -11,8 +11,8 @@ import { settingsManager } from './settings';
 import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
-
 import { sync as commandExistsSync } from 'command-exists';
+import { downloading, gettingInfo, inResult } from './tray-messanger';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -28,9 +28,27 @@ export const downloader = new YoutubeMp3Downloader({
   format: settingsManager.downloadFormat,
 })
   .on('addToQueue', videoId => store.addToQueue(videoId))
-  .on('gettingInfo', videoId => store.gettingInfo(videoId))
-  .on('progress', ({videoId, progress}) => store.progress({videoId, progress}))
-  .on('finished', (err, { videoId }) => store.finished(err, { videoId }))
+  .on('gettingInfo', videoId => {
+    gettingInfo(videoId);
+    store.gettingInfo(videoId)
+  })
+  .on('progress', ({videoId, progress}: {videoId: string, progress: IDownloadProgress}) => {
+    const video = store.getVideo(videoId);
+    if (video) {
+      downloading(videoId, progress.speed, progress.eta);
+      store.progress({videoId, progress}, video);
+    }
+  })
+  .on('finished', (err, { videoId, thumbnail, videoTitle }) => {
+    store.finished(err, { videoId })
+    if (videoTitle && settingsManager.notificationWhenDone) {
+      new Notification('Download completed', {
+        icon: './app-resources/logo-128.png',
+        body: `The video "${videoTitle}" downloaded successfully`,
+        image: thumbnail
+      });
+    }
+  })
   .on('error', (err, { videoId }) => {
     alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
     console.error(err);
@@ -97,6 +115,18 @@ export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
   } else {
     performDownload(videoOrVideos);
   }
+}
+
+// not in use currently
+export function removeVideo(videoId: string) {
+  store.removeVideo(videoId);
+  downloader.cancelDownload(videoId);
+  inResult();
+}
+
+export async function search(url: string) {
+  await store.search(url);
+  inResult();
 }
 
 function setVideoDownloadPath(video: IVideoEntity) {

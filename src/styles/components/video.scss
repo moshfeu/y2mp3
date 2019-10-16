@@ -31,6 +31,12 @@
       opacity: 1;
     }
   }
+
+  .remove {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+  }
 }
 
 @keyframes fade-in {
