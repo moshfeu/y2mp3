@@ -39,6 +39,23 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 2.3.0
+
+- Allow to remove videos from the list
+
+<img width="82" alt="Remove from the list (feature screenshot)" src="https://user-images.githubusercontent.com/3723951/66964159-7a4e2d00-f07e-11e9-8a78-1fc971b92183.png">
+
+
+- Icon in the tray that shows the progress
+
+<img width="267" alt="progress (feature screenshot)" src="https://user-images.githubusercontent.com/3723951/66964583-bdf56680-f07f-11e9-8a9e-1fd7e6394175.jpg" />
+
+- Show notification when video downloaded
+
+<img width="357" alt="notification (feature screenshot)" src="https://user-images.githubusercontent.com/3723951/66964794-50960580-f080-11e9-97bd-9d7382ea2470.png">
+
+- Bug fixes
+
 ##### 2.2.0
 
 - Attach the video's thumbnail as album art
