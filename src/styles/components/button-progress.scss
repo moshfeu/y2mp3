@@ -31,6 +31,9 @@
   }
 
   .content {
+    @include parent(':focus') {
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.6901960784313725);
+    }
     $button-bg: #1d9650;
     $button-bg-hover: #095027;
 

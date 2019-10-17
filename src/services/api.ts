@@ -1,4 +1,4 @@
-import YoutubeMp3Downloader from './youtube-mp3-downloader';
+import { YoutubeMp3Downloader, DownloadTaskState } from './youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
 import { IVideoEntity, IPlaylistYoutube, IDownloadProgress } from '../types';
@@ -13,6 +13,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import { sync as commandExistsSync } from 'command-exists';
 import { downloading, gettingInfo, inResult } from './tray-messanger';
+import { IVideoTask } from './youtube-mp3-downloader';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -22,38 +23,10 @@ export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
   outputPath: settingsManager.downloadsFolder,         // Where should the downloaded and encoded files be stored?
   youtubeVideoQuality: settingsManager.audioQuality,       // What video quality should be used?
-  queueParallelism: 1,                  // How many parallel downloads/encodes should be started?
-  progressTimeout: 1000,                 // How long should be the interval of the progress reports
   filter: 'audio',
   format: settingsManager.downloadFormat,
-})
-  .on('addToQueue', videoId => store.addToQueue(videoId))
-  .on('gettingInfo', videoId => {
-    gettingInfo(videoId);
-    store.gettingInfo(videoId)
-  })
-  .on('progress', ({videoId, progress}: {videoId: string, progress: IDownloadProgress}) => {
-    const video = store.getVideo(videoId);
-    if (video) {
-      downloading(videoId, progress.speed, progress.eta);
-      store.progress({videoId, progress}, video);
-    }
-  })
-  .on('finished', (err, { videoId, thumbnail, videoTitle }) => {
-    store.finished(err, { videoId })
-    if (videoTitle && settingsManager.notificationWhenDone) {
-      new Notification('Download completed', {
-        icon: './app-resources/logo-128.png',
-        body: `The video "${videoTitle}" downloaded successfully`,
-        image: thumbnail
-      });
-    }
-  })
-  .on('error', (err, { videoId }) => {
-    alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
-    console.error(err);
-    finishVideoOnError(err, videoId);
-  });
+  progressTimeout: 1000,
+});
 
 function finishVideoOnError(err, videoId: string) {
   store.progress({videoId, progress: {
@@ -148,5 +121,45 @@ function setVideoDownloadPath(video: IVideoEntity) {
 
 function performDownload(video: IVideoEntity) {
   setVideoDownloadPath(video);
-  downloader.download(video.id);
+  downloader.download(video.id, downloadReducer);
+}
+
+function downloadReducer(state: DownloadTaskState, ...args: any[]) {
+  switch (state) {
+    case 'added': {
+      const [videoId] = args;
+      store.addToQueue(videoId);
+    } break;
+    case 'getting info': {
+      const [videoId] = args;
+      gettingInfo(videoId);
+      store.gettingInfo(videoId);
+    } break;
+    case 'downloading': {
+      const [{videoId, progress}] = args as [{videoId: string, progress: IDownloadProgress}];
+      const video = store.getVideo(videoId);
+      if (video) {
+        downloading(videoId, progress.speed, progress.eta);
+        store.progress({videoId, progress}, video);
+      }
+    } break;
+    case 'done': {
+      const [{ videoId, thumbnail, videoTitle }] = args as [{videoId: string, thumbnail: string; videoTitle: string}];
+
+      store.finished(null, { videoId })
+      if (videoTitle && settingsManager.notificationWhenDone) {
+        new Notification('Download completed', {
+          icon: './app-resources/logo-128.png',
+          body: `The video "${videoTitle}" downloaded successfully`,
+          image: thumbnail
+        });
+      }
+    } break;
+    case 'error': {
+      const [err, {videoId}] = args as [object, IVideoTask];
+      alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
+      console.error(err);
+      finishVideoOnError(err, videoId);
+    } break;
+  }
 }
