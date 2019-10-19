@@ -7,7 +7,6 @@ import { settingsManager } from '../settings';
 const sanitize = require('sanitize-filename');
 import { videoFormats, audioFormats } from './options';
 import { youtubeBaseUrl, cleanFileName, getVideoMetaData } from './utils';
-import { IVideoTask } from '.';
 import { IDownloadProgress } from '../../types';
 
 export class YoutubeMp3Downloader {
@@ -59,6 +58,7 @@ export class YoutubeMp3Downloader {
         thumbnail: ''
       };
 
+      console.info(`getting info: ${task.data.videoId}`);
       const info = await ytdl.getInfo(videoUrl, {
         quality: this.youtubeVideoQuality,
         filter: this.filter
@@ -66,7 +66,7 @@ export class YoutubeMp3Downloader {
 
       // that means that the download already canceled
       if (task.aborted) {
-        console.log(`'${info.title}' was deleted`);
+        console.info(`'${info.title}' was aborted`);
         return;
       }
 
@@ -99,6 +99,11 @@ export class YoutubeMp3Downloader {
 
           //Add progress event listener
           str.on('progress', function(progress) {
+            if (task.aborted) {
+              console.info(`stream of '${info.title}' was aborted`);
+              stream.destroy();
+            }
+            console.info(`progress: of '${info.title}'`, progress);
             if (progress.percentage === 100) {
               resultObj.stats = {
                 transferredBytes: progress.transferred,
@@ -106,7 +111,6 @@ export class YoutubeMp3Downloader {
                 averageSpeed: parseFloat(progress.speed.toFixed(2))
               };
             }
-            console.log('before progress!');
             task.data.onStateChanged('downloading', {
               videoId: task.data.videoId,
               progress
@@ -129,6 +133,7 @@ export class YoutubeMp3Downloader {
               reject(err);
             })
             .on('end', function() {
+              console.info(`done: '${info.title}`);
               resultObj.file = filePath;
               resultObj.youtubeUrl = videoUrl;
               resultObj.videoTitle = videoTitle;
@@ -157,7 +162,7 @@ export class YoutubeMp3Downloader {
                     // once the new file saved, delete the original (w/o the album art) and rename the new to the original name
                     unlinkSync(filePath);
                     rename(tempFileName, filePath, () => ({}));
-                    console.log('end in adding cover');
+                    console.info(`done to adding cover: '${info.title}`);
                   })
                   .addInput(resultObj.thumbnail)
                   .addOutputOption(['-map', '0:0'])
@@ -190,7 +195,7 @@ export class YoutubeMp3Downloader {
   };
 
   cancelDownload(videoId: string) {
-    this.queue.remove(v => v.id === videoId);
+    this.queue.remove(videoId);
   }
 
   setOutputPath(path: string) {

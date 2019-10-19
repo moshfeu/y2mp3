@@ -1,6 +1,6 @@
 import { observable, computed, action, toJS } from 'mobx';
 import { IVideoEntity, EVideoStatus, IMessage } from '../types';
-import { fetchVideos } from '../services/api';
+import { fetchVideos, removeAllVideos } from '../services/api';
 import { IVideoTask } from '../services/youtube-mp3-downloader';
 import { isFFMpegInstalled } from '../services/ffmpeg-installer';
 import { showTermsIsInvalid, hideMessage, showNoInternet } from '../services/modalsAndAlerts';
@@ -26,11 +26,14 @@ class Store {
     this.searchTerm = term;
     this.searchInProgress = true;
     hideMessage();
+    removeAllVideos();
     try {
-      this.videos = await fetchVideos(this.searchTerm);
-      if (!this.videos.length) {
+      const videos = await fetchVideos(this.searchTerm);;
+      if (!videos.length) {
         showTermsIsInvalid();
+        return;
       }
+      this.videos = videos;
     } catch (error) {
       if (error.code === 'ENOTFOUND') {
         showNoInternet();
@@ -53,14 +56,16 @@ class Store {
     const video = this.getVideo(videoId);
     video.status = EVideoStatus.PENDING;
     video.progress = 0;
-    console.log(toJS(this.videos), 'addToQueue');
+    console.log('addToQueue', toJS(video));
   }
 
   @action gettingInfo = (videoId: string) => {
     const video = this.getVideo(videoId);
+    if (!video) {
+      return;
+    }
     video.status = EVideoStatus.GETTING_INFO;
     this.countProgressUntil(video, 19);
-    console.log(toJS(this.videos), 'gettingInfo');
   }
 
   @action progress = ({videoId, progress}: IVideoTask, video: IVideoEntity = this.getVideo(videoId)) => {
@@ -68,7 +73,6 @@ class Store {
     if (video) {
       video.status = EVideoStatus.DOWNLOADING;
       video.progress = 20 + Math.floor(progress.percentage * 0.8);
-      console.log(toJS(this.videos), progress, 'progress');
     }
   }
 
@@ -78,7 +82,6 @@ class Store {
     if (video) {
       video.status = EVideoStatus.DONE;
       video.progress = 0;
-      console.log('done');
     }
   }
 

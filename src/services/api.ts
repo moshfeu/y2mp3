@@ -90,6 +90,10 @@ export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
   }
 }
 
+export function removeAllVideos() {
+  store.videos.forEach(video => removeVideo(video.id));
+}
+
 // not in use currently
 export function removeVideo(videoId: string) {
   store.removeVideo(videoId);

@@ -87,7 +87,7 @@
     "sinon": "^7.2.3",
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
-    "typescript": "^3.2.4",
+    "typescript": "^3.7.0-dev.20191018",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1"
   },

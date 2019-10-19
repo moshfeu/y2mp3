@@ -33,13 +33,21 @@ export class Video extends React.Component<IVideoProps, any> {
   }
 
   onClickTitle = () =>  {
-    const { video:{id} } = this.props;
     shell.openExternal(`https://www.youtube.com/watch?v=${this.props.video.id}`);
   }
 
   onFormatClicked = (e: any, data: { value: DownloadFormat }) => {
     const { value: format } = data;
     settingsManager.downloadFormat = format;
+  }
+
+  componentWillUnmount() {
+    const {id, status} = this.props.video;
+    if (status === EVideoStatus.NOT_STARTED || status === EVideoStatus.DONE) {
+      return;
+    }
+    console.log('componentWillUnmount', id);
+    removeVideo(id);
   }
 
   render() {
@@ -51,16 +59,13 @@ export class Video extends React.Component<IVideoProps, any> {
 
     return (
       <div className="video" style={{backgroundImage, ...style}}>
-        {
-          (video.status === EVideoStatus.NOT_STARTED || video.status === EVideoStatus.DONE) &&
-          <Popup
-            trigger={
-              <Button className="remove" color="red" circular basic icon="close" onClick={() => removeVideo(video.id)}></Button>
-            }
-            content="Remove"
-            inverted
-          />
-        }
+        <Popup
+          trigger={
+            <Button className="remove" color="red" circular basic icon="close" onClick={() => removeVideo(video.id)}></Button>
+          }
+          content="Remove"
+          inverted
+        />
         <div className="details">
           <Popup
             trigger={<div className="name"

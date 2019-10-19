@@ -4,7 +4,7 @@ import store from '../mobx/store';
 const CHANNEL_NAME = 'tray';
 
 function getVideoName(videoId: string): string {
-  return store.videos.find(v => v.id == videoId).name;
+  return store.videos.find(v => v.id == videoId)?.name || '';
 }
 
 export function inResult() {

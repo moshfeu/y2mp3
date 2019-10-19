@@ -7,6 +7,7 @@ export interface ITask<T> {
 
 export class Queue<T> {
   private tasks: ITask<T>[] = [];
+  private currentTask: ITask<T>;
   private inProcess = false;
 
   add(...tasks: ITask<T>[]): void {
@@ -16,13 +17,13 @@ export class Queue<T> {
     }
   }
 
-  remove(callback: (task: ITask<T>) => boolean): void {
-    const taskIndex = this.tasks.findIndex(callback);
-    // in case someone memorized it as reference
-    this.tasks[taskIndex].aborted = true;
-    if (taskIndex > -1) {
-      this.tasks.splice(taskIndex, 1);
+  remove(taskId: ITask<T>['id']): void {
+    if (this.taskIsCurrent(taskId)) {
+      this.abortCurrentTask();
+    } else {
+      this.findAndAbortTask(taskId);
     }
+    this.process();
   }
 
   start() {
@@ -35,8 +36,29 @@ export class Queue<T> {
       return;
     }
     this.inProcess = true;
-    const task = this.tasks.shift();
-    await task.main(task);
+    this.currentTask = this.tasks.shift();
+    await this.currentTask.main(this.currentTask);
     this.process();
+  }
+
+  private taskIsCurrent(taskId: ITask<T>['id']): boolean {
+    return taskId === this.currentTask.id;
+  }
+
+  private findAndAbortTask(taskId: string) {
+    const taskIndex = this.tasks.findIndex(t => t.id === taskId);
+    if (taskIndex > -1) {
+      // in case someone memorized it as reference
+      this.tasks[taskIndex].aborted = true;
+      if (taskIndex > -1) {
+        this.tasks.splice(taskIndex, 1);
+      }
+    } else {
+      console.info('tried to remove not exists task', taskId);
+    }
+  }
+
+  private abortCurrentTask() {
+    this.currentTask.aborted = true;
   }
 }

@@ -3,5 +3,6 @@
     "**/*.js.map": true,
     "**/*.bundle.js": true
   },
-  "javascript.implicitProjectConfig.experimentalDecorators": true
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
