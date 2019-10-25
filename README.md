@@ -40,6 +40,11 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 2.4.0
+
+- Allow to stop active video download
+- Scroll the screen to download when it's start
+
 ##### 2.3.0
 
 - Allow to remove videos from the list
