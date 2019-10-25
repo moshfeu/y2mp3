@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observe } from 'mobx';
 import { observer } from 'mobx-react';
 import { IVideoEntity, EVideoStatus, IButtonProgressOptions } from '../types';
 import { ButtonProgress } from './button-progress';
@@ -24,6 +25,8 @@ interface IVideoProps {
 
 @observer
 export class Video extends React.Component<IVideoProps, any> {
+  containerNode: HTMLDivElement;
+
   constructor(props) {
     super(props);
   }
@@ -39,6 +42,14 @@ export class Video extends React.Component<IVideoProps, any> {
   onFormatClicked = (e: any, data: { value: DownloadFormat }) => {
     const { value: format } = data;
     settingsManager.downloadFormat = format;
+  }
+
+  componentDidMount() {
+    observe(this.props.video, 'status', status => {
+      if (status.newValue === EVideoStatus.GETTING_INFO) {
+        this.containerNode.scrollIntoView({behavior: 'smooth'});
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -58,7 +69,7 @@ export class Video extends React.Component<IVideoProps, any> {
     const { downloadFormat } = settingsManager;
 
     return (
-      <div className="video" style={{backgroundImage, ...style}}>
+      <div className="video" ref={elm => this.containerNode = elm} style={{backgroundImage, ...style}}>
         <Popup
           trigger={
             <Button className="remove" color="red" circular basic icon="close" onClick={() => removeVideo(video.id)}></Button>
