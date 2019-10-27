@@ -114,7 +114,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
           </Form.Field>
           <Form.Field inline>
             <label>
-              Download with the video thumbnail
+              Set the video's thumnail as album art (for mp3 only)
             </label>
             <label>
               <Checkbox id="albumArt" slider onChange={this.handleFieldChange} checked={albumArt} />

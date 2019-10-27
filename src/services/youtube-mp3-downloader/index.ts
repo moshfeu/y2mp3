@@ -16,6 +16,7 @@ export class YoutubeMp3Downloader {
   private progressTimeout: number;
   private queue: Queue<IDownloadTask>;
   private youtubeVideoQuality: DownloadQuality;
+  private outputOptions: string[];
 
   constructor(options: YoutubeMp3DownloaderOptions) {
     this.queue = new Queue();
@@ -24,6 +25,7 @@ export class YoutubeMp3Downloader {
     this.filter = options.filter;
     this.format = options.format;
     this.progressTimeout = options.progressTimeout;
+    this.outputOptions = options.outputOptions || [];
 
     if (options && options.ffmpegPath) {
       ffmpeg.setFfmpegPath(options.ffmpegPath);
@@ -90,7 +92,7 @@ export class YoutubeMp3Downloader {
         });
 
         const { progressTimeout } = this;
-        stream.on('response', function(httpResponse) {
+        stream.on('response', httpResponse => {
           //Setup of progress module
           const str = progress({
             length: parseInt(httpResponse.headers['content-length']),
@@ -132,7 +134,7 @@ export class YoutubeMp3Downloader {
               task.data.onStateChanged('error', err, {videoId: task.data.videoId});
               reject(err);
             })
-            .on('end', function() {
+            .on('end', () => {
               console.info(`done: '${info.title}`);
               resultObj.file = filePath;
               resultObj.youtubeUrl = videoUrl;
@@ -141,7 +143,7 @@ export class YoutubeMp3Downloader {
               resultObj.title = title;
               resultObj.thumbnail = thumbnail;
 
-              if (settingsManager.albumArt) {
+              if (settingsManager.albumArt && this.format === 'mp3') {
                 const tempFileName = filePath.replace(
                   fileName,
                   `${fileName}-ac`
@@ -248,6 +250,7 @@ interface YoutubeMp3DownloaderOptions {
   filter: DownloadFilter;
   format: DownloadFormat;
   progressTimeout: number;
+  outputOptions?: string[];
 }
 
 export interface IVideoTask {
