@@ -47,18 +47,12 @@ export class Video extends React.Component<IVideoProps, any> {
   componentDidMount() {
     observe(this.props.video, 'status', status => {
       if (status.newValue === EVideoStatus.GETTING_INFO) {
-        this.containerNode.scrollIntoView({behavior: 'smooth'});
+        // wait for removed video to disappear
+        setTimeout(() => {
+          this.containerNode.scrollIntoView({behavior: 'smooth'});
+        }, 0);
       }
     });
-  }
-
-  componentWillUnmount() {
-    const {id, status} = this.props.video;
-    if (status === EVideoStatus.NOT_STARTED || status === EVideoStatus.DONE) {
-      return;
-    }
-    console.log('componentWillUnmount', id);
-    removeVideo(id);
   }
 
   render() {

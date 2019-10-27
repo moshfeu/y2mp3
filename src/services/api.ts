@@ -12,8 +12,9 @@ import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { sync as commandExistsSync } from 'command-exists';
-import { downloading, gettingInfo, inResult } from './tray-messanger';
+import { downloading, gettingInfo, inResult, clear } from './tray-messanger';
 import { IVideoTask } from './youtube-mp3-downloader';
+import { showCustomError } from './modalsAndAlerts';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -91,14 +92,19 @@ export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
 }
 
 export function removeAllVideos() {
-  store.videos.forEach(video => removeVideo(video.id));
+  store.videos.forEach(video => downloader.cancelDownload(video.id));
+  store.videos = [];
 }
 
 // not in use currently
 export function removeVideo(videoId: string) {
   store.removeVideo(videoId);
   downloader.cancelDownload(videoId);
-  inResult();
+  if (store.videos.length) {
+    inResult();
+  } else {
+    clear();
+  }
 }
 
 export async function search(url: string) {
@@ -160,10 +166,21 @@ function downloadReducer(state: DownloadTaskState, ...args: any[]) {
       }
     } break;
     case 'error': {
-      const [err, {videoId}] = args as [object, IVideoTask];
-      alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
-      console.error(err);
+      const [err, {videoId}] = args as [Error, IVideoTask];
       finishVideoOnError(err, videoId);
+      if (isCustomError(err)) {
+        showCustomError(err.message);
+        break;
+      } else {
+        alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
+        console.error(err);
+      }
     } break;
   }
+}
+
+function isCustomError(error: Error | object) {
+  return error instanceof Error &&
+    // https://commons.wikimedia.org/wiki/File:YouTube_blocked_UMG_country_en.png
+    error.message.includes('UMG')
 }

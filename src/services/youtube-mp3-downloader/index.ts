@@ -58,19 +58,19 @@ export class YoutubeMp3Downloader {
         thumbnail: ''
       };
 
-      console.info(`getting info: ${task.data.videoId}`);
-      const info = await ytdl.getInfo(videoUrl, {
-        quality: this.youtubeVideoQuality,
-        filter: this.filter
-      });
-
-      // that means that the download already canceled
-      if (task.aborted) {
-        console.info(`'${info.title}' was aborted`);
-        return;
-      }
-
       try {
+        console.info(`getting info: ${task.data.videoId}`);
+        const info = await ytdl.getInfo(videoUrl, {
+          quality: this.youtubeVideoQuality,
+          filter: this.filter
+        });
+
+        // that means that the download already canceled
+        if (task.aborted) {
+          console.info(`'${info.title}' was aborted`);
+          return;
+        }
+
         const videoTitle = cleanFileName(info.title);
         const fileName = (sanitize(videoTitle) || info.video_id);
         const filePath = task.data.fileName

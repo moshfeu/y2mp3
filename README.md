@@ -43,7 +43,7 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 ##### 2.4.0
 
 - Allow to stop active video download
-- Scroll the screen to download when it's start
+- Scroll the screen to a download when it starts
 
 ##### 2.3.0
 

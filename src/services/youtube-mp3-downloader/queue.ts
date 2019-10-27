@@ -20,10 +20,10 @@ export class Queue<T> {
   remove(taskId: ITask<T>['id']): void {
     if (this.taskIsCurrent(taskId)) {
       this.abortCurrentTask();
+      this.process();
     } else {
       this.findAndAbortTask(taskId);
     }
-    this.process();
   }
 
   start() {
@@ -37,12 +37,17 @@ export class Queue<T> {
     }
     this.inProcess = true;
     this.currentTask = this.tasks.shift();
-    await this.currentTask.main(this.currentTask);
-    this.process();
+    try {
+      await this.currentTask.main(this.currentTask);
+      this.process();
+    } catch (error) {
+      console.info('task failed:', this.currentTask);
+      this.remove(this.currentTask.id);
+    }
   }
 
   private taskIsCurrent(taskId: ITask<T>['id']): boolean {
-    return taskId === this.currentTask.id;
+    return taskId === this.currentTask?.id;
   }
 
   private findAndAbortTask(taskId: string) {
