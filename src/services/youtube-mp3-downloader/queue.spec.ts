@@ -7,7 +7,7 @@ describe('Queue', () => {
   let task2: ITask<any>;
 
   beforeEach(() => {
-    queue = new Queue();
+    queue = new Queue(false);
   });
 
   const generateTask = (id: string) => ({
@@ -25,15 +25,20 @@ describe('Queue', () => {
     expect(task1.main).toHaveBeenCalled();
   });
 
-  it.only('should ', async () => {
+  it('should abort an async task when it removed from the queue', async () => {
     const generateAsyncTask = (id: string): { task: ITask<any>, spy: jest.FunctionLike} => {
       const spy = jest.fn();
       return {
         task: {
           id: id,
-          main: (): Promise<object> => {
+          main: (task: ITask<any>): Promise<object> => {
+            console.log('main called');
             return new Promise(resolve => {
               setTimeout(() => {
+                console.log('callback', Date.now());
+                if (task.aborted) {
+                  return;
+                }
                 spy();
                 resolve();
               }, 100);
@@ -52,7 +57,7 @@ describe('Queue', () => {
     queue.start();
     jest.runOnlyPendingTimers();
     expect(spy1).toHaveBeenCalled();
-    queue.remove(t => t.id === task2.id);
+    queue.remove(task2.id);
     await flush();
     jest.runOnlyPendingTimers();
 
@@ -76,7 +81,7 @@ describe('Queue', () => {
     });
 
     it('should not run task 2 if removed', async () => {
-      queue.remove(t => t.id === task2.id);
+      queue.remove(task2.id);
       queue.start();
       expect(task1.main).toHaveBeenCalled();
       await flush();

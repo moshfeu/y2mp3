@@ -10,9 +10,11 @@ export class Queue<T> {
   private currentTask: ITask<T>;
   private inProcess = false;
 
+  constructor(private autoStart = true) {}
+
   add(...tasks: ITask<T>[]): void {
     this.tasks.push(...tasks);
-    if (!this.inProcess) {
+    if (!this.inProcess && this.autoStart) {
       this.start();
     }
   }
