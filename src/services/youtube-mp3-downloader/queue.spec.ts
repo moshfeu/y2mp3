@@ -65,6 +65,16 @@ describe('Queue', () => {
     expect(task2.aborted).toBeTruthy();
   });
 
+  describe('autoStart', () => {
+    it('should auto start the queue by default', () => {
+      queue = new Queue();
+      task1 = generateTask('1');
+      queue.add(task1);
+
+      expect(task1.main).toHaveBeenCalled();
+    });
+  });
+
   describe('', () => {
     beforeEach(() => {
       task1 = generateTask('1');
