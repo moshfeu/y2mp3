@@ -20,6 +20,7 @@ interface IFormState {
 }
 
 export class Form extends React.Component<IFormProps, IFormState> {
+  input: HTMLInputElement;
   constructor(props: IFormProps) {
     super(props);
     this.state = {
@@ -40,6 +41,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
         this.setState({
           terms: clipboardContent
         });
+        this.input.focus();
       }
     });
   }
@@ -88,7 +90,7 @@ export class Form extends React.Component<IFormProps, IFormState> {
       <div className={['search-wrapper', containerActive && 'active' || '', hasResult && '-has-result' || '', inProcess && '-in-process' || ''].join(' ')}>
         <form className="search-form" onSubmit={this.onSubmit}>
           <div className="input-holder">
-            <input className="search-input" type="url" placeholder="https://www.youtube.com/..." value={terms} onChange={e => this.setState({terms: e.target.value})} />
+            <input ref={ref => this.input = ref} className="search-input" type="url" placeholder="https://www.youtube.com/..." value={terms} onChange={e => this.setState({terms: e.target.value})} />
             <button type="button" className="search-icon" onClick={this.searchClick} disabled={inProcess}>
               <span></span>
             </button>

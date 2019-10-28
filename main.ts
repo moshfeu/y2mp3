@@ -76,7 +76,7 @@ function createWindow() {
 
   win.on('closed', () => {
     win = null;
-    tray.destroy();
+    tray?.destroy();
     tray = null;
   }).on('focus', () => {
     win.webContents.send(EWindowEvents.WINDOW_FOCUS);
