@@ -32,10 +32,8 @@ describe('Queue', () => {
         task: {
           id: id,
           main: (task: ITask<any>): Promise<object> => {
-            console.log('main called');
             return new Promise(resolve => {
               setTimeout(() => {
-                console.log('callback', Date.now());
                 if (task.aborted) {
                   return;
                 }
