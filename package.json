@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -54,7 +54,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
     "youtube-playlist": "git+https://github.com/moshfeu/youtube-playlist.git",
-    "ytdl-core": "^0.29.5"
+    "ytdl-core": "^1.0.6"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
