@@ -18,7 +18,7 @@ export default function AppMenu() {
         <Dropdown.Item onClick={openAbout}><Icon name="info" /> About</Dropdown.Item>
         <Dropdown.Item onClick={openPreferences}><Icon name="options" /> Options</Dropdown.Item>
         {store.hasUpdate &&
-          <Dropdown.Item onClick={() => shell.openExternal(`${CONTACT_EMAIL}?subject=I have an idea! | Something is not working as expected :(`)}><Icon name="refresh" /> Update Available</Dropdown.Item>
+          <Dropdown.Item onClick={() => shell.openExternal('https://github.com/moshfeu/y2mp3/releases/latest')}><Icon name="refresh" /> Update Available</Dropdown.Item>
         }
         <Dropdown.Divider />
         <Dropdown.Header>Help / Feedback</Dropdown.Header>
