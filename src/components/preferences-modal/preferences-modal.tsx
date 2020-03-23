@@ -31,20 +31,20 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
     };
   }
 
-  openDirectoryExplorer = () => {
-    remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
+  openDirectoryExplorer = async () => {
+    const {filePaths} = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
       properties: [
         "openDirectory",
         "createDirectory",
       ],
       title: 'Choose a directory'
-    }, (filePaths: string[]) => {
-      if (filePaths) {
-        const downloadsFolder = filePaths[0]
-        settingsManager.downloadsFolder = downloadsFolder;
-        this.setState({downloadsFolder});
-      }
-    })
+    });
+
+    if (filePaths.length) {
+      const downloadsFolder = filePaths[0]
+      settingsManager.downloadsFolder = downloadsFolder;
+      this.setState({downloadsFolder});
+    }
   }
 
   handleFieldChange = (e: SyntheticEvent, data: CheckboxProps | DropdownProps) => {

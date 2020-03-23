@@ -148,7 +148,8 @@ function createMenu() {
     },
     {
       label: "Edit",
-      submenu: [{
+      submenu: [
+        {
           label: "Undo",
           accelerator: "CmdOrCtrl+Z",
           role: "undo"
@@ -179,7 +180,7 @@ function createMenu() {
         {
           label: "Select All",
           accelerator: "CmdOrCtrl+A",
-          role: "selectall"
+          role: "selectAll"
         }
       ]
     },
