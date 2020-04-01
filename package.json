@@ -35,10 +35,8 @@
     "test:watch": "jest --watch",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
-  "resolutions": {
-    "@types/node": "12.12.6"
-  },
   "dependencies": {
+    "@types/node": "12.12.21",
     "async": "^2.6.0",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
