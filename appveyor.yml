@@ -5,13 +5,14 @@ environment:
   GH_TOKEN:
       secure: GG3j7UxXlamSiVI3UGBEQ9SXYylyne6A/WRn4Q2JrGCdcmCtNMd3f3XU7vWlM+gV
   matrix:
-    - nodejs_version: 8
+    - nodejs_version: 11
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install
+  - npm install --save-dev electron-rebuild
 matrix:
   fast_finish: true
 version: '{build}'
@@ -23,6 +24,7 @@ platform:
 init:
   - git config --global core.autocrlf input
 build_script:
+  - .\node_modules\.bin\electron-rebuild.cmd
   - npm run build
 test: true
 before_deploy:
