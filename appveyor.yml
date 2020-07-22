@@ -24,7 +24,7 @@ platform:
 init:
   - git config --global core.autocrlf input
 build_script:
-  - ./node_modules/.bin/electron-rebuild
+  - .\node_modules\.bin\electron-rebuild.cmd
   - npm run build
 test: true
 before_deploy:
