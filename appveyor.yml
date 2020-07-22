@@ -12,6 +12,7 @@ install:
   - npm install -g npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install
+  - npm install --save-dev electron-rebuild
 matrix:
   fast_finish: true
 version: '{build}'
@@ -23,6 +24,7 @@ platform:
 init:
   - git config --global core.autocrlf input
 build_script:
+  - ./node_modules/.bin/electron-rebuild
   - npm run build
 test: true
 before_deploy:
