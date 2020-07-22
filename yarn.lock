@@ -543,7 +543,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@12.12.6", "@types/node@^12.0.12":
+"@types/node@*", "@types/node@^12.0.12":
   version "12.12.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.6.tgz#a47240c10d86a9a57bb0c633f0b2e0aea9ce9253"
   integrity sha512-FjsYUPzEJdGXjwKqSpE0/9QEh6kzhTAeObA54rn6j3rR4C/mzpI9L0KNfoeASSPMMdxIsoJuCLDWcM/rVjIsSA==
@@ -3552,10 +3552,10 @@ html-encoding-sniffer@^1.0.2:
   dependencies:
     whatwg-encoding "^1.0.1"
 
-html-entities@^1.1.3:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
-  integrity sha1-DfKTUfByEWNRXfueVUPl9u7VFi8=
+html-entities@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.3.1.tgz#fb9a1a4b5b14c5daba82d3e34c6ae4fe701a0e44"
+  integrity sha512-rhE/4Z3hIhzHAUKbW8jVcCyuT5oJCXXqhN/6mXXVCpzTmvJnoH2HL/bt3EZ6p55jbFJBeAe1ZNpL5BugLujxNA==
 
 html-escaper@^2.0.0:
   version "2.0.2"
@@ -4899,10 +4899,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-m3u8stream@^0.6.3:
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.6.5.tgz#a41713cb7144f8fe1eb944d32a8848be8cb2c951"
-  integrity sha512-QZCzhcfUliZfsOboi68QkNcMejPKTEhxE+s1TApvHubDeR8ythm4ViWuYFqgUwZeoHe8q0nsPxOvA3lQvdSzyg==
+m3u8stream@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.7.1.tgz#74b01a67ca248ac7bbdc263a65d9d8d2c479a65c"
+  integrity sha512-z6ldnAdhbuWOL6LmMkwptSZGzj+qbRytMKLTbNicwF/bJMjf9U9lqD57RNQUFecvWadEkzy6PDjcNJFFgi19uQ==
   dependencies:
     miniget "^1.6.1"
     sax "^1.2.4"
@@ -5086,10 +5086,15 @@ min-document@^2.19.0:
   dependencies:
     dom-walk "^0.1.0"
 
-miniget@^1.6.0, miniget@^1.6.1:
+miniget@^1.6.1:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/miniget/-/miniget-1.7.0.tgz#a29eb79ebff479e9efafd271616981c603987875"
   integrity sha512-yrgaDSMRzrfYTkudB4Y6xK8pCb7oAH2bvfv6iPY2m6CedZfs9yK4b/ofh0Vzv08hCYXH/HHkoS8an6fkWtOAQA==
+
+miniget@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/miniget/-/miniget-2.0.1.tgz#e2188573317ad8239bab33f056aae64804fc8e47"
+  integrity sha512-MX+QfVIPAutz6c+T7WKuFKtjcw0nOyRRh1ubhTDD+z/e/pKcSAsfAV63aQKUgb1MFRT1GyfJeW53N5fHkX0wIA==
 
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
@@ -8235,19 +8240,20 @@ yauzl@^2.10.0:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-"youtube-playlist@git+https://github.com/moshfeu/youtube-playlist.git":
-  version "1.0.2"
-  resolved "git+https://github.com/moshfeu/youtube-playlist.git#8f2151b1644f8191bee818ef2f4160f1d5183c81"
+youtube-playlist@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/youtube-playlist/-/youtube-playlist-1.0.4.tgz#e77e33ef20c58d8ddd2b54603666dc3e399f478d"
+  integrity sha512-w3aVcRI3dm+lc7NS8MvSz1sHuyFTinIaDbaM1wqT7fWC+EmKyIdKHOtxxvEaYHmSW/0HuEx8NRRSX9Sbau9+7g==
   dependencies:
     cheerio "^1.0.0-rc.2"
     got "^6.3.0"
 
-ytdl-core@^1.0.6:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-1.0.9.tgz#938d5bf5f2baf901b04ffe41d4444fba72ba283a"
-  integrity sha512-HhFeLfjXU34h0FNHmSkSpKygdaYijSt8VNsC770VYBRFb+dyUKcm11cIKxu2MUSwT9znISZ0k1wFdaV/N5VW+Q==
+ytdl-core@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-3.1.2.tgz#38402a65486a6baea9e3f9c65cb7c911091b50ba"
+  integrity sha512-H2ja9W9j89TTf+LMQxo1VrdpUNCcjjHnwY6M4NmvgUaQLwNZnIoBwbch4iaT8q75trUK83PzmbihkUBd5Poyfg==
   dependencies:
-    html-entities "^1.1.3"
-    m3u8stream "^0.6.3"
-    miniget "^1.6.0"
+    html-entities "^1.3.1"
+    m3u8stream "^0.7.1"
+    miniget "^2.0.1"
     sax "^1.1.3"
