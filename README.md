@@ -143,7 +143,7 @@ Or
   <tr>
     <td><a href="http://electronjs.org/"><img width="25" alt="electron" src="https://github.githubassets.com/images/icons/emoji/electron.png" /></a></td>
     <td><a href="https://reactjs.org/"><img width="45" alt="reactjs" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" /></a></td>
-    <td><a href="https://mobx.js.org/"><img width="25" alt="mobx" src="https://mobx.js.org/docs/mobx.png" /></a></td>
+    <td><a href="https://mobx.js.org/"><img width="25" alt="mobx" src="https://mobx.js.org/img/mobx.png" /></a></td>
     <td><a href="https://www.typescriptlang.org/"><img width="25" alt="typescript" src="https://github.com/remojansen/logo.ts/blob/master/ts.jpg?raw=true" /></a></td>
     <td><a href="https://webpack.js.org/"><img width="30" src="https://github.com/webpack/media/blob/master/logo/icon-square-small.jpg?raw=true" /></a></td>
   <tr>
