@@ -40,7 +40,7 @@
     "async": "^2.6.0",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
-    "downloads-folder": "^1.0.1",
+    "downloads-folder": "^3.0.1",
     "electron-is-dev": "^1.0.1",
     "fix-path": "^2.1.0",
     "fluent-ffmpeg": "2.1.2",
@@ -70,8 +70,8 @@
     "autoprefixer": "^9.4.5",
     "coveralls": "^3.0.2",
     "css-loader": "^1.0.1",
-    "electron": "^8.2.4",
-    "electron-builder": "^22.7.0",
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1",
     "electron-icon-maker": "0.0.4",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.1",
@@ -88,8 +88,8 @@
     "style-loader": "^0.23.1",
     "ts-loader": "^5.3.3",
     "typescript": "^3.7.0-dev.20191018",
-    "webpack": "^4.28.4",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0"
   },
   "build": {
     "appId": "moshfeu.y2mp3",

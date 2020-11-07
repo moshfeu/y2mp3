@@ -1,4 +1,7 @@
-import { YoutubeMp3Downloader, DownloadTaskState } from './youtube-mp3-downloader';
+import {
+  YoutubeMp3Downloader,
+  DownloadTaskState,
+} from './youtube-mp3-downloader';
 import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
 import { IVideoEntity, IPlaylistYoutube, IDownloadProgress } from '../types';
@@ -21,26 +24,29 @@ export function isFfmpegInPath() {
 }
 
 export const downloader = new YoutubeMp3Downloader({
-  ffmpegPath: ffmpegPath(),             // Where is the FFmpeg binary located?
-  outputPath: settingsManager.downloadsFolder,         // Where should the downloaded and encoded files be stored?
-  youtubeVideoQuality: settingsManager.audioQuality,       // What video quality should be used?
+  ffmpegPath: ffmpegPath(), // Where is the FFmpeg binary located?
+  outputPath: settingsManager.downloadsFolder, // Where should the downloaded and encoded files be stored?
+  youtubeVideoQuality: settingsManager.audioQuality, // What video quality should be used?
   filter: 'audio',
   format: settingsManager.downloadFormat,
   progressTimeout: 1000,
 });
 
 function finishVideoOnError(err, videoId: string) {
-  store.progress({videoId, progress: {
-    delta: 0,
-    eta: 0,
-    length: 0,
-    percentage: 100,
-    transferred: 0,
-    remaining: 0,
-    runtime: 0,
-    speed: 0
-  }})
-  store.finished(err, { videoId })
+  store.progress({
+    videoId,
+    progress: {
+      delta: 0,
+      eta: 0,
+      length: 0,
+      percentage: 100,
+      transferred: 0,
+      remaining: 0,
+      runtime: 0,
+      speed: 0,
+    },
+  });
+  store.finished(err, { videoId });
 }
 
 export function setFfmpegPath() {
@@ -71,13 +77,17 @@ async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {
   }
 }
 
-async function fetchVideosFromList(playlistUrl: string): Promise<IVideoEntity[]> {
+async function fetchVideosFromList(
+  playlistUrl: string
+): Promise<IVideoEntity[]> {
   const data: IPlaylistYoutube = await ytlist(playlistUrl);
   console.log(data);
-  const { data: {playlist, name} } = data;
+  const {
+    data: { playlist, name },
+  } = data;
   return playlist
-    .filter(video => !video.isPrivate)
-    .map(video => createVideoEntity(video.name, video.id, name));
+    .filter((video) => !video.isPrivate)
+    .map((video) => createVideoEntity(video.name, video.id, name));
 }
 
 export function download(videoId: IVideoEntity): void;
@@ -92,7 +102,7 @@ export function download(videoOrVideos: IVideoEntity | IVideoEntity[]) {
 }
 
 export function removeAllVideos() {
-  store.videos.forEach(video => downloader.cancelDownload(video.id));
+  store.videos.forEach((video) => downloader.cancelDownload(video.id));
   store.videos = [];
 }
 
@@ -118,7 +128,7 @@ function setVideoDownloadPath(video: IVideoEntity) {
       return join(settingsManager.downloadsFolder, video.playlistName);
     }
     return settingsManager.downloadsFolder;
-  }
+  };
 
   const path = getFinalPath();
   if (!existsSync(path)) {
@@ -136,51 +146,69 @@ function performDownload(video: IVideoEntity) {
 
 function downloadReducer(state: DownloadTaskState, ...args: any[]) {
   switch (state) {
-    case 'added': {
-      const [videoId] = args;
-      store.addToQueue(videoId);
-    } break;
-    case 'getting info': {
-      const [videoId] = args;
-      gettingInfo(videoId);
-      store.gettingInfo(videoId);
-    } break;
-    case 'downloading': {
-      const [{videoId, progress}] = args as [{videoId: string, progress: IDownloadProgress}];
-      const video = store.getVideo(videoId);
-      if (video) {
-        downloading(videoId, progress.speed, progress.eta);
-        store.progress({videoId, progress}, video);
+    case 'added':
+      {
+        const [videoId] = args;
+        store.addToQueue(videoId);
       }
-    } break;
-    case 'done': {
-      const [{ videoId, thumbnail, videoTitle }] = args as [{videoId: string, thumbnail: string; videoTitle: string}];
+      break;
+    case 'getting info':
+      {
+        const [videoId] = args;
+        gettingInfo(videoId);
+        store.gettingInfo(videoId);
+      }
+      break;
+    case 'downloading':
+      {
+        const [{ videoId, progress }] = args as [
+          { videoId: string; progress: IDownloadProgress }
+        ];
+        const video = store.getVideo(videoId);
+        if (video) {
+          downloading(videoId, progress.speed, progress.eta);
+          store.progress({ videoId, progress }, video);
+        }
+      }
+      break;
+    case 'done':
+      {
+        const [{ videoId, thumbnail, videoTitle }] = args as [
+          { videoId: string; thumbnail: string; videoTitle: string }
+        ];
 
-      store.finished(null, { videoId })
-      if (videoTitle && settingsManager.notificationWhenDone) {
-        new Notification('Download completed', {
-          icon: './app-resources/logo-128.png',
-          body: `The video "${videoTitle}" downloaded successfully`,
-          image: thumbnail
-        });
+        store.finished(null, { videoId });
+        if (videoTitle && settingsManager.notificationWhenDone) {
+          new Notification('Download completed', {
+            icon: './app-resources/logo-128.png',
+            body: `The video "${videoTitle}" downloaded successfully`,
+            image: thumbnail,
+          });
+        }
       }
-    } break;
-    case 'error': {
-      const [err, {videoId}] = args as [Error, IVideoTask];
-      finishVideoOnError(err, videoId);
-      if (isCustomError(err)) {
-        showCustomError(err.message);
-        break;
-      } else {
-        alert(`Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`);
-        console.error(err);
+      break;
+    case 'error':
+      {
+        const [err, { videoId }] = args as [Error, IVideoTask];
+        finishVideoOnError(err, videoId);
+        if (isCustomError(err)) {
+          showCustomError(err.message);
+          break;
+        } else {
+          alert(
+            `Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`
+          );
+          console.error(err);
+        }
       }
-    } break;
+      break;
   }
 }
 
 function isCustomError(error: Error | object) {
-  return error instanceof Error &&
+  return (
+    error instanceof Error &&
     // https://commons.wikimedia.org/wiki/File:YouTube_blocked_UMG_country_en.png
     error.message.includes('UMG')
+  );
 }
