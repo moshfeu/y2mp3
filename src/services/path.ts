@@ -1,7 +1,7 @@
-import {join} from 'path';
+import { join } from 'path';
 import { mkdirSync, existsSync, readdirSync } from 'fs';
 import { findArgument } from './additional-arguments';
-const downloadsFolder = require('downloads-folder');
+import * as downloadsFolder from 'downloads-folder';
 
 const folderName = 'y2mp3';
 const appDataFolder = findArgument('appData');
@@ -13,7 +13,8 @@ if (!existsSync(DOWNLOADS_FOLDER)) {
 
 export const APPDATA_FOLDER = join(appDataFolder, folderName);
 // the file is different from os to os (.exe vs nothing)
-const ffmpegFileName = () => readdirSync(APPDATA_FOLDER).find(file => file.includes('ffmpeg'));
+const ffmpegFileName = () =>
+  readdirSync(APPDATA_FOLDER).find((file) => file.includes('ffmpeg'));
 export const ffmpegPath = () => {
   const ffmpegFile = ffmpegFileName();
   if (ffmpegFile) {
