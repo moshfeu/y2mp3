@@ -40,7 +40,6 @@
     "async": "^2.6.0",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
-    "downloads-folder": "^3.0.1",
     "electron-is-dev": "^1.0.1",
     "fix-path": "^2.1.0",
     "fluent-ffmpeg": "2.1.2",
