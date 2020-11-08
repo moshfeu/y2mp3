@@ -8,17 +8,17 @@ module.exports = {
       {
         test: /\.ts|.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.scss$/,
         use: [
-          "style-loader", // creates style nodes from JS strings
-          "css-loader",   // translates CSS into CommonJS
-          "sass-loader",  // compiles Sass to CSS, using Node Sass by default
-          "postcss-loader"
+          'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'sass-loader', // compiles Sass to CSS, using Node Sass by default
+          'postcss-loader',
         ],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(gif|png|jpe?g)$/i,
@@ -28,46 +28,48 @@ module.exports = {
             options: {
               name: '[name].[ext]',
               outputPath: 'resources/',
-            }
+            },
           },
         ],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
+        use: [
+          {
             loader: 'file-loader',
             options: {
-                name: '[name].[ext]',
-                outputPath: 'resources/fonts/'
-            }
-        }]
-      }
-    ]
+              name: '[name].[ext]',
+              outputPath: 'resources/fonts/',
+            },
+          },
+        ],
+      },
+    ],
   },
   watch: true,
   watchOptions: {
-    poll: true
+    poll: true,
   },
   resolve: {
     modules: ['node_modules'],
-    extensions: [ '.ts', '.tsx', '.js', '.json' ]
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
   output: {
     filename: 'resources/app.bundle.js',
     sourceMapFilename: 'resources/app.bundle.js.map',
-    path: __dirname
+    path: __dirname,
   },
   mode: 'development',
-  devtool : 'cheap-source-map',
+  devtool: 'inline-source-map',
   target: 'node',
   plugins: [
     new DefinePlugin({
-      'process.env.FLUENTFFMPEG_COV': false
+      'process.env.FLUENTFFMPEG_COV': false,
     }),
     {
-      apply: compiler => {
-        compiler.hooks.beforeCompile.tap('clearConsole', compilation => {
+      apply: (compiler) => {
+        compiler.hooks.beforeCompile.tap('clearConsole', (compilation) => {
           process.stdout.write('\033c');
         });
 
@@ -75,7 +77,7 @@ module.exports = {
         //   // https://stackoverflow.com/a/43285131/863110
         //   spawnSync(/^win/.test(process.platform) ? 'npm.cmd' : 'npm', ['test'], {stdio:'inherit'});
         // });
-      }
-    }
-  ]
-}
+      },
+    },
+  ],
+};

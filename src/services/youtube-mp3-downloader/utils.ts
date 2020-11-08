@@ -1,6 +1,13 @@
-import ytdl = require('ytdl-core');
+import * as ytdl from 'ytdl-core';
 
-const fileNameReplacemant = [[/"/g, ""], [/'/g, ""], [/\//g, ""], [/\?/g, ""], [/:/g, ""], [/;/g, ""]];
+const fileNameReplacemant = [
+  [/"/g, ''],
+  [/'/g, ''],
+  [/\//g, ''],
+  [/\?/g, ''],
+  [/:/g, ''],
+  [/;/g, ''],
+];
 
 export function cleanFileName(fileName: string) {
   fileNameReplacemant.forEach((replacement: string[]) => {
@@ -27,7 +34,11 @@ export function getVideoMetaData(videoTitle: string, info: ytdl.videoInfo) {
     artist = info.author.name;
   }
 
-  return { artist, title, thumbnail: `https://img.youtube.com/vi/${info.video_id}/mqdefault.jpg` };
+  return {
+    artist,
+    title,
+    thumbnail: `https://img.youtube.com/vi/${info.video_id}/mqdefault.jpg`,
+  };
 }
 
 export const youtubeBaseUrl = 'http://www.youtube.com/watch?v=';

@@ -553,10 +553,10 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.45.tgz#e9387572998e5ecdac221950dab3e8c3b16af884"
   integrity sha512-jnqIUKDUqJbDIUxm0Uj7bnlMnRm1T/eZ9N+AVMqhPgzrba2GhGG5o/jCTwmdPK709nEZsGoMzXEDUjcXHa3W0g==
 
-"@types/fluent-ffmpeg@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.2.tgz#7193a6a073497a96002007dedbddc26751b09bd9"
-  integrity sha512-JJcv++r1wMUK0yJsJnDSpgW7Ssruk6g+p+uG6bfHpNFrl2CO5j6xVkHB2RgPQIRlbPW3NWWUm6YrSiA3x3u6rw==
+"@types/fluent-ffmpeg@^2.1.16":
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.16.tgz#63949b0cb6bc88c9157a579cdd80858a269f3a3a"
+  integrity sha512-1FTstm6xY/2WsJVt6ARV7CiJjNCQDlR/nfw6xuYk5ITbVjk7sw89Biyqm2DGW4c3aZ3vBx+5irZvsql4eybpoQ==
   dependencies:
     "@types/node" "*"
 
@@ -632,6 +632,13 @@
   version "12.19.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.19.3.tgz#a6e252973214079155f749e8bef99cc80af182fa"
   integrity sha512-8Jduo8wvvwDzEVJCOvS/G6sgilOLvvhn1eMmK3TW8/T217O7u1jdrK6ImKLv80tVryaPSVeKu6sjDEiFjd4/eg==
+
+"@types/progress-stream@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/progress-stream/-/progress-stream-2.0.1.tgz#80ecb36f6965f5355f11aa947abb06bc7b2662c2"
+  integrity sha512-NUmoYmspOZRXTEv9NreZ/IFLO4D/iPazNCfj7FKvp6zQ1/XszPw5x8L1PiuMijQZrI9vq16ZBnOJTXxmdtLxCw==
+  dependencies:
+    "@types/node" "*"
 
 "@types/prop-types@*":
   version "15.7.3"

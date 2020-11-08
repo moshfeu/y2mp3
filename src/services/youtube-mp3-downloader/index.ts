@@ -1,7 +1,7 @@
 import { ITask, Queue } from './queue';
-import ytdl = require('ytdl-core');
+import * as ytdl from 'ytdl-core';
 import { unlinkSync, rename } from 'fs';
-const ffmpeg = require('fluent-ffmpeg');
+import * as ffmpeg from 'fluent-ffmpeg';
 import * as progress from 'progress-stream';
 import { settingsManager } from '../settings';
 const sanitize = require('sanitize-filename');
@@ -39,12 +39,14 @@ export class YoutubeMp3Downloader {
       main: this.performDownload,
       data: {
         videoId,
-        onStateChanged
-      }
+        onStateChanged,
+      },
     });
   }
 
-  private performDownload = (task: ITask<IDownloadTask>): Promise<ITask<IDownloadTask>> => {
+  private performDownload = (
+    task: ITask<IDownloadTask>
+  ): Promise<ITask<IDownloadTask>> => {
     return new Promise(async (resolve, reject) => {
       task.data.onStateChanged('getting info', task.data.videoId);
       const videoUrl = youtubeBaseUrl + task.data.videoId;
@@ -57,14 +59,14 @@ export class YoutubeMp3Downloader {
         videoTitle: '',
         artist: '',
         title: '',
-        thumbnail: ''
+        thumbnail: '',
       };
 
       try {
         console.info(`getting info: ${task.data.videoId}`);
         const info = await ytdl.getInfo(videoUrl, {
           quality: this.youtubeVideoQuality,
-          filter: this.filter
+          filter: this.filter,
         });
 
         // that means that the download already canceled
@@ -74,33 +76,29 @@ export class YoutubeMp3Downloader {
         }
 
         const videoTitle = cleanFileName(info.title);
-        const fileName = (sanitize(videoTitle) || info.video_id);
+        const fileName = sanitize(videoTitle) || info.video_id;
         const filePath = task.data.fileName
           ? this.outputPath + '/' + task.data.fileName
-          : this.outputPath +
-            '/' +
-            fileName +
-            '.' +
-            this.format;
+          : this.outputPath + '/' + fileName + '.' + this.format;
 
         const { title, artist, thumbnail } = getVideoMetaData(videoTitle, info);
 
         //Stream setup
         const stream = ytdl.downloadFromInfo(info, {
           quality: this.youtubeVideoQuality,
-          requestOptions: { maxRedirects: 5 }
+          requestOptions: { maxRedirects: 5 },
         });
 
         const { progressTimeout } = this;
-        stream.on('response', httpResponse => {
+        stream.on('response', (httpResponse) => {
           //Setup of progress module
           const str = progress({
             length: parseInt(httpResponse.headers['content-length']),
-            time: progressTimeout
+            time: progressTimeout,
           });
 
           //Add progress event listener
-          str.on('progress', function(progress) {
+          str.on('progress', function (progress) {
             if (task.aborted) {
               console.info(`stream of '${info.title}' was aborted`);
               stream.destroy();
@@ -110,12 +108,12 @@ export class YoutubeMp3Downloader {
               resultObj.stats = {
                 transferredBytes: progress.transferred,
                 runtime: progress.runtime,
-                averageSpeed: parseFloat(progress.speed.toFixed(2))
+                averageSpeed: parseFloat(progress.speed.toFixed(2)),
               };
             }
             task.data.onStateChanged('downloading', {
               videoId: task.data.videoId,
-              progress
+              progress,
             });
           });
           let outputOptions = ['-id3v2_version', '4'];
@@ -124,14 +122,16 @@ export class YoutubeMp3Downloader {
           }
 
           //Start encoding
-          const proc = new ffmpeg({
-            source: stream.pipe(str)
+          const proc = ffmpeg({
+            source: stream.pipe(str),
           })
             .outputOptions(outputOptions)
             .addOutputOption('-metadata', `title=${title}`)
             .addOutputOption('-metadata', `artist=${artist}`)
-            .on('error', function(err) {
-              task.data.onStateChanged('error', err, {videoId: task.data.videoId});
+            .on('error', function (err) {
+              task.data.onStateChanged('error', err, {
+                videoId: task.data.videoId,
+              });
               reject(err);
             })
             .on('end', () => {
@@ -150,7 +150,7 @@ export class YoutubeMp3Downloader {
                 );
 
                 ffmpeg(filePath)
-                  .on('error', e => {
+                  .on('error', (e) => {
                     console.error(
                       'error in adding cover',
                       JSON.stringify(e, null, 2)
@@ -190,7 +190,9 @@ export class YoutubeMp3Downloader {
           proc.saveToFile(filePath);
         });
       } catch (error) {
-        task.data.onStateChanged('error', error, {videoId: task.data.videoId});
+        task.data.onStateChanged('error', error, {
+          videoId: task.data.videoId,
+        });
         reject(error);
       }
     });
@@ -213,7 +215,12 @@ export class YoutubeMp3Downloader {
   }
 }
 
-export type DownloadTaskState = 'added' | 'getting info' | 'downloading' | 'done' | 'error';
+export type DownloadTaskState =
+  | 'added'
+  | 'getting info'
+  | 'downloading'
+  | 'done'
+  | 'error';
 
 interface IDownloadTaskGeneric {
   videoId: string;
@@ -224,9 +231,26 @@ interface IDownloadTaskGeneric {
 export interface IDownloadTask extends IDownloadTaskGeneric {
   onStateChanged(state: 'added', videoId: IVideoTask['videoId']): void;
   onStateChanged(state: 'getting info', task: IVideoTask['videoId']): void;
-  onStateChanged(state: 'downloading', {videoId, progress}: {videoId: IDownloadTask['videoId'], progress: IDownloadProgress}): void;
-  onStateChanged(state: 'done', { videoId, thumbnail, videoTitle }: {videoId: string, thumbnail: string; videoTitle: string}): void;
-  onStateChanged(state: 'error', err: object, {videoId}: Partial<IVideoTask>): void;
+  onStateChanged(
+    state: 'downloading',
+    {
+      videoId,
+      progress,
+    }: { videoId: IDownloadTask['videoId']; progress: IDownloadProgress }
+  ): void;
+  onStateChanged(
+    state: 'done',
+    {
+      videoId,
+      thumbnail,
+      videoTitle,
+    }: { videoId: string; thumbnail: string; videoTitle: string }
+  ): void;
+  onStateChanged(
+    state: 'error',
+    err: object,
+    { videoId }: Partial<IVideoTask>
+  ): void;
 }
 
 export type DownloadFilter = ytdl.downloadOptions['filter'];
@@ -265,5 +289,5 @@ export interface IVideoTask {
     runtime: number;
     delta: number;
     speed: number;
-  }
+  };
 }
