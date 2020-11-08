@@ -10,17 +10,17 @@ import { DownloadFormat } from '../services/youtube-mp3-downloader';
 import { Popup, Button } from 'semantic-ui-react';
 import { removeVideo } from '../services/api';
 
-const options: IButtonProgressOptions[] = formatOptions.map(option => {
+const options: IButtonProgressOptions[] = formatOptions.map((option) => {
   return {
     content: option.text,
-    header: option.disabled
-  }
+    header: option.disabled,
+  };
 });
 
 interface IVideoProps {
-  style?: React.CSSProperties,
+  style?: React.CSSProperties;
   video: IVideoEntity;
-  onVideoDownloadClick: (video :IVideoEntity) => void;
+  onVideoDownloadClick: (video: IVideoEntity) => void;
 }
 
 @observer
@@ -35,21 +35,23 @@ export class Video extends React.Component<IVideoProps, any> {
     return `url(https://img.youtube.com/vi/${this.props.video.id}/mqdefault.jpg)`;
   }
 
-  onClickTitle = () =>  {
-    shell.openExternal(`https://www.youtube.com/watch?v=${this.props.video.id}`);
-  }
+  onClickTitle = () => {
+    shell.openExternal(
+      `https://www.youtube.com/watch?v=${this.props.video.id}`
+    );
+  };
 
   onFormatClicked = (e: any, data: { value: DownloadFormat }) => {
     const { value: format } = data;
     settingsManager.downloadFormat = format;
-  }
+  };
 
   componentDidMount() {
-    observe(this.props.video, 'status', status => {
+    observe(this.props.video, 'status', (status) => {
       if (status.newValue === EVideoStatus.GETTING_INFO) {
         // wait for removed video to disappear
         setTimeout(() => {
-          this.containerNode.scrollIntoView({behavior: 'smooth'});
+          this.containerNode.scrollIntoView({ behavior: 'smooth' });
         }, 0);
       }
     });
@@ -59,39 +61,55 @@ export class Video extends React.Component<IVideoProps, any> {
     const { video, onVideoDownloadClick, style } = this.props;
     const { backgroundImage } = this;
     const text = video.status === EVideoStatus.PENDING ? 'Waiting' : 'Download';
-    const isDisabled = video.status !== EVideoStatus.NOT_STARTED && video.status !== EVideoStatus.DONE;
+    const isDisabled =
+      video.status !== EVideoStatus.NOT_STARTED &&
+      video.status !== EVideoStatus.DONE;
     const { downloadFormat } = settingsManager;
 
     return (
-      <div className="video" ref={elm => this.containerNode = elm} style={{backgroundImage, ...style}}>
+      <div
+        className='video'
+        ref={(elm) => (this.containerNode = elm)}
+        style={{ backgroundImage, ...style }}
+      >
         <Popup
           trigger={
-            <Button className="remove" color="red" circular basic icon="close" onClick={() => removeVideo(video.id)}></Button>
+            <Button
+              className='remove'
+              color='red'
+              circular
+              basic
+              icon='close'
+              onClick={() => removeVideo(video.id)}
+            ></Button>
           }
-          content="Remove"
+          content='Remove'
           inverted
         />
-        <div className="details">
+        <div className='details'>
           <Popup
-            trigger={<div className="name"
-              onClick={this.onClickTitle}>
-              {video.name}
-            </div>}
+            trigger={
+              <div className='name' onClick={this.onClickTitle}>
+                {video.name}
+              </div>
+            }
             content={video.name}
             inverted
           />
-          <div className="button">
+          <div className='button'>
             <ButtonProgress
               text={text}
+              hasError={video.status === EVideoStatus.ERROR}
               progress={video.progress}
               onClick={() => onVideoDownloadClick(video)}
               disabled={isDisabled}
               options={options}
-              isItemActive={option => option === downloadFormat}
-              onItemClick={this.onFormatClicked} />
+              isItemActive={(option) => option === downloadFormat}
+              onItemClick={this.onFormatClicked}
+            />
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

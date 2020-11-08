@@ -33,7 +33,7 @@ export class YoutubeMp3Downloader {
   }
 
   download(videoId: string, onStateChanged: IDownloadTask['onStateChanged']) {
-    onStateChanged('added', videoId);
+    onStateChanged({ state: 'added', payload: videoId });
     this.queue.add({
       id: videoId,
       main: this.performDownload,
@@ -48,7 +48,23 @@ export class YoutubeMp3Downloader {
     task: ITask<IDownloadTask>
   ): Promise<ITask<IDownloadTask>> => {
     return new Promise(async (resolve, reject) => {
-      task.data.onStateChanged('getting info', task.data.videoId);
+      const fireError = (error: Error) => {
+        const customError = new Error(error.message);
+        customError.name = 'custom';
+
+        task.data.onStateChanged({
+          state: 'error',
+          error: customError,
+          payload: {
+            videoId: task.data.videoId,
+          },
+        });
+      };
+
+      task.data.onStateChanged({
+        state: 'getting info',
+        payload: task.data.videoId,
+      });
       const videoUrl = youtubeBaseUrl + task.data.videoId;
 
       const resultObj = {
@@ -111,9 +127,12 @@ export class YoutubeMp3Downloader {
                 averageSpeed: parseFloat(progress.speed.toFixed(2)),
               };
             }
-            task.data.onStateChanged('downloading', {
-              videoId: task.data.videoId,
-              progress,
+            task.data.onStateChanged({
+              state: 'downloading',
+              payload: {
+                videoId: task.data.videoId,
+                progress,
+              },
             });
           });
           let outputOptions = ['-id3v2_version', '4'];
@@ -128,11 +147,15 @@ export class YoutubeMp3Downloader {
             .outputOptions(outputOptions)
             .addOutputOption('-metadata', `title=${title}`)
             .addOutputOption('-metadata', `artist=${artist}`)
-            .on('error', function (err) {
-              task.data.onStateChanged('error', err, {
-                videoId: task.data.videoId,
+            .on('error', function (error) {
+              task.data.onStateChanged({
+                state: 'error',
+                error,
+                payload: {
+                  videoId: task.data.videoId,
+                },
               });
-              reject(err);
+              reject(error);
             })
             .on('end', () => {
               console.info(`done: '${info.title}`);
@@ -155,11 +178,18 @@ export class YoutubeMp3Downloader {
                       'error in adding cover',
                       JSON.stringify(e, null, 2)
                     );
-                    task.data.onStateChanged('error', e, resultObj);
+                    task.data.onStateChanged({
+                      state: 'error',
+                      error: e,
+                      payload: resultObj,
+                    });
                     reject(e);
                   })
                   .on('end', () => {
-                    task.data.onStateChanged('done', resultObj);
+                    task.data.onStateChanged({
+                      state: 'done',
+                      payload: resultObj,
+                    });
                     resolve();
                     // once the new file saved, delete the original (w/o the album art) and rename the new to the original name
                     unlinkSync(filePath);
@@ -173,7 +203,7 @@ export class YoutubeMp3Downloader {
                   // has to save it in a different name otherwise, ffmpeg take only the first 2 seconds (weird behaviour)
                   .saveToFile(tempFileName);
               } else {
-                task.data.onStateChanged('done', resultObj);
+                task.data.onStateChanged({ state: 'done', payload: resultObj });
                 resolve();
               }
             });
@@ -189,10 +219,10 @@ export class YoutubeMp3Downloader {
 
           proc.saveToFile(filePath);
         });
+
+        stream.on('error', fireError);
       } catch (error) {
-        task.data.onStateChanged('error', error, {
-          videoId: task.data.videoId,
-        });
+        fireError(error);
         reject(error);
       }
     });
@@ -222,35 +252,40 @@ export type DownloadTaskState =
   | 'done'
   | 'error';
 
+export type StateChangeAction =
+  | {
+      state: 'added';
+      payload: IVideoTask['videoId'];
+    }
+  | {
+      state: 'getting info';
+      payload: IVideoTask['videoId'];
+    }
+  | {
+      state: 'downloading';
+      payload: {
+        videoId: IDownloadTask['videoId'];
+        progress: IDownloadProgress;
+      };
+    }
+  | {
+      state: 'done';
+      payload: { videoId: string; thumbnail: string; videoTitle: string };
+    }
+  | {
+      state: 'error';
+      error: Error;
+      payload: Partial<IVideoTask>;
+    };
+
 interface IDownloadTaskGeneric {
   videoId: string;
   fileName?: string;
-  onStateChanged(state: DownloadTaskState, ...args: any): void;
+  onStateChanged(action: StateChangeAction): void;
 }
 
 export interface IDownloadTask extends IDownloadTaskGeneric {
-  onStateChanged(state: 'added', videoId: IVideoTask['videoId']): void;
-  onStateChanged(state: 'getting info', task: IVideoTask['videoId']): void;
-  onStateChanged(
-    state: 'downloading',
-    {
-      videoId,
-      progress,
-    }: { videoId: IDownloadTask['videoId']; progress: IDownloadProgress }
-  ): void;
-  onStateChanged(
-    state: 'done',
-    {
-      videoId,
-      thumbnail,
-      videoTitle,
-    }: { videoId: string; thumbnail: string; videoTitle: string }
-  ): void;
-  onStateChanged(
-    state: 'error',
-    err: object,
-    { videoId }: Partial<IVideoTask>
-  ): void;
+  onStateChanged(action: StateChangeAction): void;
 }
 
 export type DownloadFilter = ytdl.downloadOptions['filter'];

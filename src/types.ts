@@ -28,12 +28,18 @@ export interface IPlaylistYoutube {
       name: string;
       isPrivate: boolean;
     }[];
-  }
+  };
 }
 
 export interface IFetchVideosCallbacks {
-  onBeforeGetInfoForDownload: (currentVideoIndex: number, info: videoInfo) => void;
-  onAfterGetInfoForDownload: (currentVideoIndex: number, info: videoInfo) => void;
+  onBeforeGetInfoForDownload: (
+    currentVideoIndex: number,
+    info: videoInfo
+  ) => void;
+  onAfterGetInfoForDownload: (
+    currentVideoIndex: number,
+    info: videoInfo
+  ) => void;
   onVideosFetched: (videos: IVideoEntity[]) => void;
   onVideoProgress: (videoIndex: number, progress: IDownloadProgress) => void;
   onDone: () => void;
@@ -49,7 +55,8 @@ export enum EVideoStatus {
   GETTING_INFO = 'Getting Data',
   PENDING = 'Pending',
   DOWNLOADING = 'Downloading',
-  DONE = 'Done'
+  DONE = 'Done',
+  ERROR = 'Error',
 }
 
 export interface IDropdownOption {
@@ -66,14 +73,14 @@ export interface IButtonProgressOptions extends MenuItemProps {
 export enum EWindowEvents {
   OPEN_ABOUT = 'open-about',
   OPEN_PREFERENCES = 'open-preferences',
-  WINDOW_FOCUS = 'window-focus'
+  WINDOW_FOCUS = 'window-focus',
 }
 
 export type MessagePosition = 'top' | 'bottom';
 export type MessageContent = string | JSX.Element;
 export interface IMessage {
   isVisible: boolean;
-  position?: MessagePosition,
+  position?: MessagePosition;
   color?: SemanticCOLORS;
   content?: MessageContent;
 }

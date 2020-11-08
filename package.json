@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
+    "@types/classnames": "^2.2.11",
     "@types/electron-is-dev": "^0.3.0",
     "@types/enzyme": "^3.1.15",
     "@types/fluent-ffmpeg": "^2.1.16",
@@ -86,8 +87,8 @@
     "sass-loader": "^7.1.0",
     "sinon": "^7.2.3",
     "style-loader": "^0.23.1",
-    "ts-loader": "^5.3.3",
-    "typescript": "^3.7.0-dev.20191018",
+    "ts-loader": "^8.0.10",
+    "typescript": "^4.0.5",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0"
   },

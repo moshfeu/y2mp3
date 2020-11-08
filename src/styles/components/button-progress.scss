@@ -26,8 +26,9 @@
     }
   }
 
-  .content, .progress {
-    outline: 1px solid rgba(0,0,0,0);
+  .content,
+  .progress {
+    outline: 1px solid rgba(0, 0, 0, 0);
   }
 
   .content {
@@ -66,12 +67,16 @@
       }
     }
 
+    @include parent('.state-error') {
+      background: #c01c1c;
+    }
+
     &::before,
     &::after {
       position: absolute;
       right: 5px;
       color: #0e7138;
-      font-family: "icomoon";
+      font-family: 'icomoon';
       opacity: 0;
       transition: opacity 0.3s 0.3s;
       pointer-events: none;
@@ -80,7 +85,7 @@
     &::before {
       background: $button-bg;
       padding: 0 3px;
-      content: "\e600";
+      content: '\e600';
 
       @include parent('.state-success') {
         opacity: 1;
@@ -88,10 +93,11 @@
     }
 
     &::after {
-      content: "\e601";
+      content: '\e601';
 
       @include parent('.state-error') {
         opacity: 1;
+        color: #710e0e;
       }
     }
   }

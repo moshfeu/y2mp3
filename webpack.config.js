@@ -69,7 +69,7 @@ module.exports = {
     }),
     {
       apply: (compiler) => {
-        compiler.hooks.beforeCompile.tap('clearConsole', (compilation) => {
+        compiler.hooks.beforeCompile.tap('clearConsole', () => {
           process.stdout.write('\033c');
         });
 

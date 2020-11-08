@@ -8,8 +8,7 @@ import * as urlParser from 'js-video-url-parser';
 import { sync as commandExistsSync } from 'command-exists';
 import {
   YoutubeMp3Downloader,
-  DownloadTaskState,
-  IVideoTask,
+  StateChangeAction,
 } from './youtube-mp3-downloader';
 import store from '../mobx/store';
 import { ffmpegPath } from './path';
@@ -149,26 +148,26 @@ function performDownload(video: IVideoEntity) {
   downloader.download(video.id, downloadReducer);
 }
 
-function downloadReducer(state: DownloadTaskState, ...args: any[]) {
-  switch (state) {
+const downloadReducer = (action: StateChangeAction) => {
+  switch (action.state) {
     case 'added':
       {
-        const [videoId] = args;
+        const { payload: videoId } = action;
         store.addToQueue(videoId);
       }
       break;
     case 'getting info':
       {
-        const [videoId] = args;
+        const { payload: videoId } = action;
         gettingInfo(videoId);
         store.gettingInfo(videoId);
       }
       break;
     case 'downloading':
       {
-        const [{ videoId, progress }] = args as [
-          { videoId: string; progress: IDownloadProgress }
-        ];
+        const {
+          payload: { videoId, progress },
+        } = action;
         const video = store.getVideo(videoId);
         if (video) {
           downloading(videoId, progress.speed, progress.eta);
@@ -178,9 +177,9 @@ function downloadReducer(state: DownloadTaskState, ...args: any[]) {
       break;
     case 'done':
       {
-        const [{ videoId, thumbnail, videoTitle }] = args as [
-          { videoId: string; thumbnail: string; videoTitle: string }
-        ];
+        const {
+          payload: { videoId, thumbnail, videoTitle },
+        } = action;
 
         store.finished(null, { videoId });
         if (videoTitle && settingsManager.notificationWhenDone) {
@@ -194,26 +193,29 @@ function downloadReducer(state: DownloadTaskState, ...args: any[]) {
       break;
     case 'error':
       {
-        const [err, { videoId }] = args as [Error, IVideoTask];
-        finishVideoOnError(err, videoId);
-        if (isCustomError(err)) {
-          showCustomError(err.message);
+        const {
+          payload: { videoId },
+          error,
+        } = action;
+        finishVideoOnError(error, videoId);
+        if (isCustomError(error)) {
+          showCustomError(error.message);
           break;
         } else {
           alert(
-            `Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${err}\n Thanks!`
+            `Sorry, something went wrong.\nPlease contact the author using "support" menu and just copy / paste the error:\n${error}\n Thanks!`
           );
-          console.error(err);
+          console.error(error);
         }
       }
       break;
   }
-}
+};
 
 function isCustomError(error: Error | object) {
   return (
     error instanceof Error &&
     // https://commons.wikimedia.org/wiki/File:YouTube_blocked_UMG_country_en.png
-    error.message.includes('UMG')
+    (error.message.includes('UMG') || error.name === 'custom')
   );
 }
