@@ -1,23 +1,23 @@
+import { join } from 'path';
+import { sync } from 'mkdirp';
+import { existsSync } from 'fs';
+import * as ffmpeg from 'fluent-ffmpeg';
+import { getBasicInfo } from 'ytdl-core';
+import scrapePlaylist, { Playlist } from 'youtube-playlist-scraper';
+import * as urlParser from 'js-video-url-parser';
+import { sync as commandExistsSync } from 'command-exists';
 import {
   YoutubeMp3Downloader,
   DownloadTaskState,
+  IVideoTask,
 } from './youtube-mp3-downloader';
-import * as ytlist from 'youtube-playlist';
 import store from '../mobx/store';
-import { IVideoEntity, IPlaylistYoutube, IDownloadProgress } from '../types';
 import { ffmpegPath } from './path';
-import * as urlParser from 'js-video-url-parser';
-import { getBasicInfo } from 'ytdl-core';
-import { createVideoEntity } from '../factories/video-entity';
-import * as ffmpeg from 'fluent-ffmpeg';
+import { IVideoEntity, IDownloadProgress } from '../types';
 import { settingsManager } from './settings';
-import { sync } from 'mkdirp';
-import { existsSync } from 'fs';
-import { join } from 'path';
-import { sync as commandExistsSync } from 'command-exists';
-import { downloading, gettingInfo, inResult, clear } from './tray-messanger';
-import { IVideoTask } from './youtube-mp3-downloader';
 import { showCustomError } from './modalsAndAlerts';
+import { createVideoEntity } from '../factories/video-entity';
+import { downloading, gettingInfo, inResult, clear } from './tray-messanger';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -80,14 +80,19 @@ async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {
 async function fetchVideosFromList(
   playlistUrl: string
 ): Promise<IVideoEntity[]> {
-  const data: IPlaylistYoutube = await ytlist(playlistUrl);
-  console.log(data);
-  const {
-    data: { playlist, name },
-  } = data;
-  return playlist
-    .filter((video) => !video.isPrivate)
-    .map((video) => createVideoEntity(video.name, video.id, name));
+  try {
+    const playlistId = new URL(playlistUrl).searchParams.get('list');
+    const data: Playlist = await scrapePlaylist(playlistId);
+    console.log(data);
+    const { playlist } = data;
+    return (
+      playlist
+        // .filter((video) => !video.isPrivate)
+        .map((video) => createVideoEntity(video.name, video.id, name))
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export function download(videoId: IVideoEntity): void;

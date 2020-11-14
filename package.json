@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -53,7 +53,7 @@
     "sanitize-filename": "^1.6.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
-    "youtube-playlist": "^1.0.4",
+    "youtube-playlist-scraper": "^1.0.2",
     "ytdl-core": "^3.1.2"
   },
   "devDependencies": {
