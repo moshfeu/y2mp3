@@ -49,6 +49,7 @@ export class YoutubeMp3Downloader {
   ): Promise<ITask<IDownloadTask>> => {
     return new Promise(async (resolve, reject) => {
       const fireError = (error: Error) => {
+        reject(error);
         const customError = new Error(error.message);
         customError.name = 'custom';
 
@@ -147,16 +148,7 @@ export class YoutubeMp3Downloader {
             .outputOptions(outputOptions)
             .addOutputOption('-metadata', `title=${title}`)
             .addOutputOption('-metadata', `artist=${artist}`)
-            .on('error', function (error) {
-              task.data.onStateChanged({
-                state: 'error',
-                error,
-                payload: {
-                  videoId: task.data.videoId,
-                },
-              });
-              reject(error);
-            })
+            .on('error', fireError)
             .on('end', () => {
               console.info(`done: '${info.title}`);
               resultObj.file = filePath;
@@ -223,7 +215,6 @@ export class YoutubeMp3Downloader {
         stream.on('error', fireError);
       } catch (error) {
         fireError(error);
-        reject(error);
       }
     });
   };
