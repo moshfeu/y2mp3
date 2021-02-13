@@ -1,6 +1,6 @@
 import * as ytdl from 'ytdl-core';
 
-const fileNameReplacemant = [
+const fileNameReplacemant: [RegExp, string][] = [
   [/"/g, ''],
   [/'/g, ''],
   [/\//g, ''],
@@ -10,14 +10,17 @@ const fileNameReplacemant = [
 ];
 
 export function cleanFileName(fileName: string) {
-  fileNameReplacemant.forEach((replacement: string[]) => {
+  fileNameReplacemant.forEach((replacement) => {
     fileName = fileName.replace(replacement[0], replacement[1]);
   });
 
   return fileName;
 }
 
-export function getVideoMetaData(videoTitle: string, info: ytdl.videoInfo) {
+export function getVideoMetaData(
+  videoTitle: string,
+  info: ytdl.videoInfo['videoDetails']
+) {
   let artist = 'Unknown';
   let title = 'Unknown';
   if (videoTitle.indexOf('-') > -1) {
@@ -37,7 +40,7 @@ export function getVideoMetaData(videoTitle: string, info: ytdl.videoInfo) {
   return {
     artist,
     title,
-    thumbnail: `https://img.youtube.com/vi/${info.video_id}/mqdefault.jpg`,
+    thumbnail: `https://img.youtube.com/vi/${info.videoId}/mqdefault.jpg`,
   };
 }
 

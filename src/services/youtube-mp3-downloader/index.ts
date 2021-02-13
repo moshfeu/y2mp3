@@ -1,6 +1,6 @@
 import { ITask, Queue } from './queue';
 import * as ytdl from 'ytdl-core';
-import { unlinkSync, rename } from 'fs';
+import { unlinkSync, rename, existsSync, createReadStream } from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as progress from 'progress-stream';
 import { settingsManager } from '../settings';
@@ -49,6 +49,7 @@ export class YoutubeMp3Downloader {
   ): Promise<ITask<IDownloadTask>> => {
     return new Promise(async (resolve, reject) => {
       const fireError = (error: Error) => {
+        reject(error);
         const customError = new Error(error.message);
         customError.name = 'custom';
 
@@ -80,28 +81,31 @@ export class YoutubeMp3Downloader {
 
       try {
         console.info(`getting info: ${task.data.videoId}`);
-        const info = await ytdl.getInfo(videoUrl, {
-          quality: this.youtubeVideoQuality,
-          filter: this.filter,
-        });
+        const info = await ytdl.getInfo(videoUrl);
+        const { videoDetails } = info;
 
         // that means that the download already canceled
         if (task.aborted) {
-          console.info(`'${info.title}' was aborted`);
+          console.info(`'${videoDetails.title}' was aborted`);
           return;
         }
 
-        const videoTitle = cleanFileName(info.title);
-        const fileName = sanitize(videoTitle) || info.video_id;
+        const videoTitle = cleanFileName(videoDetails.title);
+        const fileName = sanitize(videoTitle) || videoDetails.videoId;
         const filePath = task.data.fileName
           ? this.outputPath + '/' + task.data.fileName
           : this.outputPath + '/' + fileName + '.' + this.format;
 
-        const { title, artist, thumbnail } = getVideoMetaData(videoTitle, info);
-
+        const { title, artist, thumbnail } = getVideoMetaData(
+          videoTitle,
+          videoDetails
+        );
         //Stream setup
         const stream = ytdl.downloadFromInfo(info, {
           quality: this.youtubeVideoQuality,
+          filter: this.filter,
+          // TODO fix format (currently throws a invalid input error [Doesn't tell much I know, but it's a late at night])
+          // format: info.formats[2],
           requestOptions: { maxRedirects: 5 },
         });
 
@@ -116,10 +120,10 @@ export class YoutubeMp3Downloader {
           //Add progress event listener
           str.on('progress', function (progress) {
             if (task.aborted) {
-              console.info(`stream of '${info.title}' was aborted`);
+              console.info(`stream of '${videoDetails.title}' was aborted`);
               stream.destroy();
             }
-            console.info(`progress: of '${info.title}'`, progress);
+            console.info(`progress: of '${videoDetails.title}'`, progress);
             if (progress.percentage === 100) {
               resultObj.stats = {
                 transferredBytes: progress.transferred,
@@ -147,18 +151,9 @@ export class YoutubeMp3Downloader {
             .outputOptions(outputOptions)
             .addOutputOption('-metadata', `title=${title}`)
             .addOutputOption('-metadata', `artist=${artist}`)
-            .on('error', function (error) {
-              task.data.onStateChanged({
-                state: 'error',
-                error,
-                payload: {
-                  videoId: task.data.videoId,
-                },
-              });
-              reject(error);
-            })
+            .on('error', fireError)
             .on('end', () => {
-              console.info(`done: '${info.title}`);
+              console.info(`done: '${videoDetails.title}`);
               resultObj.file = filePath;
               resultObj.youtubeUrl = videoUrl;
               resultObj.videoTitle = videoTitle;
@@ -171,8 +166,8 @@ export class YoutubeMp3Downloader {
                   fileName,
                   `${fileName}-ac`
                 );
-
-                ffmpeg(filePath)
+                const stream = createReadStream(filePath);
+                ffmpeg(stream)
                   .on('error', (e) => {
                     console.error(
                       'error in adding cover',
@@ -194,7 +189,9 @@ export class YoutubeMp3Downloader {
                     // once the new file saved, delete the original (w/o the album art) and rename the new to the original name
                     unlinkSync(filePath);
                     rename(tempFileName, filePath, () => ({}));
-                    console.info(`done to adding cover: '${info.title}`);
+                    console.info(
+                      `done to adding cover: '${videoDetails.title}`
+                    );
                   })
                   .addInput(resultObj.thumbnail)
                   .addOutputOption(['-map', '0:0'])
@@ -223,7 +220,6 @@ export class YoutubeMp3Downloader {
         stream.on('error', fireError);
       } catch (error) {
         fireError(error);
-        reject(error);
       }
     });
   };

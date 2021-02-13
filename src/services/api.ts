@@ -3,7 +3,6 @@ import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 import { getBasicInfo } from 'ytdl-core';
-import scrapePlaylist, { Playlist } from 'youtube-playlist-scraper';
 import * as urlParser from 'js-video-url-parser';
 import { sync as commandExistsSync } from 'command-exists';
 import {
@@ -17,6 +16,7 @@ import { settingsManager } from './settings';
 import { showCustomError } from './modalsAndAlerts';
 import { createVideoEntity } from '../factories/video-entity';
 import { downloading, gettingInfo, inResult, clear } from './tray-messanger';
+import { scrap } from './playlist-scraper';
 
 export function isFfmpegInPath() {
   return commandExistsSync('ffmpeg');
@@ -69,8 +69,10 @@ export function fetchVideos(term: string): Promise<IVideoEntity[]> {
 
 async function fetchVideoFromSingle(videoUrl: string): Promise<IVideoEntity[]> {
   try {
-    const { title, video_id } = await getBasicInfo(videoUrl);
-    return [createVideoEntity(title, video_id)];
+    const {
+      videoDetails: { title, videoId },
+    } = await getBasicInfo(videoUrl);
+    return [createVideoEntity(title, videoId)];
   } catch (error) {
     return [];
   }
@@ -80,10 +82,9 @@ async function fetchVideosFromList(
   playlistUrl: string
 ): Promise<IVideoEntity[]> {
   try {
-    const playlistId = new URL(playlistUrl).searchParams.get('list');
-    const data: Playlist = await scrapePlaylist(playlistId);
+    const data = await scrap(playlistUrl);
     console.log(data);
-    const { playlist } = data;
+    const { playlist, name } = data;
     return (
       playlist
         // .filter((video) => !video.isPrivate)

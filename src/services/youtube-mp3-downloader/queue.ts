@@ -41,10 +41,11 @@ export class Queue<T> {
     this.currentTask = this.tasks.shift();
     try {
       await this.currentTask.main(this.currentTask);
-      this.process();
     } catch (error) {
       console.info('task failed:', this.currentTask);
       this.remove(this.currentTask.id);
+    } finally {
+      this.process();
     }
   }
 
