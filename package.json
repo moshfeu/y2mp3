@@ -38,6 +38,7 @@
   "dependencies": {
     "@types/node": "12.12.21",
     "async": "^2.6.0",
+    "cheerio": "^1.0.0-rc.5",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
     "electron-is-dev": "^1.0.1",
@@ -47,14 +48,14 @@
     "mkdirp": "^0.5.1",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
+    "node-fetch": "^2.6.1",
     "progress-stream": "^2.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.5.2",
     "sanitize-filename": "^1.6.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
-    "youtube-playlist-scraper": "^1.0.2",
-    "ytdl-core": "^3.1.2"
+    "ytdl-core": "^4.4.5"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",
@@ -64,6 +65,7 @@
     "@types/fluent-ffmpeg": "^2.1.16",
     "@types/jest": "^24.0.20",
     "@types/mkdirp": "^0.5.2",
+    "@types/node-fetch": "^2.5.8",
     "@types/progress-stream": "^2.0.1",
     "@types/react": "^16.9.5",
     "@types/react-dom": "^16.0.9",
