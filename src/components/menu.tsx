@@ -5,13 +5,14 @@ import { shell } from '../services/electron-adapter';
 import { GITHUB_LINK, CONTACT_EMAIL, GITHUB_LINK_ISSUES, TWITTER_LINK, TWITTER_LINK_PROFILE } from '../constants';
 import store from '../mobx/store';
 
+import styles from '../styles/components/menu.scss';
 
 export default function AppMenu() {
-  return (<div className="app-menu">
+  return (<div className={styles['app-menu']}>
     <Dropdown closeOnChange value={''} icon={
       <>
         <Icon name="bars" size="big" />
-        {store.hasUpdate && <Label className="has-update-not" circular color="blue" floating empty />}
+        {store.hasUpdate && <Label className={styles['has-update-not']} circular color="blue" floating empty />}
       </>
     }>
       <Dropdown.Menu>

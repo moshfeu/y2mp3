@@ -11,7 +11,36 @@ import {
 
 class Store {
   @observable searchTerm: string;
-  @observable videos: IVideoEntity[] = [];
+  @observable videos: IVideoEntity[] = [
+    {
+      id: 'pf_ecsJz1YE',
+      name: 'Frank Sinatra- The Christmas Waltz',
+      playlistName: '',
+      progress: 0,
+      status: EVideoStatus.NOT_STARTED,
+    },
+    {
+      id: 'JvKKd32Yw2E',
+      name: 'What do you hear? Yanny or Laurel?',
+      playlistName: '',
+      progress: 0,
+      status: EVideoStatus.NOT_STARTED,
+    },
+    {
+      id: 'tPEE9ZwTmy0',
+      name: 'Shortest Video on Youtube',
+      playlistName: '',
+      progress: 0,
+      status: EVideoStatus.NOT_STARTED,
+    },
+    {
+      id: 'cdwal5Kw3Fc',
+      name: "World's Shortest YouTube Video! (0.00000000001 sec.)",
+      playlistName: '',
+      progress: 0,
+      status: EVideoStatus.NOT_STARTED,
+    },
+  ];
   @observable searchInProgress: boolean;
   @observable isFFMpegInstalled: boolean;
   @observable isAboutOpen: boolean;

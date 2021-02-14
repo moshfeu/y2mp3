@@ -9,3 +9,4 @@ resources
 maps
 coverage
 main.js
+*.scss.d.ts

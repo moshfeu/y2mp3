@@ -1,14 +1,16 @@
+@import '../mixin';
+
 .video {
   width: 350px;
   height: 190px;
   background-size: 100% auto;
   margin: 0 auto 15px;
   position: relative;
-  animation: fade-in .2s ease forwards;
+  animation: fade-in 0.2s ease forwards;
   opacity: 0;
 
   .details {
-    background: rgba(0,0,0,.5);
+    background: rgba(0, 0, 0, 0.5);
     color: #fff;
     position: absolute;
     bottom: 0;
@@ -38,7 +40,7 @@
     left: 5px;
 
     &:focus::before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -46,6 +48,19 @@
       height: 100%;
       box-shadow: 0 0 5px 0;
       border-radius: 50%;
+    }
+  }
+
+  .button {
+    .options {
+      overflow: hidden;
+      transition: width, padding 0.15s ease;
+
+      @include parent('.-with-progress') {
+        width: 0;
+        padding-right: 0;
+        padding-left: 0;
+      }
     }
   }
 }

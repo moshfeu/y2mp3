@@ -1,4 +1,4 @@
-.ui.dropdown .menu>.disabled.item {
+.ui.dropdown .menu > .disabled.item {
   pointer-events: none !important;
 }
 
@@ -18,5 +18,16 @@
 }
 
 .ui.dimmer {
-  background: rgba(0, 0, 0, .95);
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.button,
+.buttons .button {
+  @include parent('.ui.primary') {
+    @include buttonBg(#1d9650);
+  }
+
+  @include parent('.ui.secondary') {
+    @include buttonBg(#008329);
+  }
 }

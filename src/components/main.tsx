@@ -1,5 +1,3 @@
-import '../styles/style.scss';
-
 import * as React from 'react';
 import * as DOM from 'react-dom';
 import store from '../mobx/store';
@@ -21,20 +19,22 @@ import { checkForUpdateAndNotify } from '../services/check-for-update';
 import AppMenu from './menu';
 import { clear as clearTrayTooltip } from '../services/tray-messanger';
 
+import '../styles/style.scss';
+import styles from '../styles/components/main.scss';
+
 @observer
 class Main extends React.Component<{}, {}> {
-
   constructor(props: any) {
     super(props);
   }
 
   downloadVideo = async (video: IVideoEntity) => {
     download(video);
-  }
+  };
 
   downloadAll = () => {
     download(store.videos);
-  }
+  };
 
   async componentDidMount() {
     clearTrayTooltip();
@@ -51,7 +51,7 @@ class Main extends React.Component<{}, {}> {
   public render() {
     const { searchInProgress, videos, message } = store;
     return (
-      <div className="main">
+      <div className={styles.main}>
         <AppMenu />
         <Form
           hasResult={!!videos.length}
@@ -59,31 +59,47 @@ class Main extends React.Component<{}, {}> {
           onClear={() => store.clearResult()}
           inProcess={searchInProgress}
         >
-          {videos.length ?
+          {videos.length ? (
             <div>
-              <ButtonProgress text={`Download All (${videos.length})`} onClick={this.downloadAll} />
-              <div className="videos">
+              <ButtonProgress
+                text={`Download All (${videos.length})`}
+                onClick={this.downloadAll}
+              />
+              <div className='videos'>
                 {videos.map((video, i) => (
                   <Video
                     key={video.id}
                     video={video}
                     onVideoDownloadClick={this.downloadVideo}
                     style={{
-                      animationDelay: `${(i + 1) * 200}ms`
+                      animationDelay: `${(i + 1) * 200}ms`,
                     }}
                   />
                 ))}
               </div>
             </div>
-          : ''}
+          ) : (
+            ''
+          )}
         </Form>
-        {
-          !store.isFFMpegInstalled && <InstallFFMpeg onDone={() => store.isFFMpegInstalled = true} onError={showCustomError} />
-        }
+        {!store.isFFMpegInstalled && (
+          <InstallFFMpeg
+            onDone={() => (store.isFFMpegInstalled = true)}
+            onError={showCustomError}
+          />
+        )}
         <AboutModal open={store.isAboutOpen} onClose={closeModal} />
         <PreferencesModal open={store.isPreferencesOpen} onClose={closeModal} />
-        <div className={classNames(['messages', message.position, {'-visible': message.isVisible}])}>
-          <Message color={message.color} compact>{message.content}</Message>
+        <div
+          className={classNames([
+            'messages',
+            message.position,
+            { '-visible': message.isVisible },
+          ])}
+        >
+          <Message color={message.color} compact>
+            {message.content}
+          </Message>
         </div>
       </div>
     );
@@ -94,5 +110,6 @@ const root = document.getElementById('app');
 DOM.render(
   <ElectronEventsListener>
     <Main />
-  </ElectronEventsListener>
-, root);
+  </ElectronEventsListener>,
+  root
+);

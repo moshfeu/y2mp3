@@ -7,8 +7,10 @@ import { shell } from '../services/electron-adapter';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from '../services/youtube-mp3-downloader';
-import { Popup, Button } from 'semantic-ui-react';
+import { Popup, Button, Icon } from 'semantic-ui-react';
 import { removeVideo } from '../services/api';
+
+import styles from '../styles/components/video.scss';
 
 const options: IButtonProgressOptions[] = formatOptions.map((option) => {
   return {
@@ -68,14 +70,14 @@ export class Video extends React.Component<IVideoProps, any> {
 
     return (
       <div
-        className='video'
+        className={styles.video}
         ref={(elm) => (this.containerNode = elm)}
         style={{ backgroundImage, ...style }}
       >
         <Popup
           trigger={
             <Button
-              className='remove'
+              className={styles.remove}
               color='red'
               circular
               basic
@@ -86,18 +88,24 @@ export class Video extends React.Component<IVideoProps, any> {
           content='Remove'
           inverted
         />
-        <div className='details'>
+        <div className={styles.details}>
           <Popup
             trigger={
-              <div className='name' onClick={this.onClickTitle}>
+              <div className={styles.name} onClick={this.onClickTitle}>
                 {video.name}
               </div>
             }
             content={video.name}
             inverted
           />
-          <div className='button'>
-            <ButtonProgress
+          <div className={styles.button}>
+            <Button.Group icon>
+              <Button primary>Download</Button>
+              <Button className={styles.options} secondary>
+                <Icon name='options' />
+              </Button>
+            </Button.Group>
+            {/* <ButtonProgress
               text={text}
               hasError={video.status === EVideoStatus.ERROR}
               progress={video.progress}
@@ -106,7 +114,7 @@ export class Video extends React.Component<IVideoProps, any> {
               options={options}
               isItemActive={(option) => option === downloadFormat}
               onItemClick={this.onFormatClicked}
-            />
+            /> */}
           </div>
         </div>
       </div>
