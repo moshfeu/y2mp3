@@ -1,6 +1,7 @@
 const config = require('./webpack.config');
 
-config.watch = false;
-config.mode = 'production';
-
-module.exports = config;
+module.exports = (...args) => ({
+  ...config(...args),
+  watch: false,
+  mode: 'production',
+});

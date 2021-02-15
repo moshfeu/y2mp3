@@ -6,7 +6,8 @@
     "removeComments": true,
     "module": "ESNext",
     "jsx": "react",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
   },
   "exclude": [
     "node_modules"

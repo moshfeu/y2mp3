@@ -1,7 +1,7 @@
 const { DefinePlugin } = require('webpack');
 const { spawnSync } = require('child_process');
 
-module.exports = {
+module.exports = (env, argv) => ({
   entry: './src/components/main.tsx',
   module: {
     rules: [
@@ -79,7 +79,7 @@ module.exports = {
             stdio: 'inherit'
           });
           console.log('after tsc');
-          if (firstTime) {
+          if (firstTime && argv.mode === 'development') {
             firstTime = false;
             spawnSync('yarn', ['electron'], {
               stdio: 'inherit'
@@ -94,4 +94,4 @@ module.exports = {
       },
     },
   ],
-};
+});
