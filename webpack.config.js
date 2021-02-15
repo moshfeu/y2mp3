@@ -1,7 +1,7 @@
 const { DefinePlugin } = require('webpack');
 const { spawnSync } = require('child_process');
 
-module.exports = {
+module.exports = (env, argv) => ({
   entry: './src/components/main.tsx',
   module: {
     rules: [
@@ -69,8 +69,22 @@ module.exports = {
     }),
     {
       apply: (compiler) => {
-        compiler.hooks.beforeCompile.tap('clearConsole', () => {
-          process.stdout.write('\033c');
+        // compiler.hooks.beforeCompile.tap('clearConsole', () => {
+        //   process.stdout.write('\033c');
+        // });
+        let firstTime = true;
+        compiler.hooks.done.tap('ts', () => {
+          console.log('after compile');
+          spawnSync('tsc', {
+            stdio: 'inherit'
+          });
+          console.log('after tsc');
+          if (firstTime && argv.mode === 'development') {
+            firstTime = false;
+            spawnSync('yarn', ['electron'], {
+              stdio: 'inherit'
+            });
+          }
         });
 
         // compiler.hooks.afterCompile.tap('jest', compilation => {
@@ -80,4 +94,4 @@ module.exports = {
       },
     },
   ],
-};
+});
