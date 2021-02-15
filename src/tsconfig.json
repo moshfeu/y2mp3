@@ -2,18 +2,13 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "sourceMap": false,
-    "rootDir": "src",
+    "sourceMap": true,
     "removeComments": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "ESNext",
     "jsx": "react",
     "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"
   ],
-  "files": [
-    "./main.ts"
-  ]
 }
