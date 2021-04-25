@@ -74,13 +74,14 @@ module.exports = (env, argv) => ({
         // });
         let firstTime = true;
         compiler.hooks.done.tap('ts', () => {
-          console.log('after compile');
-          spawnSync('tsc', {
+          console.log(`after compile in mode "${compiler.options.mode}"`);
+          spawnSync('tsc', ['--project', `tsconfig${compiler.options.mode === 'production' ? '.prod' : ''}.json`], {
             stdio: 'inherit'
           });
-          console.log('after tsc');
-          if (firstTime && argv.mode === 'development') {
+          console.log(`after tsc. first time? ${firstTime}`);
+          if (firstTime && compiler.options.mode === 'development') {
             firstTime = false;
+            console.log('run electron')
             spawnSync('yarn', ['electron'], {
               stdio: 'inherit'
             });

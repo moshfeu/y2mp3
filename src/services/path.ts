@@ -1,9 +1,10 @@
 import { join } from 'path';
 import { mkdirSync, existsSync, readdirSync } from 'fs';
 import { findArgument } from './additional-arguments';
+import { homedir } from 'os';
 
 function downloadsFolder() {
-  return join(process.env.HOME, 'downloads');
+  return join(homedir(), 'downloads');
 }
 
 const folderName = 'y2mp3';
