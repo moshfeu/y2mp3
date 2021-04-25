@@ -5,7 +5,7 @@ matrix:
   include:
   - os: linux
     language: node_js
-    node_js: '11'
+    node_js: '14'
     env:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
