@@ -75,7 +75,7 @@ module.exports = (env, argv) => ({
         let firstTime = true;
         compiler.hooks.done.tap('ts', () => {
           console.log(`after compile in mode "${compiler.options.mode}"`);
-          spawnSync('tsc', ['--project', `tsconfig${compiler.options.mode === 'production' ? '.prod' : ''}.json`], {
+          spawnSync('tsc', {
             stdio: 'inherit'
           });
           console.log(`after tsc. first time? ${firstTime}`);
