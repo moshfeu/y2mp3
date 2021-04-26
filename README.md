@@ -2,12 +2,16 @@
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
 [![Release version](https://img.shields.io/github/release/moshfeu/y2mp3.svg)](https://github.com/moshfeu/y2mp3/releases/latest)
 [![Github All Releases](https://img.shields.io/github/downloads/moshfeu/y2mp3/total.svg)](https://github.com/moshfeu/y2mp3/releases)
+[![Follow me on Twitter](https://img.shields.io/twitter/follow/y2mp3.svg?style=social)](https://twitter.com/y2mp3)
 
 <img src="app-resources/logo-128.png" alt="logo" />
 
 ## What is "Y2Mp3" app?
 
 A simple desktop application to download Youtube videos to video (mp4, mpg, wmv) and audio (wav, flac, m4a, wma, mp3, ogg, acc) formats, one by one or all of them.
+
+A note: Since this app relays on youtube site and apis, it sometimes breaks without any change.
+In this case, please create an issue or tweet [@y2mp3](https://twitter.com/y2mp3)
 
 <img src="app-resources/video.gif" alt="video demo" width="320" />
 
@@ -41,7 +45,7 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ##### 2.5.0
 
-Fix - The app didn't work at all because if changes in Youtube.
+Fix - The app didn't work at all because of changes in Youtube.
 
 ##### 2.4.1
 
