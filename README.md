@@ -19,6 +19,10 @@ In this case, please create an issue or tweet [@y2mp3](https://twitter.com/y2mp3
 
 <a href="https://join.slack.com/t/y2mp3/shared_invite/enQtNTk0OTE0Njc4ODY4LTYzYmY1M2MwMWFmZmQ1NTA2MDMxNWIzZTFkYzcyOTdkMjE3ZmNmMzk4NmM4YWY5OThkYTJjNzFhZTA0NGI3OTk" target="_blank"><img src="https://cdn.brandfolder.io/5H442O3W/as/pl546j-7le8zk-ex8w65/Slack_RGB.png?width=120" alt="link to Slack channel" /></a>
 
+#### Limitations
+
+- Fetch only first 100 clips in a playlist
+
 ## Disclaimer
 📢📢
 1. The app doesn't track you down in ANY way. Not Google Analytics, or any other service. We know nothing jon snow! So, if you have an idea about how to make this app even greater, we will not know unless you will tell us. Please fill a [Feature Request](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=enhancement&template=feature_request.md) or [Open a bug](https://github.com/moshfeu/y2mp3/issues/new?assignees=moshfeu&labels=bug&template=bug_report.md) and let we know what do you think.
