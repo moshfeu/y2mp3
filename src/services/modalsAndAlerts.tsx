@@ -3,6 +3,7 @@ import store from '../mobx/store';
 import { SemanticCOLORS } from 'semantic-ui-react';
 import { MessagePosition, MessageContent } from '../types';
 import { ExternalLink } from '../components/external-link';
+import { runInAction } from 'mobx';
 
 let currentOpen: 'about' | 'preferences';
 
@@ -43,6 +44,10 @@ export function showSuccessPasted() {
   showMessage('green', 'The url was taken from the clipboard! Just hit the "search" button', 4000, 'top');
 }
 
+export function showPlaylistHasMore() {
+  showMessage('blue', 'Showing only top 100 items', 4000, 'top');
+}
+
 export function showAppHasUpdate() {
   showMessage('blue',
     <span>
@@ -51,23 +56,27 @@ export function showAppHasUpdate() {
   4000, 'top');
 }
 
-function showMessage(color: SemanticCOLORS, content: MessageContent, time: number = 0, position: MessagePosition = 'bottom') {
+async function showMessage(color: SemanticCOLORS, content: MessageContent, time: number = 0, position: MessagePosition = 'bottom') {
+  await hideMessage();
   const { message } = store;
-  message.position = position;
-  message.color = color;
-  message.content = <div>🤖 {content}</div>;
+  runInAction(() => {
+    message.position = position;
+    message.color = color;
+    message.content = <div>🤖 {content}</div>;
+  })
   message.isVisible = true;
   if (!!time) {
     hideMessage(time);
   }
 }
 
+let hideTimeout: NodeJS.Timeout;
 export function hideMessage(timeout: number = 0) {
-  if (timeout) {
-    setTimeout(() => {
+  clearTimeout(hideTimeout);
+  return new Promise<void>((resolve) => {
+    hideTimeout = setTimeout(() => {
       store.message.isVisible = false;
+      resolve();
     }, timeout);
-  } else {
-    store.message.isVisible = false;
-  }
+  })
 }

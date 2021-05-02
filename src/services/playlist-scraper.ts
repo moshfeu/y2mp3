@@ -15,15 +15,21 @@ export const scrap = async (playlistURL: string) => {
 
   const [jsonStr] = /{.*}/gm.exec(cheerio.html(ytInitialData));
   const info = JSON.parse(jsonStr);
-  const songs = info.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer.contents.map(
-    ({ playlistVideoRenderer }) => ({
+  const {
+    contents,
+  } = info.contents.twoColumnBrowseResultsRenderer.tabs[0].tabRenderer.content.sectionListRenderer.contents[0].itemSectionRenderer.contents[0].playlistVideoListRenderer;
+  const songs = contents
+    .filter(({ playlistVideoRenderer }) => playlistVideoRenderer)
+    .map(({ playlistVideoRenderer }) => ({
       id: playlistVideoRenderer.videoId,
       name: playlistVideoRenderer.title.runs[0].text,
-    })
-  );
+    }));
+
+  const hasMore = contents.length > songs.length
 
   return {
     name: info.metadata.playlistMetadataRenderer.title,
     playlist: songs,
+    hasMore,
   };
 };

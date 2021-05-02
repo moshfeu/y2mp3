@@ -13,7 +13,7 @@ import store from '../mobx/store';
 import { ffmpegPath } from './path';
 import { IVideoEntity, IDownloadProgress } from '../types';
 import { settingsManager } from './settings';
-import { showCustomError } from './modalsAndAlerts';
+import { showCustomError, showPlaylistHasMore } from './modalsAndAlerts';
 import { createVideoEntity } from '../factories/video-entity';
 import { downloading, gettingInfo, inResult, clear } from './tray-messanger';
 import { scrap } from './playlist-scraper';
@@ -84,7 +84,10 @@ async function fetchVideosFromList(
   try {
     const data = await scrap(playlistUrl);
     console.log(data);
-    const { playlist, name } = data;
+    const { playlist, name, hasMore } = data;
+    if (hasMore) {
+      showPlaylistHasMore()
+    }
     return (
       playlist
         // .filter((video) => !video.isPrivate)

@@ -90,7 +90,9 @@ function createWindow() {
 
   try {
     tray = new Tray(join(app.getAppPath(), 'assets', 'tray.png'));
-    tray.on('click', () => win.focus());
+    tray.on('click', () => {
+      win.focus();
+    });
 
     ipcMain.on('tray', (_, message: string) => {
       tray.setToolTip(message);
