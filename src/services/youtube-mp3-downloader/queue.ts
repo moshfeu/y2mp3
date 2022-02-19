@@ -2,7 +2,7 @@ export interface ITask<T> {
   id: string;
   data: T;
   aborted?: boolean;
-  main: (task: this) => Promise<object>;
+  main: (task: this) => Promise<void>;
 };
 
 export class Queue<T> {

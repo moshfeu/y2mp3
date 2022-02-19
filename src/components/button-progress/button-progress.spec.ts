@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import ButtonProgressDriver from './button-progress.driver';
 import { ButtonProgressStates } from './button-progress';
 
