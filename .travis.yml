@@ -17,6 +17,7 @@ matrix:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 cache:
+  yarn: true
   directories:
   # - node_modules
   - "$HOME/.cache/electron"
