@@ -1,6 +1,6 @@
 env:
   global:
-    secure: E9tvTxyTR9vkUERNFkhXP9EvwG0RjgGtaI3un2fFW/7/78cQV4hJjLG9Cl6+/vTy7NSWZ64qc+uqN+wxSRDUm8f+v6leslaY6lb9ZCi7bhPX8H9ekIhM1fqmUPHOgoodsx56qmJ35U06D1pkYM6BIKaXorj9RO2Js9I8GSHwF4/EH5PQR1qd7zQB+9cxyJKz2hiJLcBDehKHcecggjtpNTW6mohiLP/7VuA+tLJDO2TMzH10AkX+J0KCZN/qFuW7jsdb9Z5x2pwPh4ldeY4XhQEmyOmqZRu5Ghi+hpXBjdwX08Q3GM0LsnRCofMHZPrP9xMM7P9W3ie5EYeh6Eq+dFWIPupose185UB4y5pVEP0a8pnAt9Crs9kcorrMz1UFa9vdmjqvv0GS+GpGiAQEvm3d4aHnrnlyWdwC/r5aWYeIyvTy+zzZ/EdQvpmCZLhegXRl44ZMUhKH5wd7ygCqdSpFQXBUuaFoAQGyJh3s08K9IWbsCQMS7r04tktrN6mEQFrgrpSqJLKP+UJgd4bMzbkXO8tOh4ErxxQKTBS4aV/hTIlNF2i0p35wRK2eCYUW1x31VoCXwT5db7oNl9w37cKsVvmb1LWaRePn0yX+7lgvSqO6iCYnAv+n5SCK4ngdzTwISb5iyqv5UUIsGmAyYECWli0tgvvnstY+EtG2734=
+  - secure: vOKFX3Dvhs13h+fsR7rn5s5vX1T3r6ncSywpgJtc6eXFYn/QAns4WKnsjIowWSMDBg1LkjImkc7u7ZZqR2r0VmWJyV4vQ4AXyCNLINR+CL7ADrGIQTqfa8DSYfTxw8CsJO9zEGaMkCPUdpnWjn2RW632cIJass0AlBnkr8t9VINW1166pVM3+wkqGPjna8pjAnREBpGOeXBzmm7ZDnyo04DvFFxk8YbhIrBwFsmhiU/wHTLSOz4LQpMzcaYBfIA1gNFEzQhVQHAFsbnY/rS+SnLteCAA6joJZG/dOoJ731sUH0SfyzI5RseQLXh36nqgO/3SZ8Z3bRQc77iqCvlcn9VUjF7fRw0gdppzrAE4JYE+ppbLBE6YXVJuXI91S2LUvpjiNukPdGGLAl3idnxIBgGNMTgJffMQ5hu9RKEigS6FDZQMBwX6gqFpT1MkOpMR0bvHmzUB7M3ON+kSJAjTSHLGNA+ezOpldosruu0+8BipW5JW4XrN5aNbwtEQtqrVppSqBuIB8xFwzL0gaLUXxjgn6Vg3Oyz0yYtN8ozKlIg3+6uFd///TBfnRjE3OHKW9VGZ2TQuPkX0CilvJwcI1Zg1fL2EpliePXnvhwhP6Heudiyqev2N9NfHL7MPqgpetphoWDpo7kZrQQyKPq86zAPrt8EHzrtxgujPHvwQuus=
 matrix:
   include:
   - os: linux
@@ -19,21 +19,20 @@ matrix:
 cache:
   yarn: true
   directories:
-  # - node_modules
   - "$HOME/.cache/electron"
   - "$HOME/.cache/electron-builder"
 before_install:
-  - |
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-      mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v2.3.1/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-2.3.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1
-      export PATH="/tmp/git-lfs:$PATH"
-    fi
+- |
+  if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+    mkdir -p /tmp/git-lfs && curl -L https://github.com/github/git-lfs/releases/download/v2.3.1/git-lfs-$([ "$TRAVIS_OS_NAME" == "linux" ] && echo "linux" || echo "darwin")-amd64-2.3.1.tar.gz | tar -xz -C /tmp/git-lfs --strip-components 1
+    export PATH="/tmp/git-lfs:$PATH"
+  fi
 install:
 - yarn
 - yarn upgrade node-sass
 - yarn generate-icons
 before_script:
-  - git lfs pull
+- git lfs pull
 script:
 - |
   yarn build
@@ -57,14 +56,14 @@ before_cache:
 deploy:
   provider: releases
   api_key:
-    secure: E9tvTxyTR9vkUERNFkhXP9EvwG0RjgGtaI3un2fFW/7/78cQV4hJjLG9Cl6+/vTy7NSWZ64qc+uqN+wxSRDUm8f+v6leslaY6lb9ZCi7bhPX8H9ekIhM1fqmUPHOgoodsx56qmJ35U06D1pkYM6BIKaXorj9RO2Js9I8GSHwF4/EH5PQR1qd7zQB+9cxyJKz2hiJLcBDehKHcecggjtpNTW6mohiLP/7VuA+tLJDO2TMzH10AkX+J0KCZN/qFuW7jsdb9Z5x2pwPh4ldeY4XhQEmyOmqZRu5Ghi+hpXBjdwX08Q3GM0LsnRCofMHZPrP9xMM7P9W3ie5EYeh6Eq+dFWIPupose185UB4y5pVEP0a8pnAt9Crs9kcorrMz1UFa9vdmjqvv0GS+GpGiAQEvm3d4aHnrnlyWdwC/r5aWYeIyvTy+zzZ/EdQvpmCZLhegXRl44ZMUhKH5wd7ygCqdSpFQXBUuaFoAQGyJh3s08K9IWbsCQMS7r04tktrN6mEQFrgrpSqJLKP+UJgd4bMzbkXO8tOh4ErxxQKTBS4aV/hTIlNF2i0p35wRK2eCYUW1x31VoCXwT5db7oNl9w37cKsVvmb1LWaRePn0yX+7lgvSqO6iCYnAv+n5SCK4ngdzTwISb5iyqv5UUIsGmAyYECWli0tgvvnstY+EtG2734=
+    secure: vOKFX3Dvhs13h+fsR7rn5s5vX1T3r6ncSywpgJtc6eXFYn/QAns4WKnsjIowWSMDBg1LkjImkc7u7ZZqR2r0VmWJyV4vQ4AXyCNLINR+CL7ADrGIQTqfa8DSYfTxw8CsJO9zEGaMkCPUdpnWjn2RW632cIJass0AlBnkr8t9VINW1166pVM3+wkqGPjna8pjAnREBpGOeXBzmm7ZDnyo04DvFFxk8YbhIrBwFsmhiU/wHTLSOz4LQpMzcaYBfIA1gNFEzQhVQHAFsbnY/rS+SnLteCAA6joJZG/dOoJ731sUH0SfyzI5RseQLXh36nqgO/3SZ8Z3bRQc77iqCvlcn9VUjF7fRw0gdppzrAE4JYE+ppbLBE6YXVJuXI91S2LUvpjiNukPdGGLAl3idnxIBgGNMTgJffMQ5hu9RKEigS6FDZQMBwX6gqFpT1MkOpMR0bvHmzUB7M3ON+kSJAjTSHLGNA+ezOpldosruu0+8BipW5JW4XrN5aNbwtEQtqrVppSqBuIB8xFwzL0gaLUXxjgn6Vg3Oyz0yYtN8ozKlIg3+6uFd///TBfnRjE3OHKW9VGZ2TQuPkX0CilvJwcI1Zg1fL2EpliePXnvhwhP6Heudiyqev2N9NfHL7MPqgpetphoWDpo7kZrQQyKPq86zAPrt8EHzrtxgujPHvwQuus=
   file_glob: true
   file:
-    - dist/*.dmg
-    - dist/*.AppImage
-    - dist/*.exe
-  target_commitish: $TRAVIS_COMMIT
-  tag_name: $TRAVIS_TAG
+  - dist/*.dmg
+  - dist/*.AppImage
+  - dist/*.exe
+  target_commitish: "$TRAVIS_COMMIT"
+  tag_name: "$TRAVIS_TAG"
   overwrite: true
   skip_cleanup: true
   draft: false
