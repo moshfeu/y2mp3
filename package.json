@@ -94,7 +94,9 @@
     "webpack-cli": "^4.2.0"
   },
   "build": {
-    "extends": null,
+    "extraMetadata": {
+      "main": "main.js"
+    },
     "appId": "moshfeu.y2mp3",
     "files": [
       "index.html",
