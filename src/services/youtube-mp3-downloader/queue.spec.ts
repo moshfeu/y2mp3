@@ -1,5 +1,4 @@
 import { Queue, ITask } from './queue';
-import * as flush from 'flush-promises';
 
 describe('Queue', () => {
   let queue: Queue<any>;

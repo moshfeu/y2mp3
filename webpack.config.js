@@ -62,7 +62,7 @@ module.exports = (env, argv) => ({
   },
   mode: 'development',
   devtool: 'inline-source-map',
-  target: 'node',
+  target: 'electron-renderer',
   plugins: [
     new DefinePlugin({
       'process.env.FLUENTFFMPEG_COV': false,

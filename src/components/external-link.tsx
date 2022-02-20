@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { shell } from '../services/electron-adapter';
+import { shell } from 'electron';
 
 interface ExternalLinkProps {
   href: string;

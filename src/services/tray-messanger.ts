@@ -1,4 +1,4 @@
-import { ipcRenderer } from './electron-adapter';
+import { ipcRenderer } from 'electron';
 import store from '../mobx/store';
 
 const CHANNEL_NAME = 'tray';

@@ -3,7 +3,7 @@ import { observe } from 'mobx';
 import { observer } from 'mobx-react';
 import { IVideoEntity, EVideoStatus, IButtonProgressOptions } from '../types';
 import { ButtonProgress } from './button-progress';
-import { shell } from '../services/electron-adapter';
+import { shell } from 'electron';
 import { formatOptions } from './preferences-modal/lists';
 import { settingsManager } from '../services/settings';
 import { DownloadFormat } from '../services/youtube-mp3-downloader';

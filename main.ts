@@ -6,6 +6,8 @@ import {
   MenuItemConstructorOptions,
   Tray,
   ipcMain,
+  session,
+  dialog,
 } from 'electron';
 
 import { join } from 'path';
@@ -47,7 +49,7 @@ function createWindow() {
       `--isDev=${isDev}`,
     ],
     nodeIntegration: true,
-    enableRemoteModule: true,
+    contextIsolation: false,
   };
 
   win = new BrowserWindow({
@@ -72,7 +74,7 @@ function createWindow() {
     );
     const ex = existsSync(reactDevtoolsPath);
     if (ex) {
-      BrowserWindow.addDevToolsExtension(reactDevtoolsPath);
+      session.defaultSession.loadExtension(reactDevtoolsPath);
     } else {
       console.error('react devtools extension path not found');
     }
@@ -238,3 +240,20 @@ function createMenu() {
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
+
+ipcMain.handle('version', () => app.getVersion());
+ipcMain.handle('open-directory-explorer', () => new Promise(async (resolve, reject) => {
+  try {
+    const {filePaths} = await dialog.showOpenDialog(BrowserWindow.getFocusedWindow(), {
+      properties: [
+        "openDirectory",
+        "createDirectory",
+      ],
+      title: 'Choose a directory'
+    });
+
+    resolve({filePaths});
+  } catch (err) {
+    reject(err);
+  }
+}));

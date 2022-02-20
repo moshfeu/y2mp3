@@ -3,13 +3,22 @@ import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
 import Modal from 'semantic-ui-react/dist/commonjs/modules/Modal';
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
-import { remote } from '../../services/electron-adapter';
+import { ipcRenderer } from 'electron';
 import { IModalProps } from '../../types';
 import { ExternalLink } from '../external-link';
 import { TWITTER_LINK, GITHUB_LINK, CONTACT_EMAIL } from '../../constants';
 import './about-modal.scss';
 
 export class AboutModal extends React.Component<IModalProps> {
+  state = {
+    version: '',
+  }
+
+  async componentDidMount() {
+    const currentVersion = await ipcRenderer.invoke('version');
+    this.setState({ version: currentVersion });
+  }
+
   render() {
     const { open, onClose } = this.props;
 
@@ -18,7 +27,7 @@ export class AboutModal extends React.Component<IModalProps> {
         <Header icon='info circle' content='About' />
         <Modal.Content>
           <p>
-            <b>Version:</b> {remote.app.getVersion()}
+            <b>Version:</b> {this.state.version}
           </p>
           <p>
             <b>Contact me:</b> <ExternalLink href={CONTACT_EMAIL}>moshfeu.dev@gmail.com</ExternalLink>
