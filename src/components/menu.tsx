@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Dropdown, Icon, Label } from 'semantic-ui-react';
 import { openPreferences, openAbout } from '../services/modalsAndAlerts';
-import { shell } from '../services/electron-adapter';
+import { shell } from 'electron';
 import { GITHUB_LINK, CONTACT_EMAIL, GITHUB_LINK_ISSUES, TWITTER_LINK, TWITTER_LINK_PROFILE } from '../constants';
 import store from '../mobx/store';
 

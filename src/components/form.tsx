@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isDev } from '../services/additional-arguments';
-import { ipcRenderer, clipboard } from '../services/electron-adapter';
+import { ipcRenderer, clipboard } from 'electron';
 import { EWindowEvents } from '../types';
 import { isYoutubeURL } from '../services/api';
 import { settingsManager } from '../services/settings';

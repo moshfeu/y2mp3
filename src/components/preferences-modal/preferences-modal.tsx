@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IModalProps } from '../../types';
 import { Icon, Modal, Header, Button, Form, Dropdown, DropdownProps, Checkbox, CheckboxProps, Popup } from 'semantic-ui-react';
-import { remote } from '../../services/electron-adapter';
+import { ipcRenderer } from 'electron'
 import { settingsManager, IConfig } from '../../services/settings';
 import { DownloadQuality, DownloadFormat } from '../../services/youtube-mp3-downloader'
 import { SyntheticEvent } from 'react';
@@ -32,13 +32,7 @@ export class PreferencesModal extends React.Component<IModalProps, IPreferencesM
   }
 
   openDirectoryExplorer = async () => {
-    const {filePaths} = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
-      properties: [
-        "openDirectory",
-        "createDirectory",
-      ],
-      title: 'Choose a directory'
-    });
+    const {filePaths} = await ipcRenderer.invoke('open-directory-explorer');
 
     if (filePaths.length) {
       const downloadsFolder = filePaths[0]

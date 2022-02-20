@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { ipcRenderer } from '../../services/electron-adapter';
+import { ipcRenderer } from 'electron';
 import { openAbout, openPreferences } from '../../services/modalsAndAlerts';
 import { EWindowEvents } from '../../types';
 

@@ -1,8 +1,10 @@
+import { IDownloadTask } from '.';
+
 export interface ITask<T> {
   id: string;
   data: T;
   aborted?: boolean;
-  main: (task: this) => Promise<void>;
+  main: (task: this) => Promise<ITask<IDownloadTask>>;
 };
 
 export class Queue<T> {

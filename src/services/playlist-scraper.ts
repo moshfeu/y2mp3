@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import * as cheerio from 'cheerio';
 
 export const scrap = async (playlistURL: string) => {

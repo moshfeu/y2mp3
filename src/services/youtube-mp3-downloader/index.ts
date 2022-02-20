@@ -185,7 +185,7 @@ export class YoutubeMp3Downloader {
                       state: 'done',
                       payload: resultObj,
                     });
-                    resolve();
+                    resolve(task);
                     // once the new file saved, delete the original (w/o the album art) and rename the new to the original name
                     unlinkSync(filePath);
                     rename(tempFileName, filePath, () => ({}));
@@ -201,7 +201,7 @@ export class YoutubeMp3Downloader {
                   .saveToFile(tempFileName);
               } else {
                 task.data.onStateChanged({ state: 'done', payload: resultObj });
-                resolve();
+                resolve(task);
               }
             });
 
