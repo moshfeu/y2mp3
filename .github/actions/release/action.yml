@@ -1,0 +1,61 @@
+name: Electron Builder Action
+author: Samuel Meuli
+description: GitHub Action for building and releasing Electron apps
+
+inputs:
+  github_token:
+    description: GitHub authentication token
+    required: true
+  mac_certs:
+    description: Base64-encoded code signing certificate for macOS
+    required: false
+  mac_certs_password:
+    description: Password for decrypting `mac_certs`
+    required: false
+  release:
+    description: Whether the app should be released after a successful build
+    required: false
+    default: false
+  windows_certs:
+    description: Base64-encoded code signing certificate for Windows
+    required: false
+  windows_certs_password:
+    description: Password for decrypting `windows_certs`
+    required: false
+  package_root:
+    description: Directory where NPM/Yarn commands should be run
+    required: false
+    default: "."
+  build_script_name:
+    description: Name of the optional NPM build script which is executed before `electron-builder`
+    required: false
+    default: build
+  skip_build:
+    description: Whether the action should execute the NPM build script before running `electron-builder`
+    required: false
+    default: false
+  use_vue_cli:
+    description: Whether to run `electron-builder` using the Vue CLI plugin instead of calling the command directly
+    required: false
+    default: false
+  args:
+    description: Other arguments to pass to the `electron-builder` command, e.g. configuration overrides
+    required: false
+    default: ""
+  max_attempts:
+    description: Maximum number of attempts for completing the build and release step
+    required: false
+    default: "1"
+
+  # Deprecated
+  app_root:
+    description: Directory where `electron-builder` commands should be run
+    required: false
+
+runs:
+  using: node12
+  main: index.js
+
+branding:
+  icon: upload-cloud
+  color: blue
