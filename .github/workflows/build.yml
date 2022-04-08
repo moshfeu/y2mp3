@@ -19,9 +19,6 @@ jobs:
         with:
           node-version: 14
 
-      - name: yarn build
-        run: yarn build
-
       - name: Build/release Electron app
         uses: ./.github/actions/release
         with:
