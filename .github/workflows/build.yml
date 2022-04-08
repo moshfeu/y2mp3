@@ -25,6 +25,7 @@ jobs:
       - name: Build/release Electron app
         uses: ./.github/actions/release
         with:
+          skipBuild: false
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.DEPLOY_TOKEN }}
