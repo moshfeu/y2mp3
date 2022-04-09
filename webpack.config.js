@@ -81,6 +81,7 @@ module.exports = (env, argv) => ({
             stdio: 'inherit'
           });
           console.log(`main.js exists?`, fs.existsSync('./main.js'));
+          console.log(`list of files`, fs.readdirSync('./'));
           console.log(`after tsc. first time? ${firstTime}`);
           if (firstTime && compiler.options.mode === 'development') {
             firstTime = false;
