@@ -3,7 +3,7 @@
   "appname": "y2mp3",
   "productName": "y2mp3",
   "version": "2.5.6",
-  "main": "main.js",
+  "main": "out/main.js",
   "author": {
     "name": "MosheF",
     "email": "moshfeu.dev@gmail.com",
@@ -95,12 +95,12 @@
   },
   "build": {
     "extraMetadata": {
-      "main": "main.js"
+      "main": "out/main.js"
     },
     "appId": "moshfeu.y2mp3",
     "files": [
       "index.html",
-      "main.js",
+      "out/main.js",
       "resources/**",
       "assets/**"
     ],
