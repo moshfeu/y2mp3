@@ -19,9 +19,16 @@ jobs:
         with:
           node-version: 14
 
+      - name: Installing dependencies
+        run: yarn
+
+      - name: Tsc
+        run: npx tsc
+
       - name: Build/release Electron app
         uses: ./.github/actions/release
         with:
+          skip_build: false
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.DEPLOY_TOKEN }}
