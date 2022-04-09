@@ -77,9 +77,8 @@ module.exports = (env, argv) => ({
         compiler.hooks.done.tap('ts', () => {
           console.log(`after compile in mode "${compiler.options.mode}"`);
           console.log(`out/main.js exists?`, fs.existsSync('./out/main.js'));
-          spawnSync('tsc', {
-            stdio: 'inherit',
-            cwd: __dirname
+          spawnSync('yarn tsc', {
+            stdio: 'inherit'
           });
           console.log(`out/main.js exists?`, fs.existsSync('./out/main.js'));
           console.log(`list of files`, fs.readdirSync('./out'));
