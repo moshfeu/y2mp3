@@ -111,8 +111,8 @@ const runAction = () => {
 	// Disable console advertisements during install phase
 	setEnv("ADBLOCK", true);
 
-	log(`Installing dependencies using ${useNpm ? "NPM" : "Yarn"}…`);
-	run(useNpm ? "npm install" : "yarn", pkgRoot);
+	// log(`Installing dependencies using ${useNpm ? "NPM" : "Yarn"}…`);
+	// run(useNpm ? "npm install" : "yarn", pkgRoot);
 
 	// Run NPM build script if it exists
 	if (skipBuild) {
