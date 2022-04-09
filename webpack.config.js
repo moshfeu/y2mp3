@@ -76,12 +76,12 @@ module.exports = (env, argv) => ({
         let firstTime = true;
         compiler.hooks.done.tap('ts', () => {
           console.log(`after compile in mode "${compiler.options.mode}"`);
-          console.log(`out/main.js exists?`, fs.existsSync('./out/main.js'));
-          spawnSync('yarn tsc', {
-            stdio: 'inherit'
-          });
-          console.log(`out/main.js exists?`, fs.existsSync('./out/main.js'));
-          console.log(`list of files`, fs.readdirSync('./out'));
+          // console.log(`out/main.js exists?`, fs.existsSync('./out/main.js'));
+          // spawnSync('npx tsc', {
+          //   stdio: 'inherit'
+          // });
+          console.log(`main.js exists?`, fs.existsSync('./main.js'));
+          console.log(`list of files`, fs.readdirSync('./'));
           console.log(`after tsc. first time? ${firstTime}`);
           if (firstTime && compiler.options.mode === 'development') {
             firstTime = false;

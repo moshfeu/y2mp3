@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Tsc
+        run: npx tsc
+
       - name: Build/release Electron app
         uses: ./.github/actions/release
         with:
