@@ -1,5 +1,4 @@
 const { DefinePlugin } = require('webpack');
-const fs = require('fs');
 const { spawnSync } = require('child_process');
 
 module.exports = (env, argv) => ({
@@ -76,7 +75,7 @@ module.exports = (env, argv) => ({
         let firstTime = true;
         compiler.hooks.done.tap('ts', () => {
           console.log(`after compile in mode "${compiler.options.mode}"`);
-          spawnSync('npx tsc', {
+          spawnSync('tsc', {
             stdio: 'inherit'
           });
           console.log(`after tsc. first time? ${firstTime}`);
