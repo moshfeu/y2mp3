@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 14
 
+      - name: Installing dependencies
+        run: yarn
+
       - name: Tsc
         run: npx tsc
 
