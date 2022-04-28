@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@types/node": "12.12.21",
-    "async": "^2.6.0",
+    "async": "^2.6.4",
     "cheerio": "^1.0.0-rc.5",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
