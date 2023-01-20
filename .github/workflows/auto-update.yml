@@ -19,4 +19,4 @@ jobs:
       uses: romoh/dependencies-autoupdate@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        update-command: "yarn add ytdl-core@latest"
+        update-command: "'yarn add ytdl-core@latest'"
