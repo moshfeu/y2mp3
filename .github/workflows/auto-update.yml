@@ -21,3 +21,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         update-command: "'yarn add ytdl-core@latest'"
+        on-changes-command: "'npm version patch'"
