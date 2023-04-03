@@ -26,7 +26,7 @@ export const downloader = new YoutubeMp3Downloader({
   ffmpegPath: ffmpegPath(), // Where is the FFmpeg binary located?
   outputPath: settingsManager.downloadsFolder, // Where should the downloaded and encoded files be stored?
   youtubeVideoQuality: settingsManager.audioQuality, // What video quality should be used?
-  filter: 'audio',
+  filter: 'audioandvideo',
   format: settingsManager.downloadFormat,
   progressTimeout: 1000,
 });
@@ -203,6 +203,7 @@ const downloadReducer = (action: StateChangeAction) => {
         } = action;
         finishVideoOnError(error, videoId);
         if (isCustomError(error)) {
+          console.log(error);
           showCustomError(error.message);
           break;
         } else {
