@@ -44,7 +44,7 @@ export class Queue<T> {
     try {
       await this.currentTask.main(this.currentTask);
     } catch (error) {
-      console.info('task failed:', this.currentTask);
+      console.info('task failed:', this.currentTask, error);
       this.remove(this.currentTask.id);
     } finally {
       this.process();
