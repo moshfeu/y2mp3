@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.5.8.1",
+  "version": "2.5.9-alpha",
   "main": "main.js",
   "author": {
     "name": "MosheF",
