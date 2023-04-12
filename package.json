@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.5.8",
+  "version": "2.5.9-alpha",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -55,7 +55,7 @@
     "sass": "^1.57.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
-    "ytdl-core": "^4.11.3"
+    "ytdl-core": "fent/node-ytdl-core#pull/1203/head"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",

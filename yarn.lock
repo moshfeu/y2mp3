@@ -7816,3 +7816,11 @@ ytdl-core@^4.11.3:
     m3u8stream "^0.8.6"
     miniget "^4.2.2"
     sax "^1.1.3"
+
+ytdl-core@fent/node-ytdl-core#pull/1203/head:
+  version "0.0.0-development"
+  resolved "https://codeload.github.com/fent/node-ytdl-core/tar.gz/586971bd9aeda1cbb4600851cfef82a809833ac2"
+  dependencies:
+    m3u8stream "^0.8.6"
+    miniget "^4.2.2"
+    sax "^1.1.3"
