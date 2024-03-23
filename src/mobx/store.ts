@@ -7,6 +7,7 @@ import {
   showTermsIsInvalid,
   hideMessage,
   showNoInternet,
+  showCustomError,
 } from '../services/modalsAndAlerts';
 
 class Store {
@@ -41,6 +42,8 @@ class Store {
     } catch (error) {
       if (error.code === 'ENOTFOUND') {
         showNoInternet();
+      } else {
+        showCustomError(error.message);
       }
     } finally {
       this.searchInProgress = false;

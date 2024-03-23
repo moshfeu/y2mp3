@@ -94,7 +94,8 @@ async function fetchVideosFromList(
         .map((video) => createVideoEntity(video.name, video.id, name))
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 }
 

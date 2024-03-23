@@ -1,10 +1,24 @@
 import * as cheerio from 'cheerio';
 
-export const scrap = async (playlistURL: string) => {
+const getPlaylistPageContent = async (playlistURL: string) => {
   const playlistId = new URL(playlistURL).searchParams.get('list');
-  const data = await (
-    await fetch(`https://www.youtube.com/playlist?list=${playlistId}`)
-  ).text();
+  const response = await fetch(`https://www.youtube.com/playlist?list=${playlistId}`);
+  if (!response.ok) {
+    switch (response.status) {
+      case 403:
+        throw new Error('Playlist is private or not accessible to the app');
+      case 400:
+      case 404:
+        throw new Error('Invalid playlist URL');
+      default:
+        throw new Error('Failed to fetch playlist page');
+    }
+  }
+  return response.text();
+}
+
+export const scrap = async (playlistURL: string) => {
+  const data = await getPlaylistPageContent(playlistURL);
 
   const $ = cheerio.load(data);
   const ytInitialData = $('script').filter((_index, tag) => {
