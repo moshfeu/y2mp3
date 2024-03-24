@@ -73,7 +73,7 @@
     "autoprefixer": "^9.4.5",
     "coveralls": "^3.1.1",
     "css-loader": "^1.0.1",
-    "electron": "^17.2.0",
+    "electron": "^18.3.7",
     "electron-builder": "^23.6.0",
     "electron-icon-maker": "^0.0.5",
     "enzyme": "^3.11.0",
