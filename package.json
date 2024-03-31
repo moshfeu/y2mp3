@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.5.10",
+  "version": "2.5.11",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -45,6 +45,7 @@
     "fix-path": "^2.1.0",
     "fluent-ffmpeg": "2.1.2",
     "js-video-url-parser": "^0.2.8",
+    "miniget": "^4.2.3",
     "mkdirp": "^0.5.1",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
