@@ -152,6 +152,13 @@ To release a new version, just push a new tag. The tag should be in the format `
 
 Once you happy with the release, just publish it.
 
+Let's say the version is `1.2.3`:
+
+```shell
+git tag -a v1.2.3 -m "1.2.3"
+git push origin refs/tags/v1.2.3
+```
+
 ### Stack
 
 <table>
