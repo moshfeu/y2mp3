@@ -44,6 +44,10 @@ Find your download: [https://github.com/moshfeu/y2mp3/releases/latest](https://g
 
 ## Change log
 
+##### 2.6.0
+
+Unlocking downloading from Europe and other locations requires accepting YouTube's terms of service
+
 ##### 2.5.0
 
 Fix - The app didn't work at all because of changes in Youtube.
