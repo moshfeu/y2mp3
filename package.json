@@ -2,7 +2,7 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "main": "main.js",
   "author": {
     "name": "MosheF",
@@ -37,10 +37,10 @@
   "dependencies": {
     "@types/node": "12.12.21",
     "async": "^2.6.4",
+    "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.5",
     "classnames": "^2.2.6",
     "command-exists": "^1.2.8",
-    "electron-fetch": "^1.7.4",
     "electron-is-dev": "^1.0.1",
     "fix-path": "^2.1.0",
     "fluent-ffmpeg": "2.1.2",
@@ -74,7 +74,7 @@
     "autoprefixer": "^9.4.5",
     "coveralls": "^3.1.1",
     "css-loader": "^1.0.1",
-    "electron": "^17.2.0",
+    "electron": "^17.4.11",
     "electron-builder": "^23.6.0",
     "electron-icon-maker": "^0.0.5",
     "enzyme": "^3.11.0",
@@ -90,7 +90,7 @@
     "sinon": "^7.2.3",
     "style-loader": "^0.23.1",
     "ts-loader": "^9.2.6",
-    "typescript": "^4.0.5",
+    "typescript": "^5.4.4",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.2.0"
   },
