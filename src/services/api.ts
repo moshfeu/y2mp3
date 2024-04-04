@@ -191,6 +191,7 @@ const downloadReducer = (action: StateChangeAction) => {
           new Notification('Download completed', {
             icon: './app-resources/logo-128.png',
             body: `The video "${videoTitle}" downloaded successfully`,
+            // @ts-ignore - no typings for Notification
             image: thumbnail,
           });
         }
