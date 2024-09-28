@@ -8,6 +8,6 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     allow:
-      - dependency-name: "ytdl-core"
+      - dependency-name: "@distube/ytdl-core"
     schedule:
       interval: "daily"

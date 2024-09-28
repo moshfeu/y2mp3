@@ -1,4 +1,4 @@
-import { videoInfo } from 'ytdl-core';
+import { videoInfo } from '@distube/ytdl-core';
 import { SemanticCOLORS, MenuItemProps } from 'semantic-ui-react';
 
 export interface IVideoEntity {

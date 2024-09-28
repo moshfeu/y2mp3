@@ -6,7 +6,7 @@
   "packageRules": [
     {
       "packagePatterns": ["*"],
-      "excludePackagePatterns": ["ytdl-core"],
+      "excludePackagePatterns": ["@distube/ytdl-core"],
       "enabled": false
     }
   ]
