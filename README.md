@@ -1,4 +1,4 @@
-[![Travis-ci build Status](https://travis-ci.com/moshfeu/y2mp3.svg?branch=master)](https://travis-ci.com/moshfeu/y2mp3)
+[![Build/release](https://github.com/moshfeu/y2mp3/actions/workflows/build.yml/badge.svg)](https://github.com/moshfeu/y2mp3/actions/workflows/build.yml)
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-configured-green.svg)](https://wallabyjs.com)
 [![Release version](https://img.shields.io/github/release/moshfeu/y2mp3.svg)](https://github.com/moshfeu/y2mp3/releases/latest)
 [![Github All Releases](https://img.shields.io/github/downloads/moshfeu/y2mp3/total.svg)](https://github.com/moshfeu/y2mp3/releases)

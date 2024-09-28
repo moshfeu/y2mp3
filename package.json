@@ -106,7 +106,14 @@
       "assets/**"
     ],
     "mac": {
-      "icon": "resources/icons/mac/icon.icns"
+      "icon": "resources/icons/mac/icon.icns",
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "arm64"
+        ]
+      }
     },
     "dmg": {
       "icon": "resources/icons/mac/icon.icns",
