@@ -28,7 +28,7 @@
     "dist-linux": "npm run dist --linux",
     "dist-windows": "npm run dist -- --win",
     "publish-linux": "electron-builder --linux --publish onTagOrDraft",
-    "generate-icons": "./node_modules/.bin/electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
+    "generate-icons": "npx electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
     "build": "npm run generate-icons && webpack --config webpack.prod.js",
     "test": "node --trace-warnings ./test/runTests.js",
     "test:watch": "jest --watch",
