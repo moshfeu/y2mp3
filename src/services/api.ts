@@ -2,7 +2,7 @@ import { join } from 'path';
 import { sync } from 'mkdirp';
 import { existsSync } from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
-import { getBasicInfo } from 'ytdl-core';
+import { getBasicInfo } from '@distube/ytdl-core';
 import * as urlParser from 'js-video-url-parser';
 import { sync as commandExistsSync } from 'command-exists';
 import {

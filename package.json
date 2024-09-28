@@ -35,6 +35,7 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.14.4",
     "@types/node": "12.12.21",
     "async": "^2.6.4",
     "axios": "^1.6.8",
@@ -55,8 +56,7 @@
     "sanitize-filename": "^1.6.1",
     "sass": "^1.57.1",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.1",
-    "ytdl-core": "4.11.5"
+    "semantic-ui-react": "^0.88.1"
   },
   "devDependencies": {
     "@types/async": "^3.0.3",

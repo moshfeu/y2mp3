@@ -1,4 +1,4 @@
-import * as ytdl from 'ytdl-core';
+import * as ytdl from '@distube/ytdl-core';
 
 const fileNameReplacemant: [RegExp, string][] = [
   [/"/g, ''],

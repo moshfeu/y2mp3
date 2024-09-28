@@ -1,5 +1,5 @@
 import { ITask, Queue } from './queue';
-import * as ytdl from 'ytdl-core';
+import * as ytdl from '@distube/ytdl-core';
 import { unlinkSync, rename, existsSync, createReadStream } from 'fs';
 import * as ffmpeg from 'fluent-ffmpeg';
 import * as progress from 'progress-stream';
@@ -106,7 +106,7 @@ export class YoutubeMp3Downloader {
           filter: this.filter,
           // TODO fix format (currently throws a invalid input error [Doesn't tell much I know, but it's a late at night])
           // format: info.formats[2],
-          requestOptions: { maxRedirects: 5 },
+          requestOptions: { maxRedirections: 5 },
         });
 
         const { progressTimeout } = this;
