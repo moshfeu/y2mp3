@@ -35,7 +35,7 @@
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
-    "@distube/ytdl-core": "^4.14.4",
+    "@distube/ytdl-core": "^4.15.3",
     "@types/node": "12.12.21",
     "async": "^2.6.4",
     "axios": "^1.6.8",
