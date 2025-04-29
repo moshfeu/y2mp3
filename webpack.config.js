@@ -6,6 +6,22 @@ module.exports = (env, argv) => ({
   module: {
     rules: [
       {
+        test: /\.js$/,
+        include: /node_modules\/undici/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: { node: 'current' } }]
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-proposal-private-methods'
+            ]
+          }
+        }
+      },
+      {
         test: /\.ts|.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
