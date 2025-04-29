@@ -1,18 +1,27 @@
 const { DefinePlugin } = require('webpack');
 const { spawnSync } = require('child_process');
+const path = require('path');
 
 module.exports = (env, argv) => ({
   entry: './src/components/main.tsx',
   module: {
     rules: [
       {
-        test: /\.js$/,
-        include: /node_modules\/undici/,
+        test: /\.m?js$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/undici'),
+          path.resolve(__dirname, 'node_modules/@distube')
+        ],
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: { node: 'current' } }]
+              ['@babel/preset-env', {
+                targets: {
+                  node: 'current',
+                  browsers: ['last 2 versions']
+                }
+              }]
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
