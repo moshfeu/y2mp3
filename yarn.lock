@@ -903,10 +903,10 @@
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
-"@distube/ytdl-core@github:1ly4s0/ytdl-core":
-  version "4.16.9"
-  resolved "https://codeload.github.com/1ly4s0/ytdl-core/tar.gz/ba7516dd4f5ad125f9ee8a41ebea486442533f82"
-  integrity sha512-nG/IZePk1aEyxqnNU+xvtaiUr+Df9nwv8/D37xs/xRtZRk8jmc2infhHXjg99NQpjKdGHkyNnGbuSvTjb84DNA==
+"@distube/ytdl-core@^4.16.12":
+  version "4.16.12"
+  resolved "https://registry.npmjs.org/@distube/ytdl-core/-/ytdl-core-4.16.12.tgz"
+  integrity sha512-/NR8Jur1Q4E2oD+DJta7uwWu7SkqdEkhwERt7f4iune70zg7ZlLLTOHs1+jgg3uD2jQjpdk7RGC16FqstG4RsA==
   dependencies:
     http-cookie-agent "^7.0.1"
     https-proxy-agent "^7.0.6"
@@ -8250,16 +8250,3 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
-
-"ytdl-core@https://github.com/1ly4s0/ytdl-core":
-  version "4.16.10"
-  resolved "git+ssh://git@github.com/1ly4s0/ytdl-core.git"
-  integrity sha512-ieDQFtuhRYgKwl/DQDQqm7BJu1coqYxeTO9QuN258Rn2a7PrpPVRRwl7WQsaXuLj+G2ZhJumD+bjsMqae6U9XQ==
-  dependencies:
-    http-cookie-agent "^7.0.1"
-    https-proxy-agent "^7.0.6"
-    m3u8stream "^0.8.6"
-    miniget "^4.2.3"
-    sax "^1.4.1"
-    tough-cookie "^5.1.2"
-    undici "^7.8.0"
