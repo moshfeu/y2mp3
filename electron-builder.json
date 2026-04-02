@@ -1,0 +1,28 @@
+{
+  "appId": "moshfeu.y2mp3",
+  "productName": "y2mp3",
+  "directories": {
+    "buildResources": "build",
+    "output": "release"
+  },
+  "files": [
+    "out/**/*"
+  ],
+  "mac": {
+    "category": "public.app-category.utilities",
+    "icon": "resources/icons/mac/icon.icns",
+    "target": [
+      { "target": "dmg", "arch": ["x64", "arm64"] },
+      { "target": "zip", "arch": ["x64", "arm64"] }
+    ]
+  },
+  "win": {
+    "icon": "resources/icons/win/icon.ico",
+    "target": ["nsis", "portable"]
+  },
+  "linux": {
+    "icon": "resources/icons/png",
+    "category": "Music",
+    "target": ["AppImage", "deb"]
+  }
+}

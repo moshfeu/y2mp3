@@ -1,11 +1,15 @@
-.idea
-node_modules
-downloads
-package-lock.json
-src/*.js
-config.js
-dist
-resources
-maps
-coverage
-main.js
+node_modules/
+out/
+dist/
+release/
+.cache/
+downloads/
+*.mp4
+*.mp3
+*.m4a
+*.webm
+.DS_Store
+# resources except icons (app.bundle.js and fonts are build artifacts)
+resources/app.bundle.js
+resources/app.bundle.js.LICENSE.txt
+resources/fonts/
