@@ -2,8 +2,9 @@
   "name": "y2mp3",
   "appname": "y2mp3",
   "productName": "y2mp3",
-  "version": "3.0.1",
-  "main": "main.js",
+  "version": "4.0.0",
+  "description": "Download YouTube videos as MP3",
+  "main": "out/main/index.js",
   "author": {
     "name": "MosheF",
     "email": "moshfeu.dev@gmail.com",
@@ -18,135 +19,39 @@
   ],
   "email": "moshfeu.dev@gmail.com",
   "license": "MIT",
-  "description": "An app to download youtube videos as mp3",
   "scripts": {
-    "start": "webpack",
-    "tsc": "tsc",
-    "electron": "electron .",
-    "electron-builder": "electron-builder",
-    "dist": "npm run build && electron-builder",
-    "dist-linux": "npm run dist --linux",
-    "dist-windows": "npm run dist -- --win",
-    "publish-linux": "electron-builder --linux --publish onTagOrDraft",
-    "generate-icons": "npx electron-icon-maker --input=app-resources/logo-full-size.png --output=resources",
-    "build": "npm run generate-icons && webpack --config webpack.prod.js",
-    "test": "node --trace-warnings ./test/runTests.js",
-    "test:watch": "jest --watch",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "dist": "yarn build && electron-builder",
+    "dist:mac": "yarn build && electron-builder --mac",
+    "dist:win": "yarn build && electron-builder --win",
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
   },
+  "keywords": ["youtube", "audio", "download", "electron", "mp3"],
   "dependencies": {
-    "@distube/ytdl-core": "github:1ly4s0/ytdl-core",
-    "@types/node": "12.12.21",
-    "async": "^2.6.4",
-    "axios": "^1.6.8",
-    "cheerio": "^1.0.0-rc.5",
-    "classnames": "^2.2.6",
-    "command-exists": "^1.2.8",
-    "electron-is-dev": "^1.0.1",
-    "fix-path": "^2.1.0",
-    "fluent-ffmpeg": "2.1.2",
-    "js-video-url-parser": "^0.2.8",
-    "miniget": "^4.2.3",
-    "mkdirp": "^0.5.1",
-    "mobx": "^5.8.0",
-    "mobx-react": "^5.4.3",
-    "progress-stream": "^2.0.0",
-    "react": "^16.10.2",
-    "react-dom": "^16.5.2",
-    "sanitize-filename": "^1.6.1",
-    "sass": "^1.57.1",
-    "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.1",
-    "ytdl-core": "https://github.com/1ly4s0/ytdl-core"
+    "clsx": "^2.1.0",
+    "electron-store": "^8.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-private-methods": "^7.18.6",
-    "@babel/preset-env": "^7.26.9",
-    "@types/async": "^3.0.3",
-    "@types/classnames": "^2.2.11",
-    "@types/electron-is-dev": "^0.3.0",
-    "@types/enzyme": "^3.10.10",
-    "@types/fluent-ffmpeg": "^2.1.16",
-    "@types/jest": "^24.0.20",
-    "@types/mkdirp": "^0.5.2",
-    "@types/node-fetch": "^2.5.8",
-    "@types/progress-stream": "^2.0.1",
-    "@types/react": "^16.9.5",
-    "@types/react-dom": "^16.0.9",
-    "@types/sinon": "^5.0.7",
-    "autoprefixer": "^9.4.5",
-    "babel-loader": "^10.0.0",
-    "coveralls": "^3.1.1",
-    "css-loader": "^1.0.1",
-    "electron": "^17.4.11",
-    "electron-builder": "^23.6.0",
-    "electron-icon-maker": "^0.0.5",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.7.1",
-    "ffbinaries": "^1.1.4",
-    "file-loader": "^2.0.0",
-    "flush-promises": "^1.0.2",
-    "jest": "^27.4.3",
-    "npm-run-all": "^4.1.5",
-    "object-assign": "^4.1.1",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "sinon": "^7.2.3",
-    "style-loader": "^0.23.1",
-    "ts-loader": "^9.2.6",
-    "typescript": "^5.4.4",
-    "webpack": "^5.69.1",
-    "webpack-cli": "^4.2.0"
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "electron-vite": "^2.0.0",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
   },
-  "build": {
-    "extraMetadata": {
-      "main": "main.js"
-    },
-    "appId": "moshfeu.y2mp3",
-    "files": [
-      "index.html",
-      "main.js",
-      "resources/**",
-      "assets/**"
-    ],
-    "mac": {
-      "icon": "resources/icons/mac/icon.icns",
-      "target": {
-        "target": "default",
-        "arch": [
-          "x64",
-          "arm64"
-        ]
-      }
-    },
-    "dmg": {
-      "icon": "resources/icons/mac/icon.icns",
-      "contents": [
-        {
-          "x": 190,
-          "y": 230
-        },
-        {
-          "x": 350,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "category": "Music"
-    },
-    "win": {
-      "icon": "resources/icons/win/icon.ico"
-    },
-    "nsis": {
-      "installerIcon": "resources/icons/win/icon.ico"
-    }
-  }
+  "type": "module"
 }

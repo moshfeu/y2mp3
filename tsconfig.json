@@ -1,19 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "sourceMap": false,
-    "removeComments": true,
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-  },
-  "exclude": [
-    "node_modules"
-  ],
-  "files": [
-    "./main.ts"
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.web.json" }
   ]
 }

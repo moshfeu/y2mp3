@@ -1,1 +1,0 @@
-export { AboutModal } from './about-modal';
