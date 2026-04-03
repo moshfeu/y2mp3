@@ -4,5 +4,8 @@
     "**/*.bundle.js": true
   },
   "javascript.implicitProjectConfig.experimentalDecorators": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "chat.promptFilesLocations": {
+    ".github/agents": true
+  }
 }

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="430" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="480" height="430" fill="#fafafa" rx="8"/>
+  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: playlist preview</text>
+  <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
+
+  <!-- URL field -->
+  <text x="20" y="56" font-size="11" fill="#777">YouTube URL</text>
+  <rect x="20" y="62" width="440" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="28" y="81" font-size="11" fill="#444">https://youtube.com/playlist?list=PLxxx</text>
+
+  <!-- Playlist preview card -->
+  <rect x="20" y="106" width="440" height="180" rx="6" fill="#fff" stroke="#ddd"/>
+  <text x="32" y="126" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
+  <text x="32" y="142" font-size="10" fill="#888">24 videos</text>
+  <!-- Entry list -->
+  <rect x="28" y="150" width="424" height="126" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+  <text x="38" y="168" font-size="10" fill="#aaa">·  1. Video Title One</text>
+  <text x="38" y="184" font-size="10" fill="#aaa">·  2. Video Title Two</text>
+  <text x="38" y="200" font-size="10" fill="#aaa">·  3. Video Title Three</text>
+  <text x="38" y="216" font-size="10" fill="#aaa">·  4. Video Title Four</text>
+  <text x="38" y="232" font-size="10" fill="#aaa">·  5. Video Title Five</text>
+  <text x="38" y="252" font-size="10" fill="#bbb">     ··· 19 more</text>
+  <!-- Scroll bar -->
+  <rect x="444" y="150" width="5" height="126" rx="3" fill="#e0e0e0"/>
+  <rect x="444" y="150" width="5" height="32" rx="3" fill="#bbb"/>
+
+  <!-- Format / Quality -->
+  <text x="20" y="312" font-size="11" fill="#777">Format</text>
+  <rect x="20" y="318" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="30" y="337" font-size="11" fill="#444">MP3  ▾</text>
+  <text x="250" y="312" font-size="11" fill="#777">Quality</text>
+  <rect x="250" y="318" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="260" y="337" font-size="11" fill="#444">Best  ▾</text>
+
+  <!-- Save location (no filename input in playlist mode) -->
+  <text x="20" y="372" font-size="11" fill="#777">Save location</text>
+  <rect x="20" y="378" width="340" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="28" y="397" font-size="11" fill="#999">/Users/me/Downloads</text>
+  <rect x="368" y="378" width="92" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="401" y="397" font-size="11" fill="#555">Browse</text>
+
+  <!-- Download button (active) -->
+  <rect x="20" y="420" width="440" height="0" rx="6" fill="#111"/>
+  <text x="240" y="416" font-size="10" fill="#888" text-anchor="middle">↓ Download Playlist (24 videos) — enabled</text>
+</svg>

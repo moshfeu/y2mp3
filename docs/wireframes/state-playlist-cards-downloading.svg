@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="500" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="480" height="500" fill="#fafafa" rx="8"/>
+
+  <!-- State label -->
+  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: downloading (playlist, card grid)</text>
+  <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
+
+  <!-- URL input (disabled) -->
+  <text x="20" y="52" font-size="11" fill="#aaa">YouTube URL</text>
+  <rect x="20" y="58" width="374" height="30" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+  <text x="28" y="77" font-size="11" fill="#bbb">https://youtube.com/playlist?list=PLxxx</text>
+  <rect x="402" y="58" width="58" height="30" rx="4" fill="#e0e0e0"/>
+  <text x="431" y="77" font-size="11" fill="#bbb" text-anchor="middle">Fetch</text>
+
+  <!-- Playlist header row with live status -->
+  <text x="20" y="118" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
+  <text x="20" y="134" font-size="10" fill="#888">2 done  ·  1 downloading  ·  21 pending</text>
+  <rect x="334" y="106" width="126" height="30" rx="5" fill="#e0e0e0"/>
+  <text x="397" y="125" font-size="11" fill="#bbb" text-anchor="middle">↓ Download All</text>
+
+  <!-- ─────────────── CARD ROW 1 (y=144) — DONE ─────────────── -->
+
+  <!-- Card 1 (DONE) -->
+  <rect x="20" y="144" width="215" height="104" rx="5" fill="#fff" stroke="#ddd"/>
+  <rect x="28" y="152" width="54" height="36" rx="2" fill="#e8e8e8" stroke="#d0d0d0"/>
+  <text x="55" y="174" font-size="10" fill="#ccc" text-anchor="middle">▶</text>
+  <!-- Done badge -->
+  <circle cx="221" cy="153" r="9" fill="#4caf50"/>
+  <text x="221" y="157" font-size="9" fill="#fff" text-anchor="middle">✓</text>
+  <text x="90" y="165" font-size="10" fill="#4caf50">Lofi Beats Vol. 1</text>
+  <text x="90" y="179" font-size="9" fill="#aaa">ChillZone · 2:34</text>
+  <line x1="28" y1="202" x2="227" y2="202" stroke="#f0f0f0"/>
+  <text x="184" y="221" font-size="10" fill="#4caf50" text-anchor="middle">✓ Saved</text>
+
+  <!-- Card 2 (DONE) -->
+  <rect x="245" y="144" width="215" height="104" rx="5" fill="#fff" stroke="#ddd"/>
+  <rect x="253" y="152" width="54" height="36" rx="2" fill="#e8e8e8" stroke="#d0d0d0"/>
+  <text x="280" y="174" font-size="10" fill="#ccc" text-anchor="middle">▶</text>
+  <circle cx="446" cy="153" r="9" fill="#4caf50"/>
+  <text x="446" y="157" font-size="9" fill="#fff" text-anchor="middle">✓</text>
+  <text x="315" y="165" font-size="10" fill="#4caf50">Midnight Drive</text>
+  <text x="315" y="179" font-size="9" fill="#aaa">NightOwl · 4:12</text>
+  <line x1="253" y1="202" x2="452" y2="202" stroke="#f0f0f0"/>
+  <text x="409" y="221" font-size="10" fill="#4caf50" text-anchor="middle">✓ Saved</text>
+
+  <!-- ─────────────── CARD ROW 2 (y=258) ─────────────── -->
+
+  <!-- Card 3 (DOWNLOADING — active, darker border) -->
+  <rect x="20" y="258" width="215" height="104" rx="5" fill="#fff" stroke="#555" stroke-width="1.5"/>
+  <rect x="28" y="266" width="54" height="36" rx="2" fill="#e8e8e8" stroke="#d0d0d0"/>
+  <text x="55" y="288" font-size="10" fill="#ccc" text-anchor="middle">▶</text>
+  <text x="90" y="279" font-size="10" font-weight="bold" fill="#222">Acoustic Morning</text>
+  <text x="90" y="293" font-size="9" fill="#888">47%  ·  2.1 MB/s</text>
+  <line x1="28" y1="306" x2="227" y2="306" stroke="#f0f0f0"/>
+  <!-- Per-card progress bar -->
+  <rect x="28" y="314" width="199" height="5" rx="2" fill="#e0e0e0"/>
+  <rect x="28" y="314" width="94" height="5" rx="2" fill="#444"/>
+  <text x="28" y="334" font-size="8" fill="#888">⟳  downloading</text>
+  <text x="222" y="334" font-size="8" fill="#666" text-anchor="end">47%</text>
+
+  <!-- Card 4 (PENDING — greyed) -->
+  <rect x="245" y="258" width="215" height="104" rx="5" fill="#fff" stroke="#e8e8e8"/>
+  <rect x="253" y="266" width="54" height="36" rx="2" fill="#efefef" stroke="#e0e0e0"/>
+  <text x="280" y="288" font-size="10" fill="#ddd" text-anchor="middle">▶</text>
+  <text x="315" y="279" font-size="10" fill="#bbb">Jazz Afternoon</text>
+  <text x="315" y="293" font-size="9" fill="#ccc">BlueMood · 5:21</text>
+  <line x1="253" y1="316" x2="452" y2="316" stroke="#f0f0f0"/>
+  <rect x="378" y="322" width="62" height="22" rx="4" fill="#f0f0f0" stroke="#e0e0e0"/>
+  <text x="409" y="337" font-size="10" fill="#ccc" text-anchor="middle">↓ Save</text>
+
+  <!-- Overflow footer -->
+  <text x="240" y="378" font-size="10" fill="#bbb" text-anchor="middle">···  20 more tracks</text>
+
+  <!-- Format / Quality (disabled) -->
+  <rect x="20" y="404" width="210" height="30" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+  <text x="30" y="423" font-size="11" fill="#bbb">MP3  ▾</text>
+  <rect x="250" y="404" width="210" height="30" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+  <text x="260" y="423" font-size="11" fill="#bbb">Best  ▾</text>
+
+  <!-- Bottom: in-progress button + Cancel -->
+  <rect x="20" y="452" width="322" height="36" rx="6" fill="#444"/>
+  <text x="181" y="475" font-size="12" fill="#fff" text-anchor="middle">Downloading 3 / 24...</text>
+  <rect x="350" y="452" width="110" height="36" rx="6" fill="#fff" stroke="#e0e0e0"/>
+  <text x="405" y="475" font-size="12" fill="#cc4444" text-anchor="middle">✕ Cancel</text>
+</svg>
