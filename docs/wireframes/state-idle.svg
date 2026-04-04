@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="250" font-family="ui-monospace, monospace, sans-serif">
-  <rect width="480" height="250" fill="#fafafa" rx="8"/>
-  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: idle</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="160" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="480" height="160" fill="#fafafa" rx="8"/>
+  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: idle (no info fetched)</text>
   <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
 
   <!-- URL field with inline Fetch button -->
@@ -11,16 +11,6 @@
   <rect x="420" y="66" width="32" height="22" rx="3" fill="#e8e8e8"/>
   <text x="436" y="81" font-size="12" fill="#555" text-anchor="middle">→</text>
 
-  <!-- Format / Quality -->
-  <text x="20" y="112" font-size="11" fill="#777">Format</text>
-  <rect x="20" y="118" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="30" y="137" font-size="11" fill="#444">MP3  ▾</text>
-  <text x="250" y="112" font-size="11" fill="#777">Quality</text>
-  <rect x="250" y="118" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="260" y="137" font-size="11" fill="#444">Best  ▾</text>
-
-  <!-- Download button (disabled) -->
-  <rect x="20" y="162" width="440" height="36" rx="6" fill="#e0e0e0"/>
-  <text x="240" y="185" font-size="13" fill="#aaa" text-anchor="middle">⬇️  Download Audio</text>
-  <text x="240" y="224" font-size="10" fill="#bbb" text-anchor="middle">filename · save location moved to Settings</text>
+  <text x="240" y="120" font-size="10" fill="#bbb" text-anchor="middle">Format · Quality · Download button hidden until fetch succeeds</text>
+  <text x="240" y="136" font-size="10" fill="#bbb" text-anchor="middle">clipboard auto-paste fires on focus if field is empty</text>
 </svg>

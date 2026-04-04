@@ -1,67 +1,75 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="470" font-family="ui-monospace, monospace, sans-serif">
-  <rect width="480" height="470" fill="#fafafa" rx="8"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="570" height="540" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="570" height="540" fill="#fafafa" rx="8"/>
   <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: downloading (playlist)</text>
-  <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
+  <line x1="20" y1="32" x2="540" y2="32" stroke="#ddd"/>
 
-  <!-- URL field (disabled) -->
+  <!-- URL field (locked) -->
   <text x="20" y="54" font-size="11" fill="#aaa">YouTube URL</text>
-  <rect x="20" y="60" width="440" height="30" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
+  <rect x="20" y="60" width="520" height="30" rx="4" fill="#f5f5f5" stroke="#e0e0e0"/>
   <text x="28" y="79" font-size="11" fill="#bbb">https://youtube.com/playlist?list=PLxxx</text>
 
-  <!-- Playlist card: header(56) + row1(52) + row2(52) + row3-active(68) + row4(52) = 280 -->
-  <rect x="20" y="102" width="440" height="280" rx="6" fill="#fff" stroke="#ddd"/>
-
-  <!-- Card header -->
-  <text x="32" y="122" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
-  <text x="32" y="138" font-size="10" fill="#888">24 videos</text>
+  <!-- Playlist header row -->
+  <text x="20" y="110" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
+  <text x="20" y="126" font-size="10" fill="#888">24 videos</text>
   <!-- Progress pill -->
-  <rect x="388" y="112" width="62" height="20" rx="10" fill="#eee"/>
-  <text x="419" y="125" font-size="10" fill="#555" text-anchor="middle">3 / 24</text>
-  <!-- Header divider -->
-  <line x1="20" y1="158" x2="460" y2="158" stroke="#eee"/>
+  <rect x="430" y="104" width="108" height="24" rx="12" fill="#eee"/>
+  <text x="484" y="120" font-size="10" fill="#555" text-anchor="middle">Downloading 3 / 24</text>
+  <!-- Cancel All -->
+  <rect x="390" y="130" width="148" height="26" rx="4" fill="#fff" stroke="#ddd"/>
+  <text x="464" y="147" font-size="10" fill="#cc4444" text-anchor="middle">✕ Cancel All</text>
 
-  <!-- Scrollbar -->
-  <rect x="454" y="158" width="4" height="224" rx="2" fill="#f0f0f0"/>
-  <rect x="454" y="175" width="4" height="60" rx="2" fill="#ccc"/>
+  <!-- ── Row 1: done ── -->
+  <rect x="20" y="162" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
+  <rect x="32" y="174" width="64" height="40" rx="3" fill="#c8e6c9"/>
+  <text x="64" y="198" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
+  <text x="108" y="192" font-size="11" font-weight="bold" fill="#555">1. Video Title One</text>
+  <text x="108" y="208" font-size="10" fill="#aaa">3:24</text>
+  <rect x="432" y="181" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="198" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- Row 1: done -->
-  <rect x="28" y="164" width="64" height="40" rx="3" fill="#e8f5e9"/>
-  <text x="60" y="188" font-size="9" fill="#4caf50" text-anchor="middle">img</text>
-  <text x="100" y="178" font-size="11" fill="#333">Video Title One</text>
-  <text x="100" y="193" font-size="10" fill="#aaa">3:24</text>
-  <text x="450" y="178" font-size="11" fill="#4caf50" text-anchor="end">✓ Done</text>
-  <line x1="20" y1="210" x2="460" y2="210" stroke="#f0f0f0"/>
+  <!-- ── Row 2: done ── -->
+  <rect x="20" y="236" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
+  <rect x="32" y="248" width="64" height="40" rx="3" fill="#c8e6c9"/>
+  <text x="64" y="272" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
+  <text x="108" y="266" font-size="11" font-weight="bold" fill="#555">2. Video Title Two</text>
+  <text x="108" y="282" font-size="10" fill="#aaa">4:10</text>
+  <rect x="432" y="255" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="272" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- Row 2: done -->
-  <rect x="28" y="216" width="64" height="40" rx="3" fill="#e8f5e9"/>
-  <text x="60" y="240" font-size="9" fill="#4caf50" text-anchor="middle">img</text>
-  <text x="100" y="230" font-size="11" fill="#333">Video Title Two</text>
-  <text x="100" y="245" font-size="10" fill="#aaa">4:10</text>
-  <text x="450" y="230" font-size="11" fill="#4caf50" text-anchor="end">✓ Done</text>
-  <line x1="20" y1="262" x2="460" y2="262" stroke="#f0f0f0"/>
+  <!-- ── Row 3: active downloading ── -->
+  <rect x="20" y="310" width="520" height="72" rx="6" fill="#fff" stroke="#444" stroke-width="1.5"/>
+  <rect x="32" y="322" width="64" height="40" rx="3" fill="#c8c8c8"/>
+  <text x="64" y="346" font-size="9" fill="#888" text-anchor="middle">▶</text>
+  <text x="108" y="336" font-size="11" font-weight="bold" fill="#222">3. Video Title Three</text>
+  <text x="108" y="352" font-size="10" fill="#aaa">5:47</text>
+  <!-- progress bar -->
+  <rect x="108" y="358" width="328" height="5" rx="2" fill="#e0e0e0"/>
+  <rect x="108" y="358" width="220" height="5" rx="2" fill="#444"/>
+  <!-- ⟳ N% badge -->
+  <rect x="450" y="325" width="78" height="26" rx="4" fill="#222"/>
+  <text x="489" y="342" font-size="10" fill="#fff" text-anchor="middle">⟳ 67%</text>
+  <text x="489" y="373" font-size="9" fill="#aaa" text-anchor="middle">✕ cancel</text>
 
-  <!-- Row 3: active — thumbnail tinted blue, inline progress bar -->
-  <rect x="28" y="268" width="64" height="40" rx="3" fill="#e3f2fd"/>
-  <text x="60" y="292" font-size="9" fill="#1976d2" text-anchor="middle">img</text>
-  <text x="100" y="280" font-size="11" font-weight="bold" fill="#111">Video Title Three</text>
-  <!-- Inline progress bar -->
-  <rect x="100" y="286" width="292" height="5" rx="2" fill="#e0e0e0"/>
-  <rect x="100" y="286" width="195" height="5" rx="2" fill="#444"/>
-  <text x="450" y="280" font-size="11" fill="#444" text-anchor="end">⟳ 67%</text>
-  <line x1="20" y1="330" x2="460" y2="330" stroke="#f0f0f0"/>
+  <!-- ── Row 4: queued ── -->
+  <rect x="20" y="392" width="520" height="64" rx="6" fill="#fff" stroke="#e8e8e8"/>
+  <rect x="32" y="404" width="64" height="40" rx="3" fill="#e0e0e0"/>
+  <text x="64" y="428" font-size="9" fill="#bbb" text-anchor="middle">▶</text>
+  <text x="108" y="422" font-size="11" font-weight="bold" fill="#999">4. Video Title Four</text>
+  <text x="108" y="438" font-size="10" fill="#ccc">2:55</text>
+  <rect x="452" y="407" width="76" height="26" rx="4" fill="#f8f8f8" stroke="#e8e8e8"/>
+  <text x="490" y="424" font-size="10" fill="#ccc" text-anchor="middle">⬇ Download</text>
 
-  <!-- Row 4: pending -->
-  <rect x="28" y="336" width="64" height="40" rx="3" fill="#f5f5f5"/>
-  <text x="60" y="360" font-size="9" fill="#ccc" text-anchor="middle">4</text>
-  <text x="100" y="350" font-size="11" fill="#aaa">Video Title Four</text>
-  <text x="100" y="365" font-size="10" fill="#ccc">2:55</text>
-  <text x="450" y="350" font-size="11" fill="#ccc" text-anchor="end">·</text>
+  <!-- fade + scrollbar -->
+  <defs>
+    <linearGradient id="fd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fafafa" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#fafafa" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="432" width="520" height="30" fill="url(#fd)"/>
+  <rect x="546" y="162" width="6" height="300" rx="3" fill="#e8e8e8"/>
+  <rect x="546" y="162" width="6" height="80" rx="3" fill="#bbb"/>
 
-  <!-- Buttons: Download (in-progress) + Cancel -->
-  <rect x="20" y="396" width="320" height="36" rx="6" fill="#444"/>
-  <text x="180" y="419" font-size="12" fill="#fff" text-anchor="middle">Downloading 3 / 24...</text>
-  <rect x="350" y="396" width="110" height="36" rx="6" fill="#fff" stroke="#e0e0e0"/>
-  <text x="405" y="419" font-size="12" fill="#cc4444" text-anchor="middle">✕ Cancel</text>
-
-  <text x="240" y="455" font-size="10" fill="#bbb" text-anchor="middle">[proposed] per-row progress · cancel button</text>
+  <text x="280" y="504" font-size="10" fill="#bbb" text-anchor="middle">done rows → 📂 Show file · active row → ⟳ N% + ✕ cancel + progress bar · queued → muted ⬇ Download</text>
+  <text x="280" y="520" font-size="10" fill="#bbb" text-anchor="middle">format · quality · Download All hidden during download</text>
 </svg>

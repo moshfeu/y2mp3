@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="180" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="480" height="180" fill="#fafafa" rx="8"/>
+  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: fetch error</text>
+  <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
+
+  <!-- URL field — editable again, error ring -->
+  <text x="20" y="56" font-size="11" fill="#777">YouTube URL</text>
+  <rect x="20" y="62" width="440" height="30" rx="4" fill="#fff" stroke="#cc4444" stroke-width="1.5"/>
+  <text x="28" y="81" font-size="11" fill="#888">https://www.youtube.com/watch?v=invalid</text>
+  <!-- Retry → button -->
+  <rect x="420" y="66" width="32" height="22" rx="3" fill="#ffebee"/>
+  <text x="436" y="81" font-size="12" fill="#cc4444" text-anchor="middle">→</text>
+
+  <!-- Inline error message below field -->
+  <text x="20" y="106" font-size="11" fill="#cc4444">⚠  Could not fetch video info. Check the URL and try again.</text>
+
+  <text x="240" y="152" font-size="10" fill="#bbb" text-anchor="middle">error ring on field · inline message below · → button re-enabled for retry</text>
+  <text x="240" y="168" font-size="10" fill="#bbb" text-anchor="middle">format · quality · download button remain hidden</text>
+</svg>

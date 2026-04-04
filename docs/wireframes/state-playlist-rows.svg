@@ -1,85 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="560" height="580" font-family="ui-monospace, monospace, sans-serif">
-  <rect width="560" height="580" fill="#fafafa" rx="8"/>
-  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">playlist entries — row layout</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="570" height="580" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="570" height="580" fill="#fafafa" rx="8"/>
+  <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">playlist entries — row layout (all states)</text>
   <line x1="20" y1="32" x2="540" y2="32" stroke="#ddd"/>
 
   <!-- Legend -->
-  <text x="20" y="52" font-size="10" fill="#aaa">thumbnail · title + meta · duration · action button · progress bar (during download)</text>
+  <text x="20" y="52" font-size="10" fill="#aaa">thumbnail · title · duration · status/action · progress bar (download only) · error (failed only)</text>
 
-  <!-- ── Row 1: pending ── -->
+  <!-- ── Row 1: pending (before download starts — individual download button) ── -->
   <rect x="20" y="62" width="520" height="64" rx="6" fill="#fff" stroke="#e8e8e8"/>
-  <!-- thumb -->
   <rect x="32" y="74" width="64" height="40" rx="3" fill="#e0e0e0"/>
   <text x="64" y="98" font-size="9" fill="#bbb" text-anchor="middle">▶</text>
-  <!-- title + meta -->
   <text x="108" y="90" font-size="11" font-weight="bold" fill="#222">1. Lofi Hip Hop Radio — Beats to Relax</text>
-  <text x="108" y="106" font-size="10" fill="#aaa">Lofi Girl  ·  1:02:34</text>
-  <!-- duration badge -->
-  <!-- action button: idle -->
-  <rect x="454" y="79" width="74" height="26" rx="4" fill="#f0f0f0" stroke="#ddd"/>
-  <text x="491" y="96" font-size="10" fill="#555" text-anchor="middle">↓ Save</text>
+  <text x="108" y="106" font-size="10" fill="#aaa">1:02:34</text>
+  <!-- per-row download button -->
+  <rect x="452" y="79" width="76" height="26" rx="4" fill="#f0f0f0" stroke="#ddd"/>
+  <text x="490" y="96" font-size="10" fill="#555" text-anchor="middle">⬇ Download</text>
 
   <!-- ── Row 2: downloading (active) ── -->
   <rect x="20" y="136" width="520" height="72" rx="6" fill="#fff" stroke="#444" stroke-width="1.5"/>
-  <!-- thumb -->
   <rect x="32" y="148" width="64" height="40" rx="3" fill="#c8c8c8"/>
   <text x="64" y="172" font-size="9" fill="#888" text-anchor="middle">▶</text>
-  <!-- title + meta -->
   <text x="108" y="160" font-size="11" font-weight="bold" fill="#222">2. Study Music Alpha Waves</text>
-  <text x="108" y="176" font-size="10" fill="#aaa">YellowBrickCinema  ·  3:00:01</text>
-  <!-- progress bar -->
+  <text x="108" y="176" font-size="10" fill="#aaa">3:00:01</text>
+  <!-- progress bar inline -->
   <rect x="108" y="182" width="332" height="5" rx="2" fill="#e0e0e0"/>
   <rect x="108" y="182" width="200" height="5" rx="2" fill="#444"/>
-  <!-- action button: downloading -->
+  <!-- ⟳ N% badge -->
   <rect x="454" y="153" width="74" height="26" rx="4" fill="#222"/>
   <text x="491" y="170" font-size="10" fill="#fff" text-anchor="middle">⟳ 60%</text>
-  <!-- cancel hint -->
   <text x="491" y="197" font-size="9" fill="#aaa" text-anchor="middle">✕ cancel</text>
 
   <!-- ── Row 3: done ── -->
   <rect x="20" y="218" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
-  <!-- thumb -->
   <rect x="32" y="230" width="64" height="40" rx="3" fill="#c8e6c9"/>
   <text x="64" y="254" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
-  <!-- title + meta -->
   <text x="108" y="248" font-size="11" font-weight="bold" fill="#555">3. Deep Focus Music</text>
-  <text x="108" y="264" font-size="10" fill="#aaa">Greenred Productions  ·  2:58:14  ·  48 MB</text>
-  <!-- action button: done — show in finder -->
-  <rect x="438" y="237" width="90" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
-  <text x="483" y="254" font-size="10" fill="#4caf50" text-anchor="middle">✓ Show file</text>
+  <text x="108" y="264" font-size="10" fill="#aaa">2:58:14</text>
+  <!-- 📂 Show file -->
+  <rect x="432" y="237" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="254" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- ── Row 4: failed ── -->
+  <!-- ── Row 4: failed — error inline ── -->
   <rect x="20" y="292" width="520" height="64" rx="6" fill="#fff9f9" stroke="#ffcdd2"/>
-  <!-- thumb -->
   <rect x="32" y="304" width="64" height="40" rx="3" fill="#ffcdd2"/>
   <text x="64" y="328" font-size="9" fill="#cc4444" text-anchor="middle">✗</text>
-  <!-- title + meta -->
   <text x="108" y="318" font-size="11" font-weight="bold" fill="#888">4. Chill Beats (Private Video)</text>
+  <!-- error replaces duration -->
   <text x="108" y="334" font-size="10" fill="#cc4444">Video unavailable — private or removed</text>
-  <!-- action button: retry -->
   <rect x="454" y="311" width="74" height="26" rx="4" fill="#fff" stroke="#ffcdd2"/>
   <text x="491" y="328" font-size="10" fill="#cc4444" text-anchor="middle">↺ Retry</text>
 
-  <!-- ── Row 5: pending ── -->
+  <!-- ── Row 5: pending (queued — Download All in progress, waiting its turn) ── -->
   <rect x="20" y="366" width="520" height="64" rx="6" fill="#fff" stroke="#e8e8e8"/>
   <rect x="32" y="378" width="64" height="40" rx="3" fill="#e0e0e0"/>
   <text x="64" y="402" font-size="9" fill="#bbb" text-anchor="middle">▶</text>
   <text x="108" y="396" font-size="11" font-weight="bold" fill="#999">5. Morning Meditation Music</text>
-  <text x="108" y="412" font-size="10" fill="#ccc">PowerThoughts  ·  1:07:24</text>
-  <rect x="454" y="379" width="74" height="26" rx="4" fill="#f0f0f0" stroke="#ddd"/>
-  <text x="491" y="396" font-size="10" fill="#bbb" text-anchor="middle">↓ Save</text>
+  <text x="108" y="412" font-size="10" fill="#ccc">1:07:24</text>
+  <!-- muted download button — still clickable to jump-download this row -->
+  <rect x="452" y="381" width="76" height="26" rx="4" fill="#f8f8f8" stroke="#e8e8e8"/>
+  <text x="490" y="398" font-size="10" fill="#ccc" text-anchor="middle">⬇ Download</text>
 
-  <!-- more indicator -->
-  <text x="280" y="452" font-size="10" fill="#bbb" text-anchor="middle">··· 19 more tracks</text>
+  <!-- fade gradient — rows continue scrolling below -->
+  <defs>
+    <linearGradient id="fadeOut" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fafafa" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#fafafa" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="410" width="520" height="40" fill="url(#fadeOut)"/>
+  <!-- scrollbar track + thumb on right edge -->
+  <rect x="546" y="62" width="6" height="388" rx="3" fill="#e8e8e8"/>
+  <rect x="546" y="62" width="6" height="80" rx="3" fill="#bbb"/>
+  <text x="280" y="464" font-size="10" fill="#bbb" text-anchor="middle">list is scrollable · 24 tracks total</text>
+
+  <!-- Format / Quality (appear after fetch) -->
+  <rect x="20" y="462" width="245" height="26" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="32" y="479" font-size="10" fill="#666">MP3  ▾</text>
+  <rect x="275" y="462" width="245" height="26" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="287" y="479" font-size="10" fill="#666">Best  ▾</text>
 
   <!-- Download All button -->
-  <rect x="20" y="470" width="380" height="36" rx="6" fill="#222"/>
-  <text x="210" y="493" font-size="13" fill="#fff" text-anchor="middle">⬇️  Download All  (24 videos)</text>
+  <rect x="20" y="498" width="380" height="36" rx="6" fill="#222"/>
+  <text x="210" y="521" font-size="13" fill="#fff" text-anchor="middle">⬇️  Download All  (24 videos)</text>
 
-  <!-- Cancel All -->
-  <rect x="410" y="470" width="130" height="36" rx="6" fill="#fff" stroke="#ddd"/>
-  <text x="475" y="493" font-size="12" fill="#cc4444" text-anchor="middle">✕ Cancel All</text>
+  <!-- Cancel All (shown during download) -->
+  <rect x="410" y="498" width="130" height="36" rx="6" fill="#fff" stroke="#ddd"/>
+  <text x="475" y="521" font-size="12" fill="#cc4444" text-anchor="middle">✕ Cancel All</text>
 
-  <!-- annotation -->
-  <text x="280" y="545" font-size="10" fill="#bbb" text-anchor="middle">row height ~64px · thumbnail 64×40 · progress bar appears only during download</text>
+  <text x="280" y="566" font-size="10" fill="#bbb" text-anchor="middle">per-row ⬇ button downloads that clip only · Download All queues all · error inline in row</text>
 </svg>

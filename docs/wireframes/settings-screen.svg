@@ -1,64 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="444" font-family="ui-monospace, monospace, sans-serif">
-  <rect width="480" height="444" fill="#fafafa" rx="8"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="464" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="480" height="464" fill="#fafafa" rx="8"/>
 
-  <!-- State label -->
+  <!-- State label + ⌘, shortcut hint -->
   <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">Settings</text>
+  <text x="460" y="26" font-size="10" fill="#aaa" text-anchor="end">⌘,  to open</text>
   <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
 
   <!-- ─────────────── OUTPUT ─────────────── -->
   <text x="20" y="52" font-size="10" font-weight="bold" fill="#999">OUTPUT</text>
 
-  <!-- Default Format + Quality (2-col) -->
-  <text x="20" y="70" font-size="11" fill="#777">Default Format</text>
-  <rect x="20" y="76" width="200" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="30" y="95" font-size="11" fill="#444">MP3  ▾</text>
-  <text x="250" y="70" font-size="11" fill="#777">Default Quality</text>
-  <rect x="250" y="76" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="260" y="95" font-size="11" fill="#444">Best  ▾</text>
-
   <!-- Default Save Location -->
-  <text x="20" y="126" font-size="11" fill="#777">Default Save Location</text>
-  <rect x="20" y="132" width="338" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="28" y="151" font-size="11" fill="#999">/Users/me/Downloads</text>
-  <rect x="366" y="132" width="94" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="413" y="151" font-size="11" fill="#555" text-anchor="middle">Browse</text>
-  <text x="20" y="174" font-size="9" fill="#aaa">↑ suggestion #3: moved here from the download form</text>
+  <text x="20" y="70" font-size="11" fill="#777">Save location</text>
+  <rect x="20" y="76" width="338" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="28" y="95" font-size="11" fill="#999">/Users/me/Downloads</text>
+  <rect x="366" y="76" width="94" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="413" y="95" font-size="11" fill="#555" text-anchor="middle">Browse</text>
+
+  <!-- Playlist subfolder toggle row -->
+  <rect x="20" y="118" width="440" height="52" rx="6" fill="#fff" stroke="#e8e8e8"/>
+  <!-- checkbox -->
+  <rect x="32" y="132" width="16" height="16" rx="3" fill="#222"/>
+  <text x="40" y="144" font-size="10" fill="#fff" text-anchor="middle">✓</text>
+  <text x="58" y="136" font-size="11" fill="#222">Save playlists in a subfolder</text>
+  <!-- path preview -->
+  <text x="58" y="154" font-size="9" fill="#888">/Users/me/Downloads/<tspan font-weight="bold" fill="#444">Playlist Name</tspan>/</text>
 
   <!-- Divider -->
-  <line x1="20" y1="186" x2="460" y2="186" stroke="#e8e8e8"/>
+  <line x1="20" y1="184" x2="460" y2="184" stroke="#e8e8e8"/>
 
-  <!-- ─────────────── PLAYLIST ─────────────── -->
-  <text x="20" y="204" font-size="10" font-weight="bold" fill="#999">PLAYLIST</text>
+  <!-- ─────────────── DOWNLOAD DEFAULTS ─────────────── -->
+  <text x="20" y="202" font-size="10" font-weight="bold" fill="#999">DOWNLOAD DEFAULTS</text>
 
-  <!-- Toggle row -->
-  <text x="20" y="224" font-size="11" fill="#222">Save playlist to dedicated folder</text>
-  <!-- Toggle ON: dark pill, circle right -->
-  <rect x="412" y="212" width="48" height="24" rx="12" fill="#222"/>
-  <circle cx="448" cy="224" r="9" fill="#fff"/>
-
-  <!-- Description -->
-  <text x="20" y="244" font-size="9" fill="#888">Creates a subfolder named after the playlist title inside your save location.</text>
-
-  <!-- Path preview (when toggle is ON) -->
-  <rect x="20" y="254" width="440" height="26" rx="4" fill="#f0f0f0" stroke="#e0e0e0"/>
-  <text x="28" y="271" font-size="9" fill="#777">e.g.  /Users/me/Downloads/<tspan font-weight="bold" fill="#444">Playlist Name</tspan>/track.mp3</text>
-  <text x="20" y="290" font-size="9" fill="#aaa">↑ suggestion #4: preview updates live when toggle is ON</text>
+  <!-- Default Format + Quality (2-col) -->
+  <text x="20" y="220" font-size="11" fill="#777">Default Format</text>
+  <rect x="20" y="226" width="200" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="30" y="245" font-size="11" fill="#444">MP3  ▾</text>
+  <text x="250" y="220" font-size="11" fill="#777">Default Quality</text>
+  <rect x="250" y="226" width="210" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="260" y="245" font-size="11" fill="#444">Best  ▾</text>
 
   <!-- Divider -->
-  <line x1="20" y1="302" x2="460" y2="302" stroke="#e8e8e8"/>
+  <line x1="20" y1="272" x2="460" y2="272" stroke="#e8e8e8"/>
 
   <!-- ─────────────── APPEARANCE ─────────────── -->
-  <text x="20" y="320" font-size="10" font-weight="bold" fill="#999">APPEARANCE</text>
+  <text x="20" y="290" font-size="10" font-weight="bold" fill="#999">APPEARANCE</text>
 
   <!-- Theme -->
-  <text x="20" y="338" font-size="11" fill="#777">Theme</text>
-  <rect x="20" y="344" width="200" height="30" rx="4" fill="#fff" stroke="#bbb"/>
-  <text x="30" y="363" font-size="11" fill="#444">System  ▾</text>
+  <text x="20" y="308" font-size="11" fill="#777">Theme</text>
+  <rect x="20" y="314" width="200" height="30" rx="4" fill="#fff" stroke="#bbb"/>
+  <text x="30" y="333" font-size="11" fill="#444">System  ▾</text>
 
   <!-- Divider -->
-  <line x1="20" y1="388" x2="460" y2="388" stroke="#e8e8e8"/>
+  <line x1="20" y1="358" x2="460" y2="358" stroke="#e8e8e8"/>
 
   <!-- Save button -->
-  <rect x="20" y="398" width="440" height="36" rx="6" fill="#222"/>
-  <text x="240" y="421" font-size="13" fill="#fff" text-anchor="middle">Save Settings</text>
+  <rect x="20" y="368" width="440" height="36" rx="6" fill="#222"/>
+  <text x="240" y="391" font-size="13" fill="#fff" text-anchor="middle">Save Settings</text>
+
+  <text x="240" y="432" font-size="10" fill="#bbb" text-anchor="middle">⌘, shortcut · subfolder live preview · save location moved from form</text>
+  <text x="240" y="448" font-size="10" fill="#bbb" text-anchor="middle">History "Show in Finder" hidden for failed entries</text>
 </svg>

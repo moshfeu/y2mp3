@@ -1,59 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="480" height="460" font-family="ui-monospace, monospace, sans-serif">
-  <rect width="480" height="460" fill="#fafafa" rx="8"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="570" height="530" font-family="ui-monospace, monospace, sans-serif">
+  <rect width="570" height="530" fill="#fafafa" rx="8"/>
   <text x="20" y="26" font-size="12" font-weight="bold" fill="#555">state: done (partial success)</text>
-  <line x1="20" y1="32" x2="460" y2="32" stroke="#ddd"/>
+  <line x1="20" y1="32" x2="540" y2="32" stroke="#ddd"/>
 
-  <!-- Playlist card: header(56) + 4 rows × 52 = 264 total -->
-  <rect x="20" y="42" width="440" height="264" rx="6" fill="#fff" stroke="#ddd"/>
+  <!-- URL field (success ring) -->
+  <text x="20" y="54" font-size="11" fill="#aaa">YouTube URL</text>
+  <rect x="20" y="60" width="520" height="30" rx="4" fill="#f5f5f5" stroke="#c8e6c9"/>
+  <text x="28" y="79" font-size="11" fill="#bbb">https://youtube.com/playlist?list=PLxxx</text>
 
-  <!-- Card header -->
-  <text x="32" y="62" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
-  <text x="32" y="78" font-size="10" fill="#888">24 videos</text>
-  <!-- Result pill -->
-  <rect x="358" y="52" width="94" height="20" rx="10" fill="#fff8e1" stroke="#f0c040"/>
-  <text x="405" y="65" font-size="10" fill="#b07d00" text-anchor="middle">23 ✓ · 1 ✗</text>
-  <!-- Header divider -->
-  <line x1="20" y1="98" x2="460" y2="98" stroke="#eee"/>
+  <!-- Playlist header -->
+  <text x="20" y="110" font-size="12" font-weight="bold" fill="#222">My Awesome Playlist</text>
+  <text x="20" y="126" font-size="10" fill="#888">24 videos</text>
+  <rect x="400" y="102" width="138" height="24" rx="12" fill="#fff8e1" stroke="#f0c040"/>
+  <text x="469" y="118" font-size="10" fill="#b07d00" text-anchor="middle">23 ✓ · 1 ✗</text>
 
-  <!-- Row 1: done -->
-  <rect x="28" y="104" width="64" height="40" rx="3" fill="#e8f5e9"/>
-  <text x="60" y="128" font-size="9" fill="#4caf50" text-anchor="middle">img</text>
-  <text x="100" y="118" font-size="11" fill="#333">Video Title One</text>
-  <text x="100" y="133" font-size="10" fill="#aaa">3:24</text>
-  <text x="450" y="118" font-size="11" fill="#4caf50" text-anchor="end">✓ Done</text>
-  <line x1="20" y1="150" x2="460" y2="150" stroke="#f0f0f0"/>
+  <!-- ── Row 1: done ── -->
+  <rect x="20" y="136" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
+  <rect x="32" y="148" width="64" height="40" rx="3" fill="#c8e6c9"/>
+  <text x="64" y="172" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
+  <text x="108" y="166" font-size="11" font-weight="bold" fill="#555">1. Video Title One</text>
+  <text x="108" y="182" font-size="10" fill="#aaa">3:24</text>
+  <rect x="432" y="155" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="172" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- Row 2: done -->
-  <rect x="28" y="156" width="64" height="40" rx="3" fill="#e8f5e9"/>
-  <text x="60" y="180" font-size="9" fill="#4caf50" text-anchor="middle">img</text>
-  <text x="100" y="170" font-size="11" fill="#333">Video Title Two</text>
-  <text x="100" y="185" font-size="10" fill="#aaa">4:10</text>
-  <text x="450" y="170" font-size="11" fill="#4caf50" text-anchor="end">✓ Done</text>
-  <line x1="20" y1="202" x2="460" y2="202" stroke="#f0f0f0"/>
+  <!-- ── Row 2: done ── -->
+  <rect x="20" y="210" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
+  <rect x="32" y="222" width="64" height="40" rx="3" fill="#c8e6c9"/>
+  <text x="64" y="246" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
+  <text x="108" y="240" font-size="11" font-weight="bold" fill="#555">2. Video Title Two</text>
+  <text x="108" y="256" font-size="10" fill="#aaa">4:10</text>
+  <rect x="432" y="229" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="246" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- Row 3: failed — thumbnail tinted red, inline error reason -->
-  <rect x="28" y="208" width="64" height="40" rx="3" fill="#ffebee"/>
-  <text x="60" y="232" font-size="9" fill="#e53935" text-anchor="middle">img</text>
-  <text x="100" y="222" font-size="11" fill="#cc2222">Video Title Three</text>
-  <text x="100" y="237" font-size="10" fill="#e57373">video unavailable</text>
-  <text x="450" y="222" font-size="11" fill="#cc2222" text-anchor="end">✗ Failed</text>
-  <line x1="20" y1="254" x2="460" y2="254" stroke="#f0f0f0"/>
+  <!-- ── Row 3: failed ── -->
+  <rect x="20" y="284" width="520" height="64" rx="6" fill="#fff9f9" stroke="#ffcdd2"/>
+  <rect x="32" y="296" width="64" height="40" rx="3" fill="#ffcdd2"/>
+  <text x="64" y="320" font-size="9" fill="#cc4444" text-anchor="middle">✗</text>
+  <text x="108" y="312" font-size="11" font-weight="bold" fill="#888">3. Video Title Three (Private)</text>
+  <text x="108" y="328" font-size="10" fill="#cc4444">Video unavailable — private or removed</text>
+  <rect x="454" y="303" width="74" height="26" rx="4" fill="#fff" stroke="#ffcdd2"/>
+  <text x="491" y="320" font-size="10" fill="#cc4444" text-anchor="middle">↺ Retry</text>
 
-  <!-- Row 4: done -->
-  <rect x="28" y="260" width="64" height="40" rx="3" fill="#e8f5e9"/>
-  <text x="60" y="284" font-size="9" fill="#4caf50" text-anchor="middle">img</text>
-  <text x="100" y="274" font-size="11" fill="#333">Video Title Four</text>
-  <text x="100" y="289" font-size="10" fill="#aaa">2:55</text>
-  <text x="450" y="274" font-size="11" fill="#4caf50" text-anchor="end">✓ Done</text>
+  <!-- ── Row 4: done ── -->
+  <rect x="20" y="358" width="520" height="64" rx="6" fill="#f9fff9" stroke="#c8e6c9"/>
+  <rect x="32" y="370" width="64" height="40" rx="3" fill="#c8e6c9"/>
+  <text x="64" y="394" font-size="9" fill="#4caf50" text-anchor="middle">✓</text>
+  <text x="108" y="388" font-size="11" font-weight="bold" fill="#555">4. Video Title Four</text>
+  <text x="108" y="404" font-size="10" fill="#aaa">2:55</text>
+  <rect x="432" y="377" width="96" height="26" rx="4" fill="#fff" stroke="#c8e6c9"/>
+  <text x="480" y="394" font-size="10" fill="#4caf50" text-anchor="middle">📂 Show file</text>
 
-  <!-- Partial success summary alert -->
-  <rect x="20" y="318" width="440" height="52" rx="6" fill="#fff8e1" stroke="#f0c040"/>
-  <text x="32" y="340" font-size="12" font-weight="bold" fill="#333">Downloaded 23 of 24 · 1 failed</text>
-  <text x="32" y="358" font-size="10" fill="#666">Track 3 failed · video unavailable · Show details ›</text>
+  <!-- fade + scrollbar -->
+  <defs>
+    <linearGradient id="fd2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fafafa" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#fafafa" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect x="20" y="400" width="520" height="30" fill="url(#fd2)"/>
+  <rect x="546" y="136" width="6" height="294" rx="3" fill="#e8e8e8"/>
+  <rect x="546" y="136" width="6" height="80" rx="3" fill="#bbb"/>
 
-  <!-- Start over button -->
-  <rect x="20" y="380" width="440" height="36" rx="6" fill="#fff" stroke="#bbb"/>
-  <text x="240" y="403" font-size="13" fill="#444" text-anchor="middle">↺ Start over</text>
+  <!-- Summary banner -->
+  <rect x="20" y="444" width="520" height="40" rx="6" fill="#fff8e1" stroke="#f0c040"/>
+  <text x="32" y="462" font-size="11" font-weight="bold" fill="#7a5c00">Downloaded 23 of 24 · 1 failed</text>
+  <text x="32" y="476" font-size="10" fill="#b07d00">Track 3 failed — video unavailable</text>
 
-  <text x="240" y="444" font-size="10" fill="#bbb" text-anchor="middle">[proposed] "Start over" replaces 6s auto-reset · inline error reason on failed rows</text>
+  <!-- Start over -->
+  <rect x="20" y="494" width="520" height="30" rx="6" fill="#fff" stroke="#bbb"/>
+  <text x="280" y="513" font-size="12" fill="#555" text-anchor="middle">↺ Start over</text>
 </svg>
