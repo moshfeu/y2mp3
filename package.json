@@ -27,31 +27,49 @@
     "dist:mac": "yarn build && electron-builder --mac",
     "dist:win": "yarn build && electron-builder --win",
     "lint": "eslint . --ext .ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
-  "keywords": ["youtube", "audio", "download", "electron", "mp3"],
+  "keywords": [
+    "youtube",
+    "audio",
+    "download",
+    "electron",
+    "mp3"
+  ],
   "dependencies": {
     "clsx": "^2.1.0",
     "electron-store": "^8.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.0"
+    "react-router-dom": "^7.13.1",
+    "tailwind-merge": "^2.2.0",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react": "^4.2.0",
+    "@vitest/ui": "^4.1.0",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "electron": "^28.1.0",
     "electron-builder": "^24.9.1",
     "electron-vite": "^2.0.0",
+    "jsdom": "^29.0.1",
     "postcss": "^8.4.32",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5.3.3",
-    "vite": "^5.0.10"
+    "typescript": "^6.0.0",
+    "vite": "^5.0.10",
+    "vitest": "^4.1.0"
   },
   "type": "module"
 }

@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron'
 import { join } from 'path'
-import { checkDependencies, getVideoInfo, downloadAudio, isPlaylistUrl, getPlaylistInfo } from './download'
-import type { DownloadOptions, AppSettings, DownloadItem } from '../src/types/index'
+import { checkDependencies, getVideoInfo, downloadAudio, getPlaylistInfo, abortDownload } from './download'
+import type { DownloadOptions, AppSettings, DownloadItem, VideoInfo } from '../src/types/shared'
 import crypto from 'crypto'
 
 // Lazy-loaded Store to handle ESM-only electron-store v8
@@ -18,6 +18,7 @@ async function getStores() {
         defaultFormat: 'mp3',
         defaultQuality: 'best',
         theme: 'system',
+        playlistSubfolder: false,
       },
     })
     _historyStore = new Store<{ items: DownloadItem[] }>({
@@ -90,7 +91,32 @@ app.whenReady().then(async () => {
   // IPC: get video info
   ipcMain.handle('get-video-info', async (_event, url: string) => {
     try {
-      if (isPlaylistUrl(url)) {
+      // Unviewable list types (YouTube auto-generated mixes/radio): RD, WL, LL, FL
+      const UNVIEWABLE_LIST_PREFIXES = ['RD', 'WL', 'LL', 'FL']
+      let listId: string | null = null
+      try { listId = new URL(url).searchParams.get('list') } catch { /* ignore */ }
+      const isUnviewableList = listId ? UNVIEWABLE_LIST_PREFIXES.some(p => listId!.startsWith(p)) : false
+
+      // Use URL param parsing so youtu.be/ID?list=PL is also treated as mixed
+      let hasVideo = false
+      let hasPlaylist = false
+      try {
+        const parsed = new URL(url)
+        hasVideo = parsed.searchParams.has('v') || url.includes('youtu.be/')
+        hasPlaylist = !isUnviewableList && (parsed.searchParams.has('list') || parsed.pathname === '/playlist')
+      } catch {
+        hasVideo = url.includes('v=') || url.includes('youtu.be/')
+        hasPlaylist = !isUnviewableList && (url.includes('list=') || url.includes('youtube.com/playlist'))
+      }
+
+      const isMixed = hasVideo && hasPlaylist
+      console.log('[get-video-info] hasVideo:', hasVideo, 'hasPlaylist:', hasPlaylist, 'isMixed:', isMixed, 'url:', url)
+
+      if (isMixed) {
+        // Mixed URL: show video first, let user choose to expand to playlist
+        const info = await getVideoInfo(url)
+        return { success: true, info, isMixedUrl: true }
+      } else if (hasPlaylist) {
         const playlist = await getPlaylistInfo(url)
         return { success: true, playlist }
       } else {
@@ -101,6 +127,11 @@ app.whenReady().then(async () => {
       console.error('[get-video-info] error:', error.message)
       return { success: false, error: error.message }
     }
+  })
+
+  // IPC: cancel download
+  ipcMain.handle('cancel-download', () => {
+    abortDownload()
   })
 
   // IPC: download audio
@@ -126,7 +157,7 @@ app.whenReady().then(async () => {
       )
 
       if (!result.isPlaylist) {
-        let videoInfo = null
+        let videoInfo: VideoInfo | null = null
         try { videoInfo = await getVideoInfo(options.url) } catch { /* ignore */ }
         await saveToHistory(options.url, result.filepath, result.filename, result.filesize, {
           title: videoInfo?.title || result.filename,
@@ -141,7 +172,7 @@ app.whenReady().then(async () => {
       // Save failed entry to history
       try {
         const { history } = await getStores()
-        let videoInfo = null
+        let videoInfo: VideoInfo | null = null
         try { videoInfo = await getVideoInfo(options.url) } catch { /* ignore */ }
         const item: DownloadItem = {
           id: crypto.randomUUID(),

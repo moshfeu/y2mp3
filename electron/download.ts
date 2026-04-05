@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import os from 'os'
-import type { VideoInfo, DownloadOptions, DownloadProgress, PlaylistEntry, PlaylistInfo } from '../src/types/index'
+import type { VideoInfo, DownloadOptions, DownloadProgress, PlaylistEntry, PlaylistInfo } from '@/types/shared'
 
 const execAsync = promisify(exec)
 
@@ -112,8 +112,7 @@ export async function getVideoInfo(url: string): Promise<VideoInfo> {
 }
 
 export function isPlaylistUrl(url: string): boolean {
-  return url.includes('youtube.com/playlist') ||
-         (url.includes('list=') && !url.includes('v='))
+  return url.includes('list=') || url.includes('youtube.com/playlist')
 }
 
 export async function getPlaylistInfo(url: string): Promise<PlaylistInfo> {
@@ -123,28 +122,42 @@ export async function getPlaylistInfo(url: string): Promise<PlaylistInfo> {
     ` --print "%(playlist_count)s"` +
     ` --print "%(id)s"` +
     ` --print "%(title)s"` +
+    ` --print "%(thumbnail)s"` +
+    ` --print "%(duration)s"` +
     ` "${url}"`,
     { env: EXEC_ENV }
   )
 
   const lines = stdout.trim().split('\n')
-  const chunkSize = 4
+  const chunkSize = 6
   const entries: PlaylistEntry[] = []
   let playlistTitle = 'Playlist'
   let playlistCount = 0
 
   for (let i = 0; i < lines.length; i += chunkSize) {
-    const [pTitle, pCount, id, title] = lines.slice(i, i + chunkSize)
+    const [pTitle, pCount, id, title, thumbnail, durationStr] = lines.slice(i, i + chunkSize)
     if (i === 0) {
       playlistTitle = pTitle || 'Playlist'
       playlistCount = parseInt(pCount, 10) || Math.floor(lines.length / chunkSize)
     }
     if (id && title) {
-      entries.push({ id, title, index: Math.floor(i / chunkSize) + 1, status: 'pending' })
+      entries.push({
+        id, title, index: Math.floor(i / chunkSize) + 1, status: 'pending',
+        thumbnail: thumbnail && thumbnail !== 'NA' ? thumbnail : undefined,
+        duration: parseInt(durationStr, 10) || undefined,
+      })
     }
   }
 
   return { title: playlistTitle, count: playlistCount || entries.length, entries }
+}
+
+let currentDownloadChild: ReturnType<typeof exec> | null = null
+
+export function abortDownload(): void {
+  if (currentDownloadChild) {
+    currentDownloadChild.kill('SIGTERM')
+  }
 }
 
 export async function downloadAudio(
@@ -155,10 +168,16 @@ export async function downloadAudio(
   onItemDone?: (index: number, filepath: string, filename: string, filesize: number) => void,
   onItemError?: (index: number, title: string, error: string) => void,
 ): Promise<{ filepath: string; filename: string; filesize: number; isPlaylist?: boolean }> {
-  const outputDir = options.outputPath || path.join(os.homedir(), 'Downloads')
-  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true })
+  const baseDir = options.outputPath || path.join(os.homedir(), 'Downloads')
+  const playlist = options.isPlaylist ?? isPlaylistUrl(url)
 
-  const playlist = isPlaylistUrl(url)
+  // Create output directory (with optional playlist subfolder)
+  let outputDir = baseDir
+  if (playlist && options.subfolderName) {
+    const sanitized = options.subfolderName.replace(/[/\\?%*:|"<>]/g, '_').trim()
+    outputDir = path.join(baseDir, sanitized)
+  }
+  if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true })
   const qualityMap: Record<string, string> = { best: '0', '320': '320K', '256': '256K', '192': '192K' }
   const audioQuality = qualityMap[options.quality] || '0'
 
@@ -183,10 +202,12 @@ export async function downloadAudio(
 
   return new Promise((resolve, reject) => {
     const child = exec(cmd, { env: EXEC_ENV })
+    currentDownloadChild = child
     const progressRegex = /\[download\]\s+([\d.]+)%\s+of\s+([\S]+)\s+at\s+([\S]+)\s+ETA\s+(\S+)/
     const itemRegex = /\[download\] Downloading item (\d+) of (\d+)/
     const destRegex = /\[download\] Destination: (.+)/
     const alreadyRegex = /\[download\] (.+) has already been downloaded/
+    const errorRegex = /^ERROR: (.+)/m
 
     let currentIndex = 0
     let totalItems = 1
@@ -207,6 +228,13 @@ export async function downloadAudio(
         currentFilename = ''
         currentTitle = ''
         onItemStart?.(currentIndex, totalItems, '')
+        return
+      }
+
+      // Playlist item error (yt-dlp continues to next item in playlist mode)
+      const errorMatch = data.match(errorRegex)
+      if (errorMatch && playlist && currentIndex > 0) {
+        onItemError?.(currentIndex, currentTitle || '', errorMatch[1].trim())
         return
       }
 
@@ -267,7 +295,12 @@ export async function downloadAudio(
     child.stderr?.on('data', handleData)
 
     child.on('close', (code) => {
+      currentDownloadChild = null
       console.log('[downloadAudio] yt-dlp exited with code', code)
+      if (code === null) {
+        reject(new Error('Download cancelled'))
+        return
+      }
       if (code !== 0) {
         reject(new Error(`yt-dlp exited with code ${code}`))
         return

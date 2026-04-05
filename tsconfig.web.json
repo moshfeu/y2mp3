@@ -3,9 +3,10 @@
   "include": ["src/**/*"],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "types": ["vite/client"],
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   }
 }

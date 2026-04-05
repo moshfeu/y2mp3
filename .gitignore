@@ -13,3 +13,5 @@ downloads/
 resources/app.bundle.js
 resources/app.bundle.js.LICENSE.txt
 resources/fonts/
+# TypeScript incremental build cache
+*.tsbuildinfo

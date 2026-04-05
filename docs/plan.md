@@ -23,18 +23,42 @@ yarn dist:mac  # Package as .dmg
 ```
 
 ## Current Status
-The app is fully functional for single video downloads. Core features are done:
+
+**Branch:** `feat/playlist-ux-redesign` (uncommitted implementation changes, ready to implement remaining todos)
+
+### Done
 - ✅ Electron-Vite + React 18 + TypeScript scaffold
 - ✅ Tailwind CSS + Shadcn/ui components
-- ✅ yt-dlp backend (checkDependencies, getVideoInfo, downloadAudio)
-- ✅ Download form with live step-by-step log and progress bar
-- ✅ Download history with search and reveal in Finder
-- ✅ Settings panel (output path, format, quality, theme)
-- ✅ Light/dark/system theme toggle
-- ✅ Playlist backend (isPlaylistUrl, getPlaylistInfo, per-item callbacks)
-- 🔲 Playlist support UI (next task — see Phase 11 below)
-- 🔲 QA / thorough testing
-- 🔲 Packaging for distribution
+- ✅ yt-dlp backend (isPlaylistUrl, getPlaylistInfo, downloadAudio, abortDownload)
+- ✅ Playlist UI rewrite: inline fetch button, row layout, cancel, partial success summary, Start over
+- ✅ Settings panel: save location + playlist subfolder toggle
+- ✅ IPC: cancel-download, item-error, mixed URL routing
+- ✅ UX spec fully updated (`docs/ux-spec.md`) with all design decisions
+- ✅ Full wireframe set in `docs/wireframes/` (idle, fetching, fetch-error, fetch-success, mixed-url, playlist-rows, downloading, done, settings, autopaste)
+- ✅ `docs/architecture.md` — tech reference
+- ✅ `AGENTS.md` — engineering standards + agent mindset
+- ✅ `PLAN.md` + `PLAYLIST_UX_SPEC.md` moved to `docs/`
+
+### Next: Implementation (Phase A → B → C)
+
+**Phase A — Bug fixes**
+1. `bug-state-reset-on-nav` — lift download state to App.tsx
+2. `ux-hide-controls-before-fetch` + `ux-fetch-states` — spinner/error/success fetch states
+3. `bug-dot-before-download` — hide status column until download starts
+4. `bug-error-in-row` — inline error per row, suppress global alert
+5. `bug-thumbnail-csp` — allowlist i.ytimg.com in CSP
+6. `bug-subfolder-not-saved` — read settings at download time
+
+**Phase B — New UX features**
+7. `ux-mixed-url` — video + "Fetch playlist →" banner
+8. `feat-per-row-download` — per-row ⬇ Download button
+9. `feat-show-in-folder` — 📂 Show file per row + single video done state
+10. `feat-settings-shortcut` — ⌘, opens Settings
+11. `feat-autopaste-clipboard` — clipboard auto-paste on focus + toast
+12. `bug-history-show-in-folder-failed` — hide Show in folder for failed history entries
+
+**Phase C — Polish & ship**
+- `feat-validate-output-path` → `qa-test` → squash-merge → push PR #150
 
 ---
 

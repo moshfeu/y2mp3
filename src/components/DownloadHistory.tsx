@@ -3,18 +3,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import type { DownloadItem } from '@/types/index'
+import { useHistoryStore } from '@/store/history'
 
-interface DownloadHistoryProps {
-  history: DownloadItem[]
-  onClear: () => void
-  onRefresh: () => void
-}
-
-export function DownloadHistory({ history, onClear, onRefresh }: DownloadHistoryProps) {
+export function DownloadHistory() {
+  const { items, refresh, clear } = useHistoryStore()
   const [search, setSearch] = useState('')
 
-  const filtered = history.filter(item =>
+  const filtered = items.filter(item =>
     item.title.toLowerCase().includes(search.toLowerCase()) ||
     item.author.toLowerCase().includes(search.toLowerCase())
   )
@@ -31,15 +26,15 @@ export function DownloadHistory({ history, onClear, onRefresh }: DownloadHistory
           onChange={e => setSearch(e.target.value)}
           className="flex-1"
         />
-        <Button variant="outline" onClick={onRefresh} size="sm">Refresh</Button>
-        {history.length > 0 && (
-          <Button variant="destructive" onClick={onClear} size="sm">Clear All</Button>
+        <Button variant="outline" onClick={refresh} size="sm">Refresh</Button>
+        {items.length > 0 && (
+          <Button variant="destructive" onClick={clear} size="sm">Clear All</Button>
         )}
       </div>
 
       {filtered.length === 0 ? (
         <div className="text-center py-12 text-muted-foreground">
-          {history.length === 0 ? 'No downloads yet' : 'No results found'}
+          {items.length === 0 ? 'No downloads yet' : 'No results found'}
         </div>
       ) : (
         <div className="space-y-2">
@@ -61,15 +56,18 @@ export function DownloadHistory({ history, onClear, onRefresh }: DownloadHistory
                       <span className="text-xs text-muted-foreground flex-shrink-0">{formatSize(item.filesize)}</span>
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => window.electronAPI.openFile(item.filepath)}
-                    className="flex-shrink-0"
-                    title="Show in Finder"
-                  >
-                    📂
-                  </Button>
+                  {/* Only show "Show in Finder" for completed downloads with a filepath */}
+                  {item.status === 'completed' && item.filepath && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.electronAPI.openFile(item.filepath)}
+                      className="flex-shrink-0"
+                      title="Show in Finder"
+                    >
+                      📂
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -4,19 +4,18 @@ import { Label } from '@/components/ui/label'
 import { Select } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import type { AppSettings } from '@/types/index'
+import { useSettingsStore } from '@/store/settings'
 
-interface SettingsPanelProps {
-  settings: AppSettings
-  onSave: (settings: AppSettings) => void
-}
-
-export function SettingsPanel({ settings, onSave }: SettingsPanelProps) {
-  const [local, setLocal] = useState<AppSettings>(settings)
+export function SettingsPanel() {
+  const { settings, save } = useSettingsStore()
+  const [local, setLocal] = useState(settings)
   const [saved, setSaved] = useState(false)
 
+  // Keep local in sync if settings load after mount
+  React.useEffect(() => { setLocal(settings) }, [settings])
+
   const handleSave = async () => {
-    await onSave(local)
+    await save(local)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -26,18 +25,43 @@ export function SettingsPanel({ settings, onSave }: SettingsPanelProps) {
     if (folder) setLocal(s => ({ ...s, defaultOutputPath: folder }))
   }
 
+  const playlistPreview = local.playlistSubfolder
+    ? `${local.defaultOutputPath || '~/Downloads'}/[playlist name]/`
+    : local.defaultOutputPath || '~/Downloads'
+
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader><CardTitle className="text-base">Download Defaults</CardTitle></CardHeader>
+        <CardHeader><CardTitle className="text-base">Output</CardTitle></CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Default save location</Label>
+            <Label>Save location</Label>
             <div className="flex gap-2">
               <Input value={local.defaultOutputPath} readOnly className="flex-1 text-xs" />
               <Button variant="outline" onClick={handleBrowse}>Browse</Button>
             </div>
           </div>
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="playlistSubfolder"
+              checked={local.playlistSubfolder}
+              onChange={e => setLocal(s => ({ ...s, playlistSubfolder: e.target.checked }))}
+              className="mt-0.5 h-4 w-4 rounded border-input accent-foreground cursor-pointer"
+            />
+            <div className="space-y-1">
+              <Label htmlFor="playlistSubfolder" className="cursor-pointer">
+                Save playlists in a subfolder
+              </Label>
+              <p className="text-xs text-muted-foreground">{playlistPreview}</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader><CardTitle className="text-base">Download Defaults</CardTitle></CardHeader>
+        <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label>Default format</Label>

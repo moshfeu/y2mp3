@@ -1,43 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { MemoryRouter, Routes, Route, NavLink, useNavigate } from 'react-router-dom'
 import { DownloadForm } from '@/components/DownloadForm'
 import { DownloadHistory } from '@/components/DownloadHistory'
 import { SettingsPanel } from '@/components/SettingsPanel'
+import { ToastContainer } from '@/components/Toast'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import type { AppSettings, DownloadItem } from '@/types/index'
+import { useSettingsStore } from '@/store/settings'
+import { useHistoryStore } from '@/store/history'
+import { useDownloadStore } from '@/store/download'
+import { useNotificationsStore } from '@/store/notifications'
+import { useState } from 'react'
 
-type Tab = 'download' | 'history' | 'settings'
-
-const defaultSettings: AppSettings = {
-  defaultOutputPath: '',
-  defaultFormat: 'mp3',
-  defaultQuality: 'best',
-  theme: 'system',
+function isYouTubeUrl(s: string) {
+  return s.includes('youtube.com/') || s.includes('youtu.be/')
 }
 
-export default function App() {
-  const [tab, setTab] = useState<Tab>('download')
-  const [settings, setSettings] = useState<AppSettings>(defaultSettings)
-  const [history, setHistory] = useState<DownloadItem[]>([])
+function AppShell() {
+  const navigate = useNavigate()
+  const loadSettings = useSettingsStore(s => s.load)
+  const loadHistory = useHistoryStore(s => s.load)
   const [depsWarning, setDepsWarning] = useState<string | null>(null)
 
-  const applyTheme = (theme: string) => {
-    const root = document.documentElement
-    if (theme === 'dark') {
-      root.classList.add('dark')
-    } else if (theme === 'light') {
-      root.classList.remove('dark')
-    } else {
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) root.classList.add('dark')
-      else root.classList.remove('dark')
-    }
-  }
-
   useEffect(() => {
-    window.electronAPI.getSettings().then(s => {
-      setSettings(s)
-      applyTheme(s.theme)
-    })
-    window.electronAPI.getHistory().then(setHistory)
+    loadSettings()
+    loadHistory()
     window.electronAPI.checkDependencies().then(deps => {
       const missing: string[] = []
       if (!deps.ytdlp) missing.push('yt-dlp')
@@ -46,28 +32,46 @@ export default function App() {
         setDepsWarning(`Missing dependencies: ${missing.join(', ')}. Install with: brew install ${missing.join(' ')}`)
       }
     })
+
+    // ⌘, / Ctrl+, → navigate to Settings
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === ',' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        navigate('/settings')
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+
+    // Auto-paste: when the window is focused, check clipboard for a YouTube URL
+    const onFocus = async () => {
+      try {
+        const text = await navigator.clipboard.readText()
+        if (!text || !isYouTubeUrl(text.trim())) return
+        const { status, url, setUrl } = useDownloadStore.getState()
+        const { add } = useNotificationsStore.getState()
+        // Only auto-paste when idle and URL field is empty or different
+        if (status === 'idle' && url.trim() !== text.trim()) {
+          setUrl(text.trim())
+          add('📋 URL pasted from clipboard', 'info')
+        }
+      } catch {
+        // clipboard permission denied or unavailable — silent
+      }
+    }
+    window.addEventListener('focus', onFocus)
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('focus', onFocus)
+    }
   }, [])
 
-  const handleSaveSettings = async (newSettings: AppSettings) => {
-    await window.electronAPI.saveSettings(newSettings)
-    setSettings(newSettings)
-    applyTheme(newSettings.theme)
-  }
-
-  const handleDownloadComplete = () => {
-    window.electronAPI.getHistory().then(setHistory)
-  }
-
-  const handleClearHistory = async () => {
-    await window.electronAPI.clearHistory()
-    setHistory([])
-  }
-
-  const tabs: { id: Tab; label: string }[] = [
-    { id: 'download', label: '⬇️ Download' },
-    { id: 'history', label: '📋 History' },
-    { id: 'settings', label: '⚙️ Settings' },
-  ]
+  const navClass = ({ isActive }: { isActive: boolean }) =>
+    `px-3 py-1.5 text-sm rounded-md transition-colors ${
+      isActive
+        ? 'bg-primary text-primary-foreground'
+        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+    }`
 
   return (
     <div className="min-h-screen bg-background">
@@ -80,19 +84,9 @@ export default function App() {
           className="flex gap-1"
           style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
         >
-          {tabs.map(t => (
-            <button
-              key={t.id}
-              onClick={() => setTab(t.id)}
-              className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                tab === t.id
-                  ? 'bg-primary text-primary-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+          <NavLink to="/download" className={navClass}>⬇️ Download</NavLink>
+          <NavLink to="/history" className={navClass}>📋 History</NavLink>
+          <NavLink to="/settings" className={navClass}>⚙️ Settings</NavLink>
         </div>
       </div>
 
@@ -105,20 +99,24 @@ export default function App() {
       )}
 
       <div className="px-6 py-4 max-w-2xl mx-auto">
-        {tab === 'download' && (
-          <DownloadForm settings={settings} onDownloadComplete={handleDownloadComplete} />
-        )}
-        {tab === 'history' && (
-          <DownloadHistory
-            history={history}
-            onClear={handleClearHistory}
-            onRefresh={() => window.electronAPI.getHistory().then(setHistory)}
-          />
-        )}
-        {tab === 'settings' && (
-          <SettingsPanel settings={settings} onSave={handleSaveSettings} />
-        )}
+        <Routes>
+          <Route path="/download" element={<DownloadForm />} />
+          <Route path="/history" element={<DownloadHistory />} />
+          <Route path="/settings" element={<SettingsPanel />} />
+          <Route path="*" element={<DownloadForm />} />
+        </Routes>
       </div>
+
+      <ToastContainer />
     </div>
   )
 }
+
+export default function App() {
+  return (
+    <MemoryRouter initialEntries={['/download']}>
+      <AppShell />
+    </MemoryRouter>
+  )
+}
+
