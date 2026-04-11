@@ -116,35 +116,90 @@ export function isPlaylistUrl(url: string): boolean {
 }
 
 export async function getPlaylistInfo(url: string): Promise<PlaylistInfo> {
+  console.log('getPliatlistInfo] running yt-dlp --flat-playlist for', url)
+
+  const template = {
+    playlist: "%(playlist_title)j",
+    count: "%(playlist_count)j",
+    id: "%(id)j",
+    title: "%(title)j",
+    uploader: "%(uploader)j",
+    views: "%(view_count)j",
+    duration: "%(duration)j",
+    thumb: "https://i.ytimg.com/vi/%(id)s/hqdefault.jpg"
+  };
+
+  // Stringify it, then fix the placeholder quotes so yt-dlp recognizes them
+  const printString = JSON.stringify(template).replace(/"(%\(.+?\)j)"/g, "$1");
+  const command = `yt-dlp --flat-playlist --print '${printString}' "${url}"`;
+  console.log('[getPlaylistInfo] command:', command)
   const { stdout } = await execAsync(
-    `yt-dlp --flat-playlist --no-warnings` +
-    ` --print "%(playlist_title)s"` +
-    ` --print "%(playlist_count)s"` +
-    ` --print "%(id)s"` +
-    ` --print "%(title)s"` +
-    ` --print "%(thumbnail)s"` +
-    ` --print "%(duration)s"` +
-    ` "${url}"`,
+    command,
     { env: EXEC_ENV }
   )
 
-  const lines = stdout.trim().split('\n')
-  const chunkSize = 6
+  // Parse output robustly: either the command prints one JSON object per line
+  const raw = stdout || ''
+  const lines = raw.trim().split(/\r?\n/).filter(l => l.trim().length > 0)
+
+  // If output looks like JSON lines (each line is a JSON object), parse them individually
+  if (lines.length > 0 && lines[0].trim().startsWith('{')) {
+    const entries: PlaylistEntry[] = []
+    let playlistTitle = 'Playlist'
+    let playlistCount = 0
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i]
+      try {
+        const obj = JSON.parse(line)
+        if (i === 0) {
+          playlistTitle = obj.playlist || playlistTitle
+          playlistCount = Number(obj.count) || playlistCount
+        }
+        const id = obj.id
+        const title = obj.title
+        if (id && title) {
+          const thumb = obj.thumb || obj.thumbnail || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined)
+          entries.push({
+            id: String(id),
+            title: String(title),
+            index: i + 1,
+            status: 'pending',
+            thumbnail: thumb,
+            duration: typeof obj.duration === 'number' ? obj.duration : (parseInt(obj.duration, 10) || undefined),
+            author: obj.uploader || obj.author || undefined,
+            views: typeof obj.views === 'number' ? obj.views : (parseInt(obj.views, 10) || undefined),
+          })
+        }
+      } catch (e) {
+        // ignore malformed lines
+      }
+    }
+    return { title: playlistTitle, count: playlistCount || entries.length, entries }
+  }
+
+  // Fallback: original chunked plaintext parsing for older yt-dlp output
+  const chunkSize = 8
   const entries: PlaylistEntry[] = []
   let playlistTitle = 'Playlist'
   let playlistCount = 0
 
   for (let i = 0; i < lines.length; i += chunkSize) {
-    const [pTitle, pCount, id, title, thumbnail, durationStr] = lines.slice(i, i + chunkSize)
+    const [pTitle, pCount, id, title, thumbnail, durationStr, uploader, viewsStr] = lines.slice(i, i + chunkSize)
     if (i === 0) {
       playlistTitle = pTitle || 'Playlist'
       playlistCount = parseInt(pCount, 10) || Math.floor(lines.length / chunkSize)
     }
     if (id && title) {
+      const thumb = thumbnail && thumbnail !== 'NA' ? thumbnail : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
       entries.push({
-        id, title, index: Math.floor(i / chunkSize) + 1, status: 'pending',
-        thumbnail: thumbnail && thumbnail !== 'NA' ? thumbnail : undefined,
+        id,
+        title,
+        index: Math.floor(i / chunkSize) + 1,
+        status: 'pending',
+        thumbnail: thumb,
         duration: parseInt(durationStr, 10) || undefined,
+        author: uploader || undefined,
+        views: parseInt(viewsStr, 10) || undefined,
       })
     }
   }

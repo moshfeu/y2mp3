@@ -31,6 +31,8 @@ export interface PlaylistEntry {
   duration?: number
   filepath?: string
   error?: string
+  author?: string
+  views?: number
 }
 
 export interface PlaylistInfo {
