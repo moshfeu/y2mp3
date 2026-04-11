@@ -5,9 +5,9 @@ Full rewrite of [y2mp3](https://github.com/moshfeu/y2mp3) — replacing the old
 Webpack/React 16/MobX/ytdl-core stack with Electron-Vite + React 18 + Tailwind CSS +
 Shadcn/ui + yt-dlp.
 
-**Branch:** `feat/electron-vite-rewrite`  
-**Working folder:** `/Users/moshef/Documents/projects/y2mp3`  
-**Node version:** Must use Node v20 (`fnm use 20`). Node v24 + Yarn v1 has an EBADF bug.  
+**Branch:** `feat/electron-vite-rewrite`
+**Working folder:** `/Users/moshef/Documents/projects/y2mp3`
+**Node version:** Must use Node v20 (`fnm use 20`). Node v24 + Yarn v1 has an EBADF bug.
 **Registry:** `~/.yarnrc` points to Wix Artifactory — **VPN required for `yarn install`**.
 Before pushing to GitHub, sanitize yarn.lock:
 ```bash
@@ -57,13 +57,15 @@ yarn dist:mac  # Package as .dmg
 10. `feat-settings-shortcut` — done
 11. `feat-autopaste-clipboard` — partially: currently pastes the URL only if the input is empty. Should override even if input is non-empty when the clipboard URL differs from the input (i.e., new URL copied)
 12. `bug-history-show-in-folder-failed` — done
-13. (New) `notif-on-download` — Show notification when a clip is downloaded (controlled by new setting)
+13. (New) `notify-on-download` — Show notification when a clip is downloaded (controlled by new setting)
 
 **Phase C — Polish & ship**
 - `feat-validate-output-path` → `qa-test` → squash-merge → push PR #150
+- `upgrade-electron` - 41.2.0 is available
 
 ## Future (new)
 - Support download as video
+- Implement a mobile app using React Native + Expo + yt-dlp local api if possible
 
 ---
 

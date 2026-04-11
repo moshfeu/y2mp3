@@ -107,6 +107,25 @@ export function SettingsPanel() {
         </CardContent>
       </Card>
 
+      <Card>
+        <CardHeader><CardTitle className="text-base">Notifications</CardTitle></CardHeader>
+        <CardContent>
+          <div className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              id="notifyOnDownload"
+              checked={!!local.notifyOnDownload}
+              onChange={e => setLocal(s => ({ ...s, notifyOnDownload: e.target.checked }))}
+              className="mt-0.5 h-4 w-4 rounded border-input accent-foreground cursor-pointer"
+            />
+            <div className="space-y-1">
+              <Label htmlFor="notifyOnDownload" className="cursor-pointer">Notify on download</Label>
+              <p className="text-xs text-muted-foreground">Show an OS notification when a clip finishes downloading</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       <Button onClick={handleSave} className="w-full">
         {saved ? '✅ Saved!' : 'Save Settings'}
       </Button>

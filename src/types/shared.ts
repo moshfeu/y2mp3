@@ -72,6 +72,7 @@ export interface AppSettings {
   defaultQuality: 'best' | '320' | '256' | '192'
   theme: 'light' | 'dark' | 'system'
   playlistSubfolder: boolean
+  notifyOnDownload: boolean
 }
 
 /**

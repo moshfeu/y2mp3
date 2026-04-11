@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, dialog, shell, Notification } from 'electron'
 import { join } from 'path'
 import { checkDependencies, getVideoInfo, downloadAudio, getPlaylistInfo, abortDownload } from './download'
 import type { DownloadOptions, AppSettings, DownloadItem, VideoInfo } from '../src/types/shared'
@@ -146,11 +146,22 @@ app.whenReady().then(async () => {
         (index, total, title) => {
           event.sender.send('download-item-start', { index, total, title })
         },
-        (index, filepath, filename, filesize) => {
-          saveToHistory(options.url, filepath, filename, filesize)
-            .catch(console.error)
+        async (index, filepath, filename, filesize) => {
+          try {
+            await saveToHistory(options.url, filepath, filename, filesize)
+          } catch (err) {
+            console.error('[saveToHistory] failed:', err)
+          }
+          try {
+            const { settings } = await getStores()
+            const notify = settings.get('notifyOnDownload')
+            if (notify) new Notification({ title: 'Download complete', body: filename }).show()
+          } catch (err) {
+            console.error('[notify] failed:', err)
+          }
           event.sender.send('download-item-done', { index, filepath, filename, filesize })
         },
+
         (index, title, error) => {
           event.sender.send('download-item-error', { index, title, error })
         },
@@ -164,6 +175,14 @@ app.whenReady().then(async () => {
           author: videoInfo?.author || 'Unknown',
           thumbnail: videoInfo?.thumbnail || '',
         })
+      // For single downloads, optionally show a notification
+      try {
+        const { settings } = await getStores()
+        const notify = settings.get('notifyOnDownload')
+        if (notify) new Notification({ title: 'Download complete', body: result.filename }).show()
+      } catch (err) {
+        console.error('[notify-single] failed:', err)
+      }
       }
 
       return { success: true, ...result }

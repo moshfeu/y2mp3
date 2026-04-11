@@ -14,6 +14,7 @@ const defaults: AppSettings = {
   defaultQuality: 'best',
   theme: 'system',
   playlistSubfolder: false,
+  notifyOnDownload: false,
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
