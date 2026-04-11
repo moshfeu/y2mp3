@@ -3,21 +3,14 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select } from '@/components/ui/select'
-import { Card, CardContent } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Progress } from '@/components/ui/progress'
 import { useDownloadStore } from '@/store/download'
 import { useSettingsStore } from '@/store/settings'
+import { DownloadList } from '@/components/DownloadList'
 import { useState } from 'react'
 
 function isValidYouTubeUrl(u: string) {
   return u.includes('youtube.com/') || u.includes('youtu.be/')
-}
-
-function formatDuration(secs: number) {
-  const m = Math.floor(secs / 60)
-  const s = String(secs % 60).padStart(2, '0')
-  return `${m}:${s}`
 }
 
 function sanitizeFolderName(name: string) {
@@ -109,143 +102,19 @@ export function DownloadForm() {
         </div>
       )}
 
-      {/* Single video info card — persists through downloading and done states */}
-      {videoInfo && !isPlaylistMode && (isReady || isDownloading || isDone) && (
-        <Card className={isDone ? 'border-green-300 dark:border-green-800' : isDownloading ? 'bg-accent/20' : ''}>
-          <CardContent className="pt-4">
-            <div className="flex gap-3 items-start">
-              {videoInfo.thumbnail && (
-                <img src={videoInfo.thumbnail} alt="" className="w-24 h-16 object-cover rounded shrink-0" />
-              )}
-              <div className="flex-1 min-w-0 space-y-1">
-                <p className="font-medium text-sm truncate">{videoInfo.title}</p>
-                <p className="text-xs text-muted-foreground">{videoInfo.author}</p>
-                {/* Progress inline */}
-                {isDownloading && progress ? (
-                  <div className="space-y-1 pt-0.5">
-                    <Progress value={progress.percent} className="h-1.5" />
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>{progress.percent.toFixed(1)}%</span>
-                      <span>{progress.speed} · ETA {progress.eta}</span>
-                    </div>
-                  </div>
-                ) : isDone ? (
-                  <div className="flex items-center justify-between pt-0.5">
-                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">✅ Done</span>
-                    {singleFilepath && (
-                      <button
-                        onClick={() => window.electronAPI.openFile(singleFilepath)}
-                        className="text-xs text-muted-foreground hover:text-foreground"
-                      >
-                        📂 Show in Finder
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-xs text-muted-foreground">
-                    {formatDuration(videoInfo.duration)}
-                    {videoInfo.views > 0 && ` · ${videoInfo.views.toLocaleString()} views`}
-                  </p>
-                )}
-                {/* Download error inline */}
-                {downloadError && (
-                  <p className="text-xs text-destructive">{downloadError}</p>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      <DownloadList
+        videoInfo={videoInfo}
+        playlistInfo={playlistInfo}
+        playlistEntries={playlistEntries}
+        progress={progress}
+        isDownloading={isDownloading}
+        isDone={isDone}
+        singleFilepath={singleFilepath}
+        downloadError={downloadError}
+        handleSingleEntryDownload={handleSingleEntryDownload}
+      />
 
-      {/* Playlist rows */}
-      {isPlaylistMode && playlistInfo && (
-        <Card>
-          <CardContent className="pt-4 space-y-2">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium text-sm">{playlistInfo.title}</p>
-                <p className="text-xs text-muted-foreground">{playlistInfo.count} videos</p>
-              </div>
-              {doneStats && (
-                <span className="text-xs text-muted-foreground shrink-0 ml-2">
-                  {doneStats.succeeded} ✓{doneStats.failed > 0 ? ` · ${doneStats.failed} ✗` : ''}
-                </span>
-              )}
-              {isDownloading && progress?.playlistIndex && progress?.playlistCount && (
-                <span className="text-xs text-muted-foreground shrink-0 ml-2 tabular-nums">
-                  {progress.playlistIndex} / {progress.playlistCount}
-                </span>
-              )}
-            </div>
-            <div className="max-h-72 overflow-y-auto divide-y rounded border">
-              {playlistEntries.map(entry => {
-                const isActive = entry.status === 'downloading'
-                const entryProgress = isActive ? progress : null
-                const canDownloadSingle = (entry.status === 'pending' || entry.status === 'failed') && !isDownloading
-                return (
-                  <div key={entry.id} className={`flex items-center gap-3 px-3 py-2 ${
-                    entry.status === 'done' ? 'bg-green-50/50 dark:bg-green-950/10' :
-                    entry.status === 'failed' ? 'bg-red-50/50 dark:bg-red-950/10' :
-                    isActive ? 'bg-accent/30' : ''
-                  }`}>
-                    {entry.thumbnail ? (
-                      <img src={entry.thumbnail} alt="" className="w-16 h-10 object-cover rounded shrink-0" />
-                    ) : (
-                      <div className="w-16 h-10 bg-muted rounded shrink-0 flex items-center justify-center text-xs text-muted-foreground">
-                        {entry.index}
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0 space-y-0.5">
-                      <p className={`text-sm truncate ${
-                        entry.status === 'failed' ? 'text-destructive' :
-                        entry.status === 'done' ? 'text-muted-foreground' : ''
-                      }`}>
-                        {entry.title}
-                      </p>
-                      {entry.duration != null && !isActive && !entry.error && (
-                        <p className="text-xs text-muted-foreground">{formatDuration(entry.duration)}</p>
-                      )}
-                      {isActive && entryProgress && (
-                        <Progress value={entryProgress.percent} className="h-1" />
-                      )}
-                      {entry.error && (
-                        <p className="text-xs text-destructive truncate">{entry.error}</p>
-                      )}
-                    </div>
-                    <div className="shrink-0 min-w-[5.5rem] flex justify-end">
-                      {entry.status === 'done' && entry.filepath && (
-                        <button
-                          onClick={() => window.electronAPI.openFile(entry.filepath!)}
-                          className="text-xs text-green-600 dark:text-green-400 hover:underline"
-                        >
-                          📂 Show file
-                        </button>
-                      )}
-                      {isActive && entryProgress && (
-                        <span className="text-xs text-muted-foreground tabular-nums">
-                          {entryProgress.percent.toFixed(0)}%
-                        </span>
-                      )}
-                      {canDownloadSingle && (
-                        <button
-                          onClick={() => handleSingleEntryDownload(entry.index)}
-                          className={`text-xs border rounded px-2 py-0.5 transition-colors ${
-                            entry.status === 'failed'
-                              ? 'text-destructive border-destructive/50 hover:bg-destructive/10'
-                              : 'text-muted-foreground border-muted hover:text-foreground hover:border-foreground'
-                          }`}
-                        >
-                          {entry.status === 'failed' ? '↺ Retry' : '⬇ Download'}
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+
 
       {/* Format / Quality — only shown after fetch succeeds, hidden while downloading/done */}
       {(isReady || (isDone && !isPlaylistMode)) && (

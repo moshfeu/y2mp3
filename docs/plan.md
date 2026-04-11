@@ -43,12 +43,12 @@ yarn dist:mac  # Package as .dmg
 
 **Phase A — Bug fixes**
 1. `bug-state-reset-on-nav` — done
-2. `ux-hide-controls-before-fetch` + `ux-fetch-states` — Not sure what it was; when downloading a playlist item the per-item progress doesn't appear. The "downloading" state only sets the background grey and doesn't transition to completed when done
+2. `ux-hide-controls-before-fetch` + `ux-fetch-states` — done (per-item progress and completion state fixed)
 3. `bug-dot-before-download` — done
 4. `bug-error-in-row` — keep (can't reproduce now)
-5. `bug-thumbnail-csp` — no thumbnail in list view
+5. `bug-thumbnail-csp` — done (thumbnails & views shown in list)
 6. `bug-subfolder-not-saved` — still
-7. (New) `ux-list-item-as-single-ui` — Make list item UI match single item UI (design, author, duration, views); controlled by new setting
+7. `ux-list-item-as-single-ui` — done (list items now share single-item UI; author/duration/views/thumbnail shown)
 
 **Phase B — New UX features**
 7. `ux-mixed-url` — done

@@ -116,98 +116,53 @@ export function isPlaylistUrl(url: string): boolean {
 }
 
 export async function getPlaylistInfo(url: string): Promise<PlaylistInfo> {
-  console.log('[getPlaylistInfo] running yt-dlp --dump-single-json for', url)
-
-  // Use dump-single-json to get a single well-formed JSON object (playlist with entries)
-  const command = `yt-dlp --dump-single-json --no-warnings "${url}"`
-  const { stdout } = await execAsync(command, { env: EXEC_ENV })
-
-  const raw = stdout || ''
-  // First, try to parse the whole stdout as JSON (single object)
-  try {
-    const parsed = JSON.parse(raw)
-    const playlistTitle = parsed.title || parsed.playlist || parsed.display_id || 'Playlist'
-    const playlistCount = parsed.n_entries || parsed.count || (Array.isArray(parsed.entries) ? parsed.entries.length : 0)
-    const entries: PlaylistEntry[] = []
-    const entriesArray = Array.isArray(parsed.entries) ? parsed.entries : []
-    for (let i = 0; i < entriesArray.length; i++) {
-      const e = entriesArray[i]
-      const id = e.id || (typeof e.webpage_url === 'string' ? (() => { try { return new URL(e.webpage_url).searchParams.get('v') } catch { return undefined } })() : undefined) || ''
-      const thumb = e.thumbnail || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined)
-      entries.push({
-        id: String(id),
-        title: String(e.title || ''),
-        index: i + 1,
+  // If URL is a single video, return a single-entry PlaylistInfo so DownloadList can render uniformly
+  if (!isPlaylistUrl(url)) {
+    try {
+      const v = await getVideoInfo(url)
+      const entry: PlaylistEntry = {
+        id: v.id || '',
+        title: v.title || '',
+        index: 1,
         status: 'pending',
-        thumbnail: thumb,
-        duration: typeof e.duration === 'number' ? e.duration : (parseInt(e.duration, 10) || undefined),
-        author: e.uploader || e.uploader_id || undefined,
-        views: typeof e.view_count === 'number' ? e.view_count : (parseInt(e.view_count || e.views, 10) || undefined),
-      })
-    }
-    return { title: playlistTitle, count: playlistCount || entries.length, entries }
-  } catch (err) {
-    // Not a single JSON object — maybe stdout is JSON-lines (one JSON per line) or legacy print output
-    const lines = raw.trim().split(/\r?\n/).filter(l => l.trim().length > 0)
-
-    // If lines look like JSON objects per line, parse each
-    if (lines.length > 0 && lines[0].trim().startsWith('{')) {
-      const entries: PlaylistEntry[] = []
-      let playlistTitle = 'Playlist'
-      let playlistCount = 0
-      for (let i = 0; i < lines.length; i++) {
-        try {
-          const obj = JSON.parse(lines[i])
-          if (i === 0) {
-            playlistTitle = obj.title || obj.playlist || playlistTitle
-            playlistCount = Number(obj.count) || playlistCount
-          }
-          const id = obj.id
-          const thumb = obj.thumbnail || obj.thumb || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined)
-          entries.push({
-            id: String(id),
-            title: String(obj.title || ''),
-            index: i + 1,
-            status: 'pending',
-            thumbnail: thumb,
-            duration: typeof obj.duration === 'number' ? obj.duration : (parseInt(obj.duration, 10) || undefined),
-            author: obj.uploader || obj.author || undefined,
-            views: typeof obj.views === 'number' ? obj.views : (parseInt(obj.views, 10) || undefined),
-          })
-        } catch (e) {
-          // ignore malformed lines
-        }
+        thumbnail: v.thumbnail || (v.id ? `https://i.ytimg.com/vi/${v.id}/hqdefault.jpg` : undefined),
+        duration: v.duration,
+        author: v.author,
+        views: v.views,
       }
-      return { title: playlistTitle, count: playlistCount || entries.length, entries }
+      return { title: v.title || 'Video', count: 1, entries: [entry] }
+    } catch (e) {
+      console.warn('[getPlaylistInfo] getVideoInfo failed for single URL:', e)
+      return { title: 'Video', count: 0, entries: [] }
     }
-
-    // Fallback: try to parse legacy chunked plaintext (fields per line)
-    const chunkSize = 8
-    const entries: PlaylistEntry[] = []
-    let playlistTitle = 'Playlist'
-    let playlistCount = 0
-    for (let i = 0; i < lines.length; i += chunkSize) {
-      const [pTitle, pCount, id, title, thumbnail, durationStr, uploader, viewsStr] = lines.slice(i, i + chunkSize)
-      if (i === 0) {
-        playlistTitle = pTitle || 'Playlist'
-        playlistCount = parseInt(pCount, 10) || Math.floor(lines.length / chunkSize)
-      }
-      if (id && title) {
-        const thumb = thumbnail && thumbnail !== 'NA' ? thumbnail : `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-        entries.push({
-          id,
-          title,
-          index: Math.floor(i / chunkSize) + 1,
-          status: 'pending',
-          thumbnail: thumb,
-          duration: parseInt(durationStr, 10) || undefined,
-          author: uploader || undefined,
-          views: parseInt(viewsStr, 10) || undefined,
-        })
-      }
-    }
-    return { title: playlistTitle, count: playlistCount || entries.length, entries }
   }
+
+  console.log('[getPlaylistInfo] running deterministic yt-dlp --dump-json --flat-playlist for', url)
+
+  // Deterministic linear parsing: assume yt-dlp emits one JSON object per line.
+  const command = `yt-dlp --dump-json --flat-playlist --no-warnings "${url}"`
+  const { stdout } = await execAsync(command, { env: EXEC_ENV })
+  const raw = stdout || ''
+  const lines = raw.trim().split(/\r?\n/).filter(l => l.trim().length > 0)
+
+  const entries: PlaylistEntry[] = lines.map((line, idx) => {
+    const obj = JSON.parse(line)
+    const id = obj.id || ''
+    const thumb = obj.thumbnail || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : undefined)
+    return {
+      id: String(id),
+      title: String(obj.title || ''),
+      index: idx + 1,
+      status: 'pending',
+      thumbnail: thumb,
+      duration: typeof obj.duration === 'number' ? obj.duration : (parseInt(obj.duration, 10) || undefined),
+      views: typeof obj.view_count === 'number' ? obj.view_count : (parseInt(obj.view_count, 10) || undefined),
+      author: obj.uploader || obj.uploader_id || undefined,
+    }
+  });
+
+  const playlistTitle = entries[0]?.title ?? 'No Playlist Found'
+  return { title: playlistTitle, count: entries.length, entries }
 }
 
 let currentDownloadChild: ReturnType<typeof exec> | null = null
