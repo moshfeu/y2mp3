@@ -42,23 +42,28 @@ yarn dist:mac  # Package as .dmg
 ### Next: Implementation (Phase A → B → C)
 
 **Phase A — Bug fixes**
-1. `bug-state-reset-on-nav` — lift download state to App.tsx
-2. `ux-hide-controls-before-fetch` + `ux-fetch-states` — spinner/error/success fetch states
-3. `bug-dot-before-download` — hide status column until download starts
-4. `bug-error-in-row` — inline error per row, suppress global alert
-5. `bug-thumbnail-csp` — allowlist i.ytimg.com in CSP
-6. `bug-subfolder-not-saved` — read settings at download time
+1. `bug-state-reset-on-nav` — done
+2. `ux-hide-controls-before-fetch` + `ux-fetch-states` — Not sure what it was; when downloading a playlist item the per-item progress doesn't appear. The "downloading" state only sets the background grey and doesn't transition to completed when done
+3. `bug-dot-before-download` — done
+4. `bug-error-in-row` — keep (can't reproduce now)
+5. `bug-thumbnail-csp` — no thumbnail in list view
+6. `bug-subfolder-not-saved` — still
+7. (New) `ux-list-item-as-single-ui` — Make list item UI match single item UI (design, author, duration, views); controlled by new setting
 
 **Phase B — New UX features**
-7. `ux-mixed-url` — video + "Fetch playlist →" banner
-8. `feat-per-row-download` — per-row ⬇ Download button
-9. `feat-show-in-folder` — 📂 Show file per row + single video done state
-10. `feat-settings-shortcut` — ⌘, opens Settings
-11. `feat-autopaste-clipboard` — clipboard auto-paste on focus + toast
-12. `bug-history-show-in-folder-failed` — hide Show in folder for failed history entries
+7. `ux-mixed-url` — done
+8. `feat-per-row-download` — done
+9. `feat-show-in-folder` — done
+10. `feat-settings-shortcut` — done
+11. `feat-autopaste-clipboard` — partially: currently pastes the URL only if the input is empty. Should override even if input is non-empty when the clipboard URL differs from the input (i.e., new URL copied)
+12. `bug-history-show-in-folder-failed` — done
+13. (New) `notif-on-download` — Show notification when a clip is downloaded (controlled by new setting)
 
 **Phase C — Polish & ship**
 - `feat-validate-output-path` → `qa-test` → squash-merge → push PR #150
+
+## Future (new)
+- Support download as video
 
 ---
 
