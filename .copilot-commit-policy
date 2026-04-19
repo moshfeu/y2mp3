@@ -1,0 +1,7 @@
+# Copilot commit policy
+# When AUTO_COMMIT is set to false, AI agents must NOT create git commits or push changes
+# without explicit user approval.
+AUTO_COMMIT=false
+
+# To allow automated commits, set AUTO_COMMIT=true (only with explicit consent).
+# This file is informational and must be honored by agents and contributors.
