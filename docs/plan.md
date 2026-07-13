@@ -67,6 +67,64 @@ yarn dist:mac  # Package as .dmg
 - Support download as video
 - Implement a mobile app using React Native + Expo + yt-dlp local api if possible
 
+## Release Tooling Decision
+
+Current decision:
+- Keep Electron Builder as the active packaging and publishing flow for near-term releases (including 4.0.0-alpha manual branch releases).
+
+Planned migration:
+- Migrate to Electron Forge in phases after release pressure drops.
+- Phase 1: Add Forge config in parallel with existing Builder config.
+- Phase 2: Add a Forge-only pre-release workflow and compare artifact parity.
+- Phase 3: Switch primary release workflow to Forge.
+- Phase 4: Remove Builder-specific workflow/action once one full stable release cycle passes on Forge.
+
+## First Future feature — POC
+
+Purpose
+- Capture a minimal, runnable proof-of-concept for the repository's "First Future" feature so feasibility, IPC surface, and UX are validated before full implementation.
+
+Scope
+- Small UI in the renderer demonstrating the user interaction (button + simple form or preview)
+- IPC surface in preload and main with a thin handler in the main process
+- Backend handler that uses a mocked yt-dlp flow for dev (real yt-dlp can be swapped in later)
+- Basic settings persistence if the feature needs it
+- Short README doc with run instructions
+
+Success criteria
+- End-to-end demo: user triggers the feature and sees the expected result in the UI
+- Core pure functions covered by unit tests (vitest)
+- README with steps to run the POC locally (dev mode)
+
+Approach
+1. Create feature scaffold under `src/features/first-future/` (React + TS, Shadcn primitives)
+2. Add IPC channel `firstFuture:invoke` in `electron/preload.ts` → `electron/main.ts` and a small handler file `electron/first-future.ts`
+3. Implement a mocked backend flow for dev that returns deterministic responses; allow toggling to real backend via an env flag
+4. Wire UI to call the IPC and render results (success / error / progress)
+5. Add unit tests for the pure logic and a small integration test mocking the IPC in the renderer
+6. Add docs: `docs/first-future-poc.md` with run & test steps
+
+Todos
+- scaffold feature folder and route
+- add preload and main IPC handlers
+- implement mocked handler (dev) and real handler (noop or reuse download.ts)
+- implement UI and basic interactions
+- add unit tests and a short integration test
+- write docs/first-future-poc.md and update docs/plan.md with POC status
+
+Files to add (suggested)
+- src/features/first-future/FirstFuturePage.tsx
+- src/features/first-future/index.ts
+- electron/first-future.ts
+- docs/first-future-poc.md
+- tests/first-future.spec.ts
+
+Owner
+- @moshef
+
+Next step
+- Confirm this plan and whether to start implementation. Do not start coding until explicit approval.
+
 ---
 
 ## Key Technical Notes

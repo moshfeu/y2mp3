@@ -163,6 +163,16 @@ git tag -a v1.2.3 -m "1.2.3"
 git push origin refs/tags/v1.2.3
 ```
 
+### Manual alpha release from a branch
+
+Need to publish fast without tagging first? Use the `Manual Alpha Release` GitHub Actions workflow.
+
+1. Open the Actions tab and run `Manual Alpha Release`.
+2. Choose the branch you want to release from.
+3. Keep `version` as `4.0.0-alpha` (or set another pre-release version).
+
+The workflow publishes a GitHub pre-release using Electron Builder and uploads the generated artifacts from macOS, Linux, and Windows builds.
+
 ### Stack
 
 <table>

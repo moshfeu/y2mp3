@@ -1,0 +1,60 @@
+name: Manual Alpha Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Pre-release version to publish
+        required: true
+        default: 4.0.0-alpha
+
+permissions:
+  contents: write
+
+concurrency:
+  group: manual-alpha-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+      EP_PRE_RELEASE: true
+      EP_DRAFT: false
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Set release version in package.json
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const p='package.json';const pkg=JSON.parse(fs.readFileSync(p,'utf8'));pkg.version=process.env.RELEASE_VERSION;fs.writeFileSync(p,JSON.stringify(pkg,null,2)+'\\n');"
+
+      - name: Type check
+        run: npx tsc
+
+      - name: Build and publish Electron app (pre-release)
+        uses: ./.github/actions/release
+        with:
+          skip_build: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          release: true
+          args: --config.publish.releaseType=prerelease
